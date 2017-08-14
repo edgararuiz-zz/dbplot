@@ -1,0 +1,16 @@
+Package: dbplot
+Version: 0.0.1
+Title: Simplifies plotting of database and sparklyr data
+Description: Leverages dplyr to process the calculations of a plot inside a database. 
+    This package provides helper functions that abstract the work at three levels:
+    outputs a ggplot (highest), outputs the calculations (medium), outputs the formula
+    needed to calculate bins (lowest).
+Authors@R: 
+    person("Edgar", "Ruiz", email = "edgar@rstudio.com", role = c("aut", "cre"))
+Depends:
+    R (>= 3.1),
+    dplyr(>= 0.7),
+    rlang,
+    ggplot2
+License: GPL-2
+RoxygenNote: 6.0.1
