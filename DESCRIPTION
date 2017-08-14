@@ -12,5 +12,7 @@ Depends:
     dplyr(>= 0.7),
     rlang,
     ggplot2
+Suggests:
+    testthat
 License: GPL-2
 RoxygenNote: 6.0.1

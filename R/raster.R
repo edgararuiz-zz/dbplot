@@ -27,6 +27,7 @@
 #' @param x A continuous variable
 #' @param y A continuous variable
 #' @param fill The aggregation formula. Defaults to count (n)
+#' @param resolution The number of bins created by variable. The highest the number, the more records can be potentially imported from the sourd
 #' 
 #' @examples 
 #' 
@@ -93,6 +94,7 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100){
 #' @param x A continuous variable
 #' @param y A continuous variable
 #' @param fill The aggregation formula. Defaults to count (n)
+#' @param resolution The number of bins created by variable. The highest the number, the more records can be potentially imported from the sourd
 #' 
 #' @examples 
 #' 

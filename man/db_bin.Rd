@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{db_bin}
 \alias{db_bin}
-\title{db_bin}
+\title{Bin formula}
 \usage{
 db_bin(var, bins = 30, binwidth = NULL)
 }
