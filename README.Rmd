@@ -1,23 +1,184 @@
 ---
 title: "dbplot"
-output: github_document
+output:
+  github_document:
+    toc: true
+    toc_depth: 3
 ---
+```{r, setup, include = FALSE}
+library(dplyr)
+library(dbplot)
+library(sparklyr)
+library(nycflights13)
+
+knitr::opts_chunk$set(fig.height = 3.5, fig.width =  4, fig.align = 'center')
+```
+
+```{r, include = FALSE}
+
+conf <- spark_config()
+conf$`sparklyr.shell.driver-memory` <- "8G"
+conf$spark.memory.fraction <- 0.8
+sc <- spark_connect(master = "local", config = conf, version = "2.1.0")
+
+spark_flights <- copy_to(sc, nycflights13::flights, "flights")
+
+```
+
 
 [![Build Status](https://travis-ci.org/edgararuiz/dbplot.svg?branch=master)](https://travis-ci.org/edgararuiz/dbplot)
 
 
 Leverages `dplyr` to process the calculations of a plot inside a database.  This package provides helper functions that abstract the work at three levels:
     
-- Outputs a `ggplot2` (*highest*)
-- Outputs the calculations (*medium*)
-- Outputs the formula needed to calculate bins (*lowest*)
+1. Provides a `ggplot2` (*highest*)
+2. Outputs a data frame with the calculations (*medium*)
+3. Creates the formula needed to calculate bins (*lowest*)
+
+The functions will also work with `sparklyr`. A Spark DataFrame will be used for the examples in this README.  
+
+```{r}
+class(spark_flights)
+```
 
 
-
-
-Not available in CRAN yet, so it needs to be installed via GitHub:
+Use `devtools` to install:
 
 ```{r, eval = FALSE}
 devtools::install_github("edgararuiz/dbplot")
 ```
 
+
+
+## `ggplot`
+
+### Histogram
+
+By default `dbplot_histogram()` creates a 30 bin histogram
+
+```{r}
+spark_flights %>% 
+  dbplot_histogram(sched_dep_time)
+```
+
+Use `binwidth` to fix the bin size
+
+```{r}
+spark_flights %>% 
+  dbplot_histogram(sched_dep_time, binwidth = 200)
+```
+
+Because it outputs a `ggplot2` object, more customization can be done
+
+```{r}
+spark_flights %>% 
+  dbplot_histogram(sched_dep_time, binwidth = 300) +
+  labs(title = "Flights - Scheduled Departure Time") +
+  theme_bw()
+```
+
+### Raster
+
+To visualize two continuous variables, we typically resort to a Scatter plot. However, this may not be practical when visualizing millions or billions of dots representing the intersections of the two variables. A Raster plot may be a better option, because it concentrates the intersections into squares that are easier to parse visually.
+
+A Raster plot basically does the same as a Histogram. It takes two continuous variables and creates discrete 2-dimensional bins represented as squares in the plot. It then determines either the number of rows inside each square or processes some aggregation, like an average.
+
+
+- If no `fill` argument is passed, the default calculation will be count, `n()`
+```{r}
+spark_flights %>%
+  filter(!is.na(arr_delay)) %>%
+  dbplot_raster(arr_delay, dep_delay) 
+```
+
+
+- Pass an aggregation formula that can run inside the database
+```{r}
+spark_flights %>%
+  filter(!is.na(arr_delay)) %>%
+  dbplot_raster(arr_delay, dep_delay, mean(distance)) 
+```
+
+- Increase or decrease for more, or less, definition.  The `resolution` argument controls that, it defaults to 100 
+```{r}
+spark_flights %>%
+  filter(!is.na(arr_delay)) %>%
+  dbplot_raster(arr_delay, dep_delay, mean(distance), resolution = 500)
+```
+
+### Bar Plot
+
+- `dbplot_bar()` defaults to a tally of each value in a discrete variable
+```{r}
+spark_flights %>%
+  dbplot_bar(origin)
+```
+
+
+- Pass a formula that will be operated for each value in the discrete variable
+```{r}
+spark_flights %>%
+  dbplot_bar(origin, mean(dep_delay))
+```
+
+### Line plot
+
+- `dbplot_line()` defaults to a tally of each value in a discrete variable
+```{r}
+spark_flights %>%
+  dbplot_line(month)
+```
+
+- Pass a formula that will be operated for each value in the discrete variable
+```{r}
+spark_flights %>%
+  dbplot_line(month, mean(dep_delay))
+```
+
+## Calculations functions
+
+If a more customized plot is needed, the data the underpins the plots can also be accessed:
+
+1. `db_compute_bins()` - Returns a data frame with the bins and count per bin
+2. `db_compute_count()` - Returns a data frame with the count per discrete value
+3. `db_compute_raster()` -  Returns a data frame with the results per x/y intersection
+
+```{r}
+spark_flights %>%
+  db_compute_bins(arr_delay)
+```
+
+The data can be piped to a plot
+```{r}
+spark_flights %>%
+  filter(arr_delay < 100 , arr_delay > -50) %>%
+  db_compute_bins(arr_delay) %>%
+  ggplot() +
+  geom_col(aes(arr_delay, count, fill = count))
+```
+
+
+## `db_bin()`
+
+Uses 'rlang' to build the formula needed to create the bins of a numeric variable in an un-evaluated fashion. This way, the formula can be then passed inside a dplyr verb.
+
+```{r}
+db_bin(var)
+```
+
+
+```{r}
+spark_flights %>%
+  group_by(x = !! db_bin(arr_delay)) %>%
+  tally
+```
+
+```{r}
+spark_flights %>%
+  filter(!is.na(arr_delay)) %>%
+  group_by(x = !! db_bin(arr_delay)) %>%
+  tally %>%
+  collect %>%
+  ggplot() +
+  geom_col(aes(x, n))
+```
