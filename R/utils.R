@@ -1,4 +1,4 @@
-#' db_bin
+#' Bin formula
 #' 
 #' Uses `rlang` to build the formula needed to create the bins of a numeric variable
 #' in an unevaluated fashion.  This way, the formula can be then passed inside a dplyr
