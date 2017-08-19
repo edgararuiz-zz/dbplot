@@ -84,17 +84,15 @@ db_compute_bins <- function(data, x, bins = 30, binwidth = NULL){
 dbplot_histogram <- function(data, x, bins = 30, binwidth = NULL){
   
   x <- enexpr(x)
-  xf <- db_bin(!! x, 
-               bins = bins,
-               binwidth = binwidth) 
+
+  df <- db_compute_bins(data = data,
+                  x = !! x,
+                  bins = bins,
+                  binwidth = binwidth) 
   
-  df <- data %>%
-    group_by(x = !! xf) %>%
-    tally %>%
-    collect 
+  colnames(df) <- c("x", "n")
   
-  df %>%
-    ggplot() +
+  ggplot(df) +
     geom_col(aes(x, n)) +
     labs(x = x,
          y = "count")

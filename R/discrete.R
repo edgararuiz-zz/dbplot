@@ -76,15 +76,14 @@ dbplot_bar <- function(data, x, y = n()){
   x <- enexpr(x)
   y <- enexpr(y)
   
-  df <- data %>%
-    group_by(x = !! x) %>%
-    summarise(result = !! y) %>%
-    collect
+  df <- db_compute_count(data = data,
+                         x = !! x,
+                         y = !! y)
   
+  colnames(df) <- c("x", "y")
   
-  df %>%
-    ggplot() +
-    geom_col(aes(x, result)) +
+  ggplot(df) +
+    geom_col(aes(x, y)) +
     labs(x = x,
          y = y)
 }
@@ -127,15 +126,14 @@ dbplot_line <- function(data, x, y = n()){
   x <- enexpr(x)
   y <- enexpr(y)
   
-  df <- data %>%
-    group_by(x = !! x) %>%
-    summarise(result = !! y) %>%
-    collect
+  df <- db_compute_count(data = data,
+                         x = !! x,
+                         y = !! y)
   
+  colnames(df) <- c("x", "y")
   
-  df %>%
-    ggplot() +
-    geom_line(aes(x, result), stat = "identity") +
+  ggplot(df) +
+    geom_line(aes(x, y), stat = "identity") +
     labs(x = x,
          y = y)
 }

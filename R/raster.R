@@ -116,24 +116,20 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100){
 #' @import rlang
 #' @import ggplot2
 dbplot_raster <- function(data, x, y, fill = n(), resolution = 100){
+  
   x <- enexpr(x)
   y <- enexpr(y)
   fillname <- enexpr(fill)
   
-  xf <- db_bin(!! x, 
-               bins = resolution) 
+  df <- db_compute_raster(data = data,
+                          x = !! x,
+                          y = !! y,
+                          fill = !! fillname,
+                          resolution = resolution)
+
+  colnames(df) <- c("x", "y", "fill")
   
-  yf <- db_bin(!! y, 
-               bins = resolution) 
-  
-  df <- data %>%
-    group_by(x = !! xf,
-             y = !! yf) %>%
-    summarise(fill = !! fillname) %>%
-    collect 
-  
-  df %>%
-    ggplot() +
+  ggplot(df) +
     geom_raster(aes(x, y, fill = fill)) +
     labs(x = x,
          y = y) +
