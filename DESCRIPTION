@@ -5,7 +5,7 @@ Description: Leverages dplyr to process the calculations of a plot inside a data
     This package provides helper functions that abstract the work at three levels:
     outputs a ggplot (highest), outputs the calculations (medium), outputs the formula
     needed to calculate bins (lowest).
-Authors@R: 
+Authors@R:
     person("Edgar", "Ruiz", email = "edgar@rstudio.com", role = c("aut", "cre"))
 Depends:
     R (>= 3.1),
@@ -13,6 +13,8 @@ Depends:
     rlang,
     ggplot2
 Suggests:
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
 License: GPL-2
 RoxygenNote: 6.0.1

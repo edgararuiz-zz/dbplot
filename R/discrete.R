@@ -47,7 +47,7 @@ db_compute_count <- function(data, x, y = n()){
 #' to create the plot.  Because of this approach,
 #' the calculations automatically run inside the database if `data` has
 #' a database or sparklyr connection. The `class()` of such tables
-#' in R are: tbl_sql, tbl_dbi, tbl_sql
+#' in R are: tbl_sql, tbl_dbi, tbl_spark
 #' 
 #' @param data A table (tbl)
 #' @param x A discrete variable
@@ -97,7 +97,7 @@ dbplot_bar <- function(data, x, y = n()){
 #' to create a line plot.  Because of this approach,
 #' the calculations automatically run inside the database if `data` has
 #' a database or sparklyr connection. The `class()` of such tables
-#' in R are: tbl_sql, tbl_dbi, tbl_sql
+#' in R are: tbl_sql, tbl_dbi, tbl_spark
 #' 
 #' @param data A table (tbl)
 #' @param x A discrete variable

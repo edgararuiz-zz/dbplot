@@ -2,9 +2,11 @@
 
 export(db_bin)
 export(db_compute_bins)
+export(db_compute_boxplot)
 export(db_compute_count)
 export(db_compute_raster)
 export(dbplot_bar)
+export(dbplot_boxplot)
 export(dbplot_histogram)
 export(dbplot_line)
 export(dbplot_raster)

@@ -1,11 +1,14 @@
 dbplot
 ================
 
+-   [Connecting to a data source](#connecting-to-a-data-source)
+-   [Example](#example)
 -   [`ggplot`](#ggplot)
     -   [Histogram](#histogram)
     -   [Raster](#raster)
     -   [Bar Plot](#bar-plot)
     -   [Line plot](#line-plot)
+    -   [Boxplot](#boxplot)
 -   [Calculations functions](#calculations-functions)
 -   [`db_bin()`](#db_bin)
 
@@ -17,13 +20,26 @@ Leverages `dplyr` to process the calculations of a plot inside a database. This 
 2.  Outputs a data frame with the calculations (*medium*)
 3.  Creates the formula needed to calculate bins (*lowest*)
 
-The functions will also work with `sparklyr`. A Spark DataFrame will be used for the examples in this README.
+Connecting to a data source
+---------------------------
+
+For more information on how to connect to databases, including Hive, please visit <http://db.rstudio.com>
+
+To use Spark, please visit the `sparklyr` official website: <http://spark.rstudio.com>
+
+Example
+-------
+
+In addition to database connections, the functions work with `sparklyr`. A Spark DataFrame will be used for the examples in this README.
 
 ``` r
-class(spark_flights)
-```
+conf <- spark_config()
+conf$`sparklyr.shell.driver-memory` <- "8G"
+conf$spark.memory.fraction <- 0.8
+sc <- spark_connect(master = "local", config = conf, version = "2.1.0")
 
-    ## [1] "tbl_spark" "tbl_sql"   "tbl_lazy"  "tbl"
+spark_flights <- copy_to(sc, nycflights13::flights, "flights")
+```
 
 Use `devtools` to install:
 
@@ -43,7 +59,7 @@ spark_flights %>%
   dbplot_histogram(sched_dep_time)
 ```
 
-<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 Use `binwidth` to fix the bin size
 
@@ -52,7 +68,7 @@ spark_flights %>%
   dbplot_histogram(sched_dep_time, binwidth = 200)
 ```
 
-<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 Because it outputs a `ggplot2` object, more customization can be done
 
@@ -63,7 +79,7 @@ spark_flights %>%
   theme_bw()
 ```
 
-<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 ### Raster
 
@@ -79,7 +95,7 @@ spark_flights %>%
   dbplot_raster(arr_delay, dep_delay) 
 ```
 
-<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 -   Pass an aggregation formula that can run inside the database
 
@@ -89,7 +105,7 @@ spark_flights %>%
   dbplot_raster(arr_delay, dep_delay, mean(distance)) 
 ```
 
-<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 -   Increase or decrease for more, or less, definition. The `resolution` argument controls that, it defaults to 100
 
@@ -99,7 +115,7 @@ spark_flights %>%
   dbplot_raster(arr_delay, dep_delay, mean(distance), resolution = 500)
 ```
 
-<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 ### Bar Plot
 
@@ -110,7 +126,7 @@ spark_flights %>%
   dbplot_bar(origin)
 ```
 
-<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
 -   Pass a formula that will be operated for each value in the discrete variable
 
@@ -119,7 +135,7 @@ spark_flights %>%
   dbplot_bar(origin, mean(dep_delay))
 ```
 
-<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 ### Line plot
 
@@ -130,13 +146,24 @@ spark_flights %>%
   dbplot_line(month)
 ```
 
-<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 -   Pass a formula that will be operated for each value in the discrete variable
 
 ``` r
 spark_flights %>%
   dbplot_line(month, mean(dep_delay))
+```
+
+<img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+
+### Boxplot
+
+-   It expect a discrete variable to group by, and a continuous variable to calculate the percentiles and IQR. It doesn't calculate outliers. Currently, this feature works with Spark, Hive and Impala connections.
+
+``` r
+spark_flights %>%
+  dbplot_boxplot(origin, dep_delay)
 ```
 
 <img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
@@ -149,6 +176,7 @@ If a more customized plot is needed, the data the underpins the plots can also b
 1.  `db_compute_bins()` - Returns a data frame with the bins and count per bin
 2.  `db_compute_count()` - Returns a data frame with the count per discrete value
 3.  `db_compute_raster()` - Returns a data frame with the results per x/y intersection
+4.  `db_compute_boxplot()` - Returns a data frame with boxplot calculations
 
 ``` r
 spark_flights %>%

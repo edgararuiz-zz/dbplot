@@ -14,17 +14,6 @@ library(nycflights13)
 knitr::opts_chunk$set(fig.height = 3.5, fig.width =  4, fig.align = 'center')
 ```
 
-```{r, include = FALSE}
-
-conf <- spark_config()
-conf$`sparklyr.shell.driver-memory` <- "8G"
-conf$spark.memory.fraction <- 0.8
-sc <- spark_connect(master = "local", config = conf, version = "2.1.0")
-
-spark_flights <- copy_to(sc, nycflights13::flights, "flights")
-
-```
-
 
 [![Build Status](https://travis-ci.org/edgararuiz/dbplot.svg?branch=master)](https://travis-ci.org/edgararuiz/dbplot)
 
@@ -35,10 +24,24 @@ Leverages `dplyr` to process the calculations of a plot inside a database.  This
 2. Outputs a data frame with the calculations (*medium*)
 3. Creates the formula needed to calculate bins (*lowest*)
 
-The functions will also work with `sparklyr`. A Spark DataFrame will be used for the examples in this README.  
+## Connecting to a data source
+
+For more information on how to connect to databases, including Hive, please visit http://db.rstudio.com 
+
+To use Spark, please visit the `sparklyr` official website: http://spark.rstudio.com
+
+## Example
+
+In addition to database connections, the functions work with `sparklyr`. A Spark DataFrame will be used for the examples in this README.  
 
 ```{r}
-class(spark_flights)
+conf <- spark_config()
+conf$`sparklyr.shell.driver-memory` <- "8G"
+conf$spark.memory.fraction <- 0.8
+sc <- spark_connect(master = "local", config = conf, version = "2.1.0")
+
+spark_flights <- copy_to(sc, nycflights13::flights, "flights")
+
 ```
 
 
@@ -135,6 +138,16 @@ spark_flights %>%
   dbplot_line(month, mean(dep_delay))
 ```
 
+### Boxplot
+
+- It expect a discrete variable to group by, and a continuous variable to calculate the percentiles and IQR. It doesn't calculate outliers. Currently, this feature works with Spark, Hive and Impala connections.
+
+```{r}
+spark_flights %>%
+  dbplot_boxplot(origin, dep_delay)
+```
+
+
 ## Calculations functions
 
 If a more customized plot is needed, the data the underpins the plots can also be accessed:
@@ -142,6 +155,8 @@ If a more customized plot is needed, the data the underpins the plots can also b
 1. `db_compute_bins()` - Returns a data frame with the bins and count per bin
 2. `db_compute_count()` - Returns a data frame with the count per discrete value
 3. `db_compute_raster()` -  Returns a data frame with the results per x/y intersection
+4. `db_compute_boxplot()` -  Returns a data frame with boxplot calculations
+
 
 ```{r}
 spark_flights %>%

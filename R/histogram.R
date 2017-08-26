@@ -6,7 +6,7 @@
 #' Because of this approach,
 #' the calculations automatically run inside the database if `data` has
 #' a database or sparklyr connection. The `class()` of such tables
-#' in R are: tbl_sql, tbl_dbi, tbl_sql
+#' in R are: tbl_sql, tbl_dbi, tbl_spark
 #' 
 #' @param data A table (tbl)
 #' @param x A continuous variable
@@ -31,9 +31,11 @@
 #' @import rlang
 db_compute_bins <- function(data, x, bins = 30, binwidth = NULL){
   x <- enexpr(x)
-  xf <- db_bin(!! x, 
-               bins = bins,
-               binwidth = binwidth) 
+  xf <- db_bin(
+    !! x,
+    bins = bins,
+    binwidth = binwidth
+    )
   
   df <- data %>%
     group_by(x = !! xf) %>%
@@ -53,7 +55,7 @@ db_compute_bins <- function(data, x, bins = 30, binwidth = NULL){
 #' to create the histogram.  Because of this approach,
 #' the calculations automatically run inside the database if `data` has
 #' a database or sparklyr connection. The `class()` of such tables
-#' in R are: tbl_sql, tbl_dbi, tbl_sql
+#' in R are: tbl_sql, tbl_dbi, tbl_spark
 #' 
 #' @param data A table (tbl)
 #' @param x A continuous variable
@@ -77,9 +79,6 @@ db_compute_bins <- function(data, x, bins = 30, binwidth = NULL){
 #' @export
 #' @import dplyr
 #' @import rlang
-#' @export
-#' @import dplyr
-#' @import rlang
 #' @import ggplot2
 dbplot_histogram <- function(data, x, bins = 30, binwidth = NULL){
   
@@ -94,6 +93,11 @@ dbplot_histogram <- function(data, x, bins = 30, binwidth = NULL){
   
   ggplot(df) +
     geom_col(aes(x, n)) +
-    labs(x = x,
-         y = "count")
+    labs(
+      x = x,
+      y = "count"
+      ) +
+    labs(
+      x = x
+    )
 }
