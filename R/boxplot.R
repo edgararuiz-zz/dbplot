@@ -8,7 +8,7 @@
 #' a database or sparklyr connection. The `class()` of such tables
 #' in R are: tbl_sql, tbl_dbi, tbl_spark
 #' 
-#' It currently only works with Spark, Hive and Impala connections.
+#' It currently only works with Spark and Hive connections.
 #' 
 #' @param data A table (tbl)
 #' @param x A discrete variable in which to group the boxplots
@@ -27,9 +27,9 @@ db_compute_boxplot <- function(data, x, var, coef = 1.5){
   df <- data %>%
     group_by(!! x) %>%
     summarise(
-      lower = percentile(!! var, 0.25),
-      middle = percentile(!! var, 0.5),
-      upper = percentile(!! var, 0.75),
+      lower = percentile_approx(!! var, 0.25),
+      middle = percentile_approx(!! var, 0.5),
+      upper = percentile_approx(!! var, 0.75),
       max_raw = max(!! var),
       min_raw = min(!! var)
     ) %>%
@@ -57,7 +57,7 @@ db_compute_boxplot <- function(data, x, var, coef = 1.5){
 #' a database or sparklyr connection. The `class()` of such tables
 #' in R are: tbl_sql, tbl_dbi, tbl_spark
 #' 
-#' It currently only works with Spark, Hive and Impala connections.
+#' It currently only works with Spark and Hive connections.
 #' 
 #' @param data A table (tbl)
 #' @param x A discrete variable in which to group the boxplots

@@ -140,7 +140,7 @@ spark_flights %>%
 
 ### Boxplot
 
-- It expect a discrete variable to group by, and a continuous variable to calculate the percentiles and IQR. It doesn't calculate outliers. Currently, this feature works with Spark, Hive and Impala connections.
+- It expect a discrete variable to group by, and a continuous variable to calculate the percentiles and IQR. It doesn't calculate outliers. Currently, this feature works with sparklyr and Hive connections.
 
 ```{r}
 spark_flights %>%

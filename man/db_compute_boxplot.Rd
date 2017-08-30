@@ -22,5 +22,5 @@ the calculations automatically run inside the database if `data` has
 a database or sparklyr connection. The `class()` of such tables
 in R are: tbl_sql, tbl_dbi, tbl_spark
 
-It currently only works with Spark, Hive and Impala connections.
+It currently only works with Spark and Hive connections.
 }
