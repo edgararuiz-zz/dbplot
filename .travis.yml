@@ -4,3 +4,8 @@ language: r
 sudo: false
 cache: packages
 warnings_are_errors: false
+
+include:
+  - r: release
+  - r: oldrel
+  - r: devel
