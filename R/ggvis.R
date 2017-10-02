@@ -13,12 +13,23 @@ prop_type.tbl_sql <- function(data, prop) {
   
   if("tbl_sql" %in% class(data)) {
     
-    sample_tbl <- data %>%
-      mutate_("field" = prop$value) %>%
-      head(10) %>%
-      pull()
+    # In order to reduce the number of times
+    # the query runs. A sample will be used
+    # only of the property to be examined is
+    # x, any other will default to numeric
     
-    vector_type(sample_tbl)
+    if(prop$property == "x"){
+      sample_tbl <- data %>%
+        mutate_("field" = prop$value) %>%
+        head(10) %>%
+        pull()
+      
+      vector_type(sample_tbl)
+    } else {
+      "numeric"
+    }
+    
+
   } else {
       vector_type(ggvis:::prop_value(prop, data))
     }
