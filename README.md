@@ -9,8 +9,9 @@ dbplot
     -   [Bar Plot](#bar-plot)
     -   [Line plot](#line-plot)
     -   [Boxplot](#boxplot)
--   [Calculations functions](#calculations-functions)
+-   [Calculation functions](#calculation-functions)
 -   [`db_bin()`](#db_bin)
+-   [ggvis](#ggvis)
 
 [![Build Status](https://travis-ci.org/edgararuiz/dbplot.svg?branch=master)](https://travis-ci.org/edgararuiz/dbplot)
 
@@ -34,9 +35,7 @@ In addition to database connections, the functions work with `sparklyr`. A Spark
 
 ``` r
 conf <- spark_config()
-conf$`sparklyr.shell.driver-memory` <- "8G"
-conf$spark.memory.fraction <- 0.8
-sc <- spark_connect(master = "local", config = conf, version = "2.1.0")
+sc <- spark_connect(master = "local", version = "2.1.0")
 
 spark_flights <- copy_to(sc, nycflights13::flights, "flights")
 ```
@@ -159,7 +158,7 @@ spark_flights %>%
 
 ### Boxplot
 
--   It expect a discrete variable to group by, and a continuous variable to calculate the percentiles and IQR. It doesn't calculate outliers. Currently, this feature works with Spark, Hive and Impala connections.
+-   It expect a discrete variable to group by, and a continuous variable to calculate the percentiles and IQR. It doesn't calculate outliers. Currently, this feature works with sparklyr and Hive connections.
 
 ``` r
 spark_flights %>%
@@ -168,8 +167,8 @@ spark_flights %>%
 
 <img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
-Calculations functions
-----------------------
+Calculation functions
+---------------------
 
 If a more customized plot is needed, the data the underpins the plots can also be accessed:
 
@@ -257,3 +256,8 @@ spark_flights %>%
 ```
 
 <img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
+
+ggvis
+-----
+
+`dbplot` now includes an extension to the `ggvis` package. This allows an `tbl_sql` object to be used as the source of the plot without any additional code. Under the hood, `dbplot` adds the proper S3 methods that perform the calculations inside the database, and returns the results in the correct format that `ggvis` expects. To read more and see examples please see visit this link in RPubs: <http://rpubs.com/edgarruiz/dbplot-ggvis>

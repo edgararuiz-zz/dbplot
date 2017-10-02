@@ -36,9 +36,7 @@ In addition to database connections, the functions work with `sparklyr`. A Spark
 
 ```{r}
 conf <- spark_config()
-conf$`sparklyr.shell.driver-memory` <- "8G"
-conf$spark.memory.fraction <- 0.8
-sc <- spark_connect(master = "local", config = conf, version = "2.1.0")
+sc <- spark_connect(master = "local", version = "2.1.0")
 
 spark_flights <- copy_to(sc, nycflights13::flights, "flights")
 
@@ -148,7 +146,7 @@ spark_flights %>%
 ```
 
 
-## Calculations functions
+## Calculation functions
 
 If a more customized plot is needed, the data the underpins the plots can also be accessed:
 
@@ -197,3 +195,9 @@ spark_flights %>%
   ggplot() +
   geom_col(aes(x, n))
 ```
+
+## ggvis
+
+`dbplot` now includes an extension to the `ggvis` package.  This allows an `tbl_sql` object to be used as the source of the plot without any additional code.  Under the hood, `dbplot` adds the proper S3 methods that perform the calculations inside the database, and returns the results in the correct format that `ggvis` expects. To read more and see examples please see visit this link in RPubs: http://rpubs.com/edgarruiz/dbplot-ggvis
+
+
