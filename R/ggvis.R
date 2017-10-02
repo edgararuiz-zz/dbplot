@@ -1,4 +1,5 @@
 #' @export
+#' @import ggvis
 apply_props.tbl_sql <- function(data, props) {
   cols <- lapply(props, prop_value, data = data)
   colnames(cols) <- vapply(props, prop_label, character(1))
@@ -6,28 +7,53 @@ apply_props.tbl_sql <- function(data, props) {
 }
 
 #' @export
+#' @import ggvis
+#' @import dplyr
 prop_type.tbl_sql <- function(data, prop) {
   
-  if("tbl_sql" %in% class(data)) {"numeric"}
-    else {ggvis::vector_type(ggvis:::prop_value(prop, data))}
+  if("tbl_sql" %in% class(data)) {
     
+    sample_tbl <- data %>%
+      mutate_("field" = prop$value) %>%
+      head(10) %>%
+      pull()
+    
+    vector_type(sample_tbl)
+  } else {
+      vector_type(ggvis:::prop_value(prop, data))
+    }
 }
 
 
 #' @export
+#' @import ggvis
 eval_vector.tbl_sql <- function(x, f) {
-  1L
+  
+  # Passing 1L as the value to be evaluated ensures
+  # that the field is recognized as an integer and
+  # thus it can be used as a continuos or discrete
+  # variable. This is done to prevent the trigger
+  # of the execution of the SQL query
+  
+  if("tbl_sql" %in% class(x)){
+    1L
+  }else{
+    ggvis:::eval_vector.data.frame(x, f)
+  }
 }
 
 
 #' @export
+#' @import ggvis
 preserve_constants.tbl_sql  <- function(input, output) {
-  if("tbl_sql" %in% class(input))
-  {output}else
-  {ggvis:::preserve_constants.data.frame(input, output)}
+  if("tbl_sql" %in% class(input)){
+    output
+  }else{
+      ggvis:::preserve_constants.data.frame(input, output)
+    }
 }
 
-#' @export
+#' @import rlang
 to_expr <- function(x = NULL) {
   if(is.null(x)){
     f <- "n()"
@@ -41,6 +67,7 @@ to_expr <- function(x = NULL) {
 
 #' @export
 #' @import dplyr
+#' @import ggvis
 compute_count.tbl_sql <- function(x, x_var, w_var = NULL) {
   
   data_prep <-  x %>%
@@ -70,6 +97,7 @@ compute_count.tbl_sql <- function(x, x_var, w_var = NULL) {
 
 #' @export
 #' @import dplyr
+#' @import ggvis
 compute_bin.tbl_sql <- function(x, x_var, w_var = NULL, width = NULL, ...) {
   
   data_prep <- x %>%
@@ -97,6 +125,7 @@ compute_bin.tbl_sql <- function(x, x_var, w_var = NULL, width = NULL, ...) {
 
 #' @export
 #' @import dplyr
+#' @import ggvis
 compute_boxplot.tbl_sql <- function(x, var = NULL, coef = 1.5){
   
   groups <- group_vars(x)
@@ -109,25 +138,11 @@ compute_boxplot.tbl_sql <- function(x, var = NULL, coef = 1.5){
     arrange(x) %>%
     select(x, min_raw, lower, middle, upper, ymax, ymax) %>%
     as.data.frame(stringsAsFactors = FALSE) %>%
-    mutate(outlies_ = list(numeric())) 
+    mutate(outliers_ = list(numeric())) 
 
   
   colnames(data_prep) <- c(groups ,  "min_", "lower_", "median_", "upper_",  "max_",  "outliers_")
   
   data_prep %>%
     group_by_(groups)  
-}
-
-#' @export
-#' @import dplyr
-compute_boxplot_outliers.tbl_sql1 <- function(x) {
-
-  groups <- group_vars(x)
-  
-  outliers <- data_frame(x_var = "", value_ = 0)
-  
-  colnames(outliers) <- c(groups, "value_")
-  
-  outliers
-  
 }

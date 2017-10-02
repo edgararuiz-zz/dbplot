@@ -78,7 +78,7 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100){
 #' a raster plot.  Because of this approach,
 #' the calculations automatically run inside the database if `data` has
 #' a database or sparklyr connection. The `class()` of such tables
-#' in R are: tbl_sql, tbl_dbi, tbl_sql
+#' in R are: tbl_sql, tbl_dbi, tbl_spark
 #' 
 #' @details
 #' 

@@ -10,7 +10,9 @@ Authors@R:
 Depends:
     R (>= 3.1),
     dplyr(>= 0.7),
-    rlang
+    rlang,
+    ggplot2, 
+    ggvis
 Suggests:
     testthat,
     knitr,

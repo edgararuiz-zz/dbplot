@@ -27,7 +27,7 @@ Uses very generic dplyr code to aggregate data and ggplot2 to create
 a raster plot.  Because of this approach,
 the calculations automatically run inside the database if `data` has
 a database or sparklyr connection. The `class()` of such tables
-in R are: tbl_sql, tbl_dbi, tbl_sql
+in R are: tbl_sql, tbl_dbi, tbl_spark
 }
 \details{
 There are two considerations when using a Raster plot with a database. Both considerations are related 
