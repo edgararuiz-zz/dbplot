@@ -10,12 +10,10 @@ Authors@R:
 Depends:
     R (>= 3.1),
     dplyr(>= 0.7),
-    rlang,
-    ggplot2, 
-    ggvis
+    rlang
 Suggests:
     testthat,
-    knitr,
-    rmarkdown
+    ggplot2,
+    ggvis
 License: GPL-2
 RoxygenNote: 6.0.1

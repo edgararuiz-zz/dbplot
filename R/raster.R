@@ -98,6 +98,8 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100){
 #' 
 #' @examples 
 #' 
+#' library(ggplot2)
+#' 
 #' # Returns a 100x100 raster plot of record count of intersections of eruptions and waiting
 #' faithful %>% 
 #'   dbplot_raster(eruptions, waiting)
@@ -114,7 +116,6 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100){
 #' @export
 #' @import dplyr
 #' @import rlang
-#' @import ggplot2
 dbplot_raster <- function(data, x, y, fill = n(), resolution = 100){
   
   x <- enexpr(x)
@@ -129,11 +130,11 @@ dbplot_raster <- function(data, x, y, fill = n(), resolution = 100){
 
   colnames(df) <- c("x", "y", "fill")
   
-  ggplot(df) +
-    geom_raster(aes(x, y, fill = fill)) +
-    labs(x = x,
+  ggplot2::ggplot(df) +
+    ggplot2::geom_raster(aes(x, y, fill = fill)) +
+    ggplot2::labs(x = x,
          y = y) +
-    scale_fill_continuous(name = fillname)
+    ggplot2::scale_fill_continuous(name = fillname)
 }
 
 

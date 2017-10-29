@@ -24,6 +24,8 @@ in R are: tbl_sql, tbl_dbi, tbl_spark
 }
 \examples{
 
+library(ggplot2)
+
 # A ggplot histogram with 30 bins
 mtcars \%>\%
   dbplot_histogram(mpg)

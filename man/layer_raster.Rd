@@ -9,6 +9,8 @@ layer_raster(vis, ..., fill = NULL, res = 50)
 \arguments{
 \item{vis}{Visualization to modify}
 
+\item{...}{Visual properties, passed on to props.}
+
 \item{fill}{The aggregation formula. Defaults to count (n)}
 
 \item{res}{The number of bins created by variable. The highest the number, the more records can be potentially imported from the sourd}
@@ -31,6 +33,9 @@ to the size of the results downloaded from the database:
 the less data is downloaded from the database.
 }
 \examples{
+
+library(ggvis)
+
 mtcars \%>\% 
   ggvis(~mpg, ~cyl) \%>\% 
   layer_raster()

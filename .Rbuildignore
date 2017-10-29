@@ -1,2 +1,16 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^packrat/
+^\.Rprofile$
+^\.travis\.yml$
+^revdep$
+^cran-comments\.md$
+^data-raw$
+^codecov\.yml$
+^\.httr-oauth$
+^_pkgdown\.yml$
+^docs$
+^README\.Rmd$
+^README-.*\.png$
+^README_files$
+^.*\.log$

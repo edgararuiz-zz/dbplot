@@ -36,7 +36,6 @@
 #'   compute_raster(~mpg, ~cyl, fill = ~sum(wt))
 #' 
 #' @export
-#' @import ggvis
 compute_raster <- function(x, x_var, y_var, fill = NULL, res = 50){
   UseMethod("compute_raster")
 }
@@ -45,7 +44,6 @@ compute_raster <- function(x, x_var, y_var, fill = NULL, res = 50){
 #' @export
 #' @import rlang
 #' @import dplyr
-#' @import ggvis
 compute_raster.default <- function(x, x_var, y_var, fill = NULL, res = 50){
 
   var_fill <- to_expr(fill)
@@ -72,7 +70,6 @@ compute_raster.default <- function(x, x_var, y_var, fill = NULL, res = 50){
 
 
 #' @export
-#' @import ggvis
 compute_raster.ggvis <- function(x, x_var, y_var, fill = NULL, res = 50) {
   args <- list(x_var = x_var,
                y_var = y_var,
@@ -109,10 +106,14 @@ compute_raster.ggvis <- function(x, x_var, y_var, fill = NULL, res = 50) {
 #' the less data is downloaded from the database.
 #' 
 #' @param vis Visualization to modify
+#' @param ... Visual properties, passed on to props.
 #' @param fill The aggregation formula. Defaults to count (n)
 #' @param res The number of bins created by variable. The highest the number, the more records can be potentially imported from the sourd
 #' 
 #' @examples 
+#' 
+#' library(ggvis)
+#' 
 #' mtcars %>% 
 #'   ggvis(~mpg, ~cyl) %>% 
 #'   layer_raster()
@@ -123,11 +124,10 @@ compute_raster.ggvis <- function(x, x_var, y_var, fill = NULL, res = 50) {
 #'  layer_raster(fill = ~sum(wt))
 #' 
 #' @export
-#' @import ggvis
 layer_raster <- function(vis, ..., fill = NULL, res = 50) {
   
   
-  new_props <- ggvis:::merge_props(ggvis:::cur_props(vis), ggvis:::props(...))
+  new_props <- ggvis:::merge_props(ggvis:::cur_props(vis), ggvis::props(...))
   
   x_var <- ggvis:::find_prop_var(new_props, "x.update")
   vis <- ggvis:::set_scale_label(vis, "x", ggvis:::prop_label(ggvis:::cur_props(vis)$x.update))
@@ -145,8 +145,8 @@ layer_raster <- function(vis, ..., fill = NULL, res = 50) {
   
   vis <- ggvis:::set_scale_label(vis, "fill", legend_label)
   
-  vis <- ggvis:::layer_f(vis, function(v) {
-    v <- ggvis:::add_props(v, .props = new_props)
+  vis <- ggvis::layer_f(vis, function(v) {
+    v <- ggvis::add_props(v, .props = new_props)
     v <- compute_raster(v, x_var, y_var, fill, res)
     
     v <- layer_rects(v, x = ~x1_, x2 = ~x2_ , y = ~y1_, y2 = ~y2_, fill = ~agg_)
@@ -172,3 +172,5 @@ get_width <- function(data, var){
   
   result[1]
 }
+
+globalVariables(c("layer_rects", "lag_var"))

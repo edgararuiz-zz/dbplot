@@ -22,6 +22,8 @@ in R are: tbl_sql, tbl_dbi, tbl_spark
 }
 \examples{
 
+library(ggplot2)
+
 # Returns a plot of the row count per am 
 mtcars \%>\%
   dbplot_bar(am)

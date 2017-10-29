@@ -1,5 +1,4 @@
 #' @export
-#' @import ggvis
 apply_props.tbl_sql <- function(data, props) {
   cols <- lapply(props, prop_value, data = data)
   colnames(cols) <- vapply(props, prop_label, character(1))
@@ -7,7 +6,6 @@ apply_props.tbl_sql <- function(data, props) {
 }
 
 #' @export
-#' @import ggvis
 #' @import dplyr
 prop_type.tbl_sql <- function(data, prop) {
   
@@ -37,7 +35,6 @@ prop_type.tbl_sql <- function(data, prop) {
 
 
 #' @export
-#' @import ggvis
 eval_vector.tbl_sql <- function(x, f) {
   
   # Passing 1L as the value to be evaluated ensures
@@ -54,8 +51,6 @@ eval_vector.tbl_sql <- function(x, f) {
 }
 
 
-#' @export
-#' @import ggvis
 preserve_constants.tbl_sql  <- function(input, output) {
   if("tbl_sql" %in% class(input)){
     output
@@ -78,7 +73,6 @@ to_expr <- function(x = NULL) {
 
 #' @export
 #' @import dplyr
-#' @import ggvis
 compute_count.tbl_sql <- function(x, x_var, w_var = NULL) {
   
   data_prep <-  x %>%
@@ -108,7 +102,6 @@ compute_count.tbl_sql <- function(x, x_var, w_var = NULL) {
 
 #' @export
 #' @import dplyr
-#' @import ggvis
 compute_bin.tbl_sql <- function(x, x_var, w_var = NULL, width = NULL, ...) {
   
   data_prep <- x %>%
@@ -136,7 +129,6 @@ compute_bin.tbl_sql <- function(x, x_var, w_var = NULL, width = NULL, ...) {
 
 #' @export
 #' @import dplyr
-#' @import ggvis
 compute_boxplot.tbl_sql <- function(x, var = NULL, coef = 1.5){
   
   groups <- group_vars(x)
@@ -157,3 +149,5 @@ compute_boxplot.tbl_sql <- function(x, var = NULL, coef = 1.5){
   data_prep %>%
     group_by_(groups)  
 }
+
+globalVariables(c("head", "vector_type", "prop_value", "quickdf", "prop_label"))

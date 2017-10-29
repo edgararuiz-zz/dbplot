@@ -1,14 +1,8 @@
 #' Bin formula
 #' 
-#' Uses `rlang` to build the formula needed to create the bins of a numeric variable
+#' Uses the rlang package to build the formula needed to create the bins of a numeric variable
 #' in an unevaluated fashion.  This way, the formula can be then passed inside a dplyr
 #' verb.  
-#' 
-#' Important usage notes: 
-#' 
-#' - Specify the name of the field that uses the db_bin() function - If a name is not specified, dplyr will use the long formula text as the default name of the field, which in most cases breaks the database’s field name length rules.
-#' 
-#' - Prefix !! to the db_bin() function - This triggers the processing, or evaluation, of the function, which returns the complex formula.
 #' 
 #' @param var Variable name or formula
 #' @param bins Number of bins. Defaults to 30.
@@ -18,17 +12,17 @@
 #' @examples 
 #' 
 #'   # Important: Always name the field and
-#'   # prefix the function with !! (See Details)
+#'   # prefix the function with `!!`` (See Details)
 #' 
 #'   # Uses the default 30 bins
 #'   mtcars %>%
 #'     group_by(x = !! db_bin(mpg)) %>%
-#'     tally
+#'     tally()
 #' 
 #'   # Uses binwidth which overrides bins
 #'   mtcars %>% 
 #'     group_by(x = !! db_bin(mpg, binwidth = 10)) %>%
-#'     tally
+#'     tally()
 #' 
 #' @export
 #' @import rlang

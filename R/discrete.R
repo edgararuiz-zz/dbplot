@@ -55,6 +55,8 @@ db_compute_count <- function(data, x, y = n()){
 #' 
 #' @examples 
 #' 
+#' library(ggplot2)
+#' 
 #' # Returns a plot of the row count per am 
 #' mtcars %>%
 #'   dbplot_bar(am)
@@ -71,7 +73,6 @@ db_compute_count <- function(data, x, y = n()){
 #' @export
 #' @import dplyr
 #' @import rlang
-#' @import ggplot2
 dbplot_bar <- function(data, x, y = n()){
   x <- enexpr(x)
   y <- enexpr(y)
@@ -82,9 +83,9 @@ dbplot_bar <- function(data, x, y = n()){
   
   colnames(df) <- c("x", "y")
   
-  ggplot(df) +
-    geom_col(aes(x, y)) +
-    labs(x = x,
+  ggplot2::ggplot(df) +
+    ggplot2::geom_col(aes(x, y)) +
+    ggplot2::labs(x = x,
          y = y)
 }
 
@@ -105,6 +106,8 @@ dbplot_bar <- function(data, x, y = n()){
 #' 
 #' @examples 
 #' 
+#' library(ggplot2)
+#' 
 #' # Returns a plot of the row count per cyl 
 #' mtcars %>%
 #'   dbplot_line(cyl)
@@ -121,7 +124,6 @@ dbplot_bar <- function(data, x, y = n()){
 #' @export
 #' @import dplyr
 #' @import rlang
-#' @import ggplot2
 dbplot_line <- function(data, x, y = n()){
   x <- enexpr(x)
   y <- enexpr(y)
@@ -132,9 +134,9 @@ dbplot_line <- function(data, x, y = n()){
   
   colnames(df) <- c("x", "y")
   
-  ggplot(df) +
-    geom_line(aes(x, y), stat = "identity") +
-    labs(x = x,
+  ggplot2::ggplot(df) +
+    ggplot2::geom_line(aes(x, y), stat = "identity") +
+    ggplot2::labs(x = x,
          y = y)
 }
 

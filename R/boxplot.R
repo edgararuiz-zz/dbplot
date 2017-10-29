@@ -71,7 +71,6 @@ db_compute_boxplot <- function(data, x, var, coef = 1.5){
 #' @export
 #' @import dplyr
 #' @import rlang
-#' @import ggplot2
 dbplot_boxplot <- function(data, x, var, coef = 1.5){
   
   x <- enexpr(x)
@@ -85,11 +84,12 @@ dbplot_boxplot <- function(data, x, var, coef = 1.5){
     coef = coef
   ) 
   
-  colnames(df) <- c("x", "lower", "middle", "upper", "max_raw", "min_raw", "iqr", "min_iqr", "max_iqr", "ymax",   "ymin")
+  colnames(df) <- c("x", "lower", "middle", "upper", "max_raw", "min_raw", 
+                    "iqr", "min_iqr", "max_iqr", "ymax",   "ymin")
   
   
-  ggplot(df) +
-    geom_boxplot(
+  ggplot2::ggplot(df) +
+    ggplot2::geom_boxplot(
       aes(
         x = x,
         ymin = ymin,
@@ -99,5 +99,9 @@ dbplot_boxplot <- function(data, x, var, coef = 1.5){
         ymax = ymax
       ), stat = "identity"
     ) +
-    labs(x = x)
+    ggplot2::labs(x = x)
 }
+
+globalVariables(c("upper", "ymax", "weight", "x_", "y", "aes", "ymin", "lower", 
+                  "middle", "upper", "iqr", "max_raw", "max_iqr", "min_raw", 
+                  "min_iqr", "percentile_approx"))

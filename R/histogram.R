@@ -64,6 +64,8 @@ db_compute_bins <- function(data, x, bins = 30, binwidth = NULL){
 #' 
 #' @examples 
 #' 
+#' library(ggplot2)
+#' 
 #' # A ggplot histogram with 30 bins
 #' mtcars %>%
 #'   dbplot_histogram(mpg)
@@ -79,7 +81,6 @@ db_compute_bins <- function(data, x, bins = 30, binwidth = NULL){
 #' @export
 #' @import dplyr
 #' @import rlang
-#' @import ggplot2
 dbplot_histogram <- function(data, x, bins = 30, binwidth = NULL){
   
   x <- enexpr(x)
@@ -91,13 +92,15 @@ dbplot_histogram <- function(data, x, bins = 30, binwidth = NULL){
   
   colnames(df) <- c("x", "n")
   
-  ggplot(df) +
-    geom_col(aes(x, n)) +
+  ggplot2::ggplot(df) +
+    ggplot2::geom_col(aes(x, n)) +
     labs(
       x = x,
       y = "count"
       ) +
-    labs(
+    ggplot2::labs(
       x = x
     )
 }
+
+globalVariables(c("w", "labs"))
