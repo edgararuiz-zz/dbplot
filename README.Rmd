@@ -11,6 +11,8 @@ library(dbplot)
 library(sparklyr)
 library(nycflights13)
 
+Sys.setenv("JAVA_HOME" = normalizePath("C:\\Program Files (x86)\\Java\\jre1.8.0_151"))
+
 knitr::opts_chunk$set(fig.height = 3.5, fig.width =  4, fig.align = 'center')
 ```
 
@@ -20,27 +22,15 @@ knitr::opts_chunk$set(fig.height = 3.5, fig.width =  4, fig.align = 'center')
 
 Leverages `dplyr` to process the calculations of a plot inside a database.  This package provides helper functions that abstract the work at three levels:
     
-1. Provides a `ggplot2` (*highest*)
-2. Outputs a data frame with the calculations (*medium*)
-3. Creates the formula needed to calculate bins (*lowest*)
+1. Functions that ouput a `ggplot2` object
+2. Functions that outputs a `data.frame` object with the calculations.  
+3. Creates the formula needed to calculate bins for a Histogram or a Raster plot
 
 ## Connecting to a data source
 
 For more information on how to connect to databases, including Hive, please visit http://db.rstudio.com 
 
 To use Spark, please visit the `sparklyr` official website: http://spark.rstudio.com
-
-## Example
-
-In addition to database connections, the functions work with `sparklyr`. A Spark DataFrame will be used for the examples in this README.  
-
-```{r}
-conf <- spark_config()
-sc <- spark_connect(master = "local", version = "2.1.0")
-
-spark_flights <- copy_to(sc, nycflights13::flights, "flights")
-
-```
 
 
 Use `devtools` to install:
@@ -50,6 +40,19 @@ devtools::install_github("edgararuiz/dbplot")
 ```
 
 
+## Example
+
+In addition to database connections, the functions work with `sparklyr`. A Spark DataFrame will be used for the examples in this README.  
+
+```{r}
+library(sparklyr)
+
+conf <- spark_config()
+sc <- spark_connect(master = "local", version = "2.1.0")
+
+spark_flights <- copy_to(sc, nycflights13::flights, "flights")
+
+```
 
 ## `ggplot`
 
@@ -58,6 +61,8 @@ devtools::install_github("edgararuiz/dbplot")
 By default `dbplot_histogram()` creates a 30 bin histogram
 
 ```{r}
+library(ggplot2)
+
 spark_flights %>% 
   dbplot_histogram(sched_dep_time)
 ```
@@ -158,7 +163,7 @@ If a more customized plot is needed, the data the underpins the plots can also b
 
 ```{r}
 spark_flights %>%
-  db_compute_bins(arr_delay)
+  db_compute_bins(arr_delay) 
 ```
 
 The data can be piped to a plot
@@ -195,9 +200,5 @@ spark_flights %>%
   ggplot() +
   geom_col(aes(x, n))
 ```
-
-## ggvis
-
-`dbplot` now includes an extension to the `ggvis` package.  This allows an `tbl_sql` object to be used as the source of the plot without any additional code.  Under the hood, `dbplot` adds the proper S3 methods that perform the calculations inside the database, and returns the results in the correct format that `ggvis` expects. To read more and see examples please see visit this link in RPubs: http://rpubs.com/edgarruiz/dbplot-ggvis
 
 
