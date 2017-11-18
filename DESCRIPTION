@@ -1,6 +1,6 @@
 Package: dbplot
-Version: 0.0.1
-Title: Simplifies plotting of database and sparklyr data
+Version: 0.1.9000
+Title: Makes plotting data on databases
 Description: Leverages dplyr to process the calculations of a plot inside a database. 
     This package provides helper functions that abstract the work at three levels:
     outputs a ggplot, outputs the calculations, outputs the formula
@@ -13,7 +13,6 @@ Depends:
     rlang
 Suggests:
     testthat,
-    ggplot2,
-    ggvis
-License: GPL-2
+    ggplot2
+License: GPL-3
 RoxygenNote: 6.0.1

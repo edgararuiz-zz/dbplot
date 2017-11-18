@@ -11,15 +11,14 @@ dbplot
     -   [Boxplot](#boxplot)
 -   [Calculation functions](#calculation-functions)
 -   [`db_bin()`](#db_bin)
--   [ggvis](#ggvis)
 
 [![Build Status](https://travis-ci.org/edgararuiz/dbplot.svg?branch=master)](https://travis-ci.org/edgararuiz/dbplot)
 
 Leverages `dplyr` to process the calculations of a plot inside a database. This package provides helper functions that abstract the work at three levels:
 
-1.  Provides a `ggplot2` (*highest*)
-2.  Outputs a data frame with the calculations (*medium*)
-3.  Creates the formula needed to calculate bins (*lowest*)
+1.  Functions that ouput a `ggplot2` object
+2.  Functions that outputs a `data.frame` object with the calculations.
+3.  Creates the formula needed to calculate bins for a Histogram or a Raster plot
 
 Connecting to a data source
 ---------------------------
@@ -28,22 +27,24 @@ For more information on how to connect to databases, including Hive, please visi
 
 To use Spark, please visit the `sparklyr` official website: <http://spark.rstudio.com>
 
+Use `devtools` to install:
+
+``` r
+devtools::install_github("edgararuiz/dbplot")
+```
+
 Example
 -------
 
 In addition to database connections, the functions work with `sparklyr`. A Spark DataFrame will be used for the examples in this README.
 
 ``` r
+library(sparklyr)
+
 conf <- spark_config()
 sc <- spark_connect(master = "local", version = "2.1.0")
 
 spark_flights <- copy_to(sc, nycflights13::flights, "flights")
-```
-
-Use `devtools` to install:
-
-``` r
-devtools::install_github("edgararuiz/dbplot")
 ```
 
 `ggplot`
@@ -54,6 +55,8 @@ devtools::install_github("edgararuiz/dbplot")
 By default `dbplot_histogram()` creates a 30 bin histogram
 
 ``` r
+library(ggplot2)
+
 spark_flights %>% 
   dbplot_histogram(sched_dep_time)
 ```
@@ -104,6 +107,9 @@ spark_flights %>%
   dbplot_raster(arr_delay, dep_delay, mean(distance)) 
 ```
 
+    ## Warning: Missing values are always removed in SQL.
+    ## Use `AVG(x, na.rm = TRUE)` to silence this warning
+
 <img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 -   Increase or decrease for more, or less, definition. The `resolution` argument controls that, it defaults to 100
@@ -113,6 +119,9 @@ spark_flights %>%
   filter(!is.na(arr_delay)) %>%
   dbplot_raster(arr_delay, dep_delay, mean(distance), resolution = 500)
 ```
+
+    ## Warning: Missing values are always removed in SQL.
+    ## Use `AVG(x, na.rm = TRUE)` to silence this warning
 
 <img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
@@ -134,6 +143,9 @@ spark_flights %>%
   dbplot_bar(origin, mean(dep_delay))
 ```
 
+    ## Warning: Missing values are always removed in SQL.
+    ## Use `AVG(x, na.rm = TRUE)` to silence this warning
+
 <img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 ### Line plot
@@ -154,6 +166,9 @@ spark_flights %>%
   dbplot_line(month, mean(dep_delay))
 ```
 
+    ## Warning: Missing values are always removed in SQL.
+    ## Use `AVG(x, na.rm = TRUE)` to silence this warning
+
 <img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 ### Boxplot
@@ -164,6 +179,12 @@ spark_flights %>%
 spark_flights %>%
   dbplot_boxplot(origin, dep_delay)
 ```
+
+    ## Warning: Missing values are always removed in SQL.
+    ## Use `MAX(x, na.rm = TRUE)` to silence this warning
+
+    ## Warning: Missing values are always removed in SQL.
+    ## Use `MIN(x, na.rm = TRUE)` to silence this warning
 
 <img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
@@ -179,22 +200,22 @@ If a more customized plot is needed, the data the underpins the plots can also b
 
 ``` r
 spark_flights %>%
-  db_compute_bins(arr_delay)
+  db_compute_bins(arr_delay) 
 ```
 
     ## # A tibble: 28 x 2
-    ##     arr_delay  count
-    ##         <dbl>  <dbl>
-    ##  1   4.533333  79784
-    ##  2 -40.733333 207999
-    ##  3  95.066667   7890
-    ##  4  49.800000  19063
-    ##  5 819.333333      8
-    ##  6 140.333333   3746
-    ##  7 321.400000    232
-    ##  8 230.866667    921
-    ##  9 -86.000000   5325
-    ## 10 185.600000   1742
+    ##    arr_delay     count
+    ##        <dbl>     <dbl>
+    ##  1      4.53  79784   
+    ##  2   - 40.7  207999   
+    ##  3     95.1    7890   
+    ##  4     49.8   19063   
+    ##  5    819         8.00
+    ##  6    140      3746   
+    ##  7    321       232   
+    ##  8    231       921   
+    ##  9   - 86.0    5325   
+    ## 10    186      1742   
     ## # ... with 18 more rows
 
 The data can be piped to a plot
@@ -218,10 +239,13 @@ Uses 'rlang' to build the formula needed to create the bins of a numeric variabl
 db_bin(var)
 ```
 
-    ## (((max(var) - min(var))/(30)) * ifelse((as.integer(floor(((var) - 
-    ##     min(var))/((max(var) - min(var))/(30))))) == (30), (as.integer(floor(((var) - 
-    ##     min(var))/((max(var) - min(var))/(30))))) - 1, (as.integer(floor(((var) - 
-    ##     min(var))/((max(var) - min(var))/(30))))))) + min(var)
+    ## (((max(var, na.rm = TRUE) - min(var, na.rm = TRUE))/(30)) * ifelse((as.integer(floor(((var) - 
+    ##     min(var, na.rm = TRUE))/((max(var, na.rm = TRUE) - min(var, 
+    ##     na.rm = TRUE))/(30))))) == (30), (as.integer(floor(((var) - 
+    ##     min(var, na.rm = TRUE))/((max(var, na.rm = TRUE) - min(var, 
+    ##     na.rm = TRUE))/(30))))) - 1, (as.integer(floor(((var) - min(var, 
+    ##     na.rm = TRUE))/((max(var, na.rm = TRUE) - min(var, na.rm = TRUE))/(30))))))) + 
+    ##     min(var, na.rm = TRUE)
 
 ``` r
 spark_flights %>%
@@ -229,20 +253,20 @@ spark_flights %>%
   tally
 ```
 
-    ## # Source:   lazy query [?? x 2]
+    ## # Source: lazy query [?? x 2]
     ## # Database: spark_connection
-    ##             x      n
-    ##         <dbl>  <dbl>
-    ##  1   4.533333  79784
-    ##  2 -40.733333 207999
-    ##  3  95.066667   7890
-    ##  4  49.800000  19063
-    ##  5 819.333333      8
-    ##  6 140.333333   3746
-    ##  7 321.400000    232
-    ##  8 230.866667    921
-    ##  9 -86.000000   5325
-    ## 10 185.600000   1742
+    ##          x         n
+    ##      <dbl>     <dbl>
+    ##  1    4.53  79784   
+    ##  2 - 40.7  207999   
+    ##  3   95.1    7890   
+    ##  4   49.8   19063   
+    ##  5  819         8.00
+    ##  6  140      3746   
+    ##  7  321       232   
+    ##  8  231       921   
+    ##  9 - 86.0    5325   
+    ## 10  186      1742   
     ## # ... with more rows
 
 ``` r
@@ -256,8 +280,3 @@ spark_flights %>%
 ```
 
 <img src="README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
-
-ggvis
------
-
-`dbplot` now includes an extension to the `ggvis` package. This allows an `tbl_sql` object to be used as the source of the plot without any additional code. Under the hood, `dbplot` adds the proper S3 methods that perform the calculations inside the database, and returns the results in the correct format that `ggvis` expects. To read more and see examples please see visit this link in RPubs: <http://rpubs.com/edgarruiz/dbplot-ggvis>
