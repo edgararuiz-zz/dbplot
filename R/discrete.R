@@ -23,7 +23,7 @@
 #' 
 #' @export 
 #' @import dplyr
-#' @import rlang
+#' @importFrom rlang enexpr 
 db_compute_count <- function(data, x, y = n()){
   x <- enexpr(x)
   y <- enexpr(y)
@@ -72,7 +72,7 @@ db_compute_count <- function(data, x, y = n()){
 #' 
 #' @export
 #' @import dplyr
-#' @import rlang
+#' @importFrom rlang enexpr 
 dbplot_bar <- function(data, x, y = n()){
   x <- enexpr(x)
   y <- enexpr(y)
@@ -123,7 +123,7 @@ dbplot_bar <- function(data, x, y = n()){
 #' 
 #' @export
 #' @import dplyr
-#' @import rlang
+#' @importFrom rlang enexpr 
 dbplot_line <- function(data, x, y = n()){
   x <- enexpr(x)
   y <- enexpr(y)

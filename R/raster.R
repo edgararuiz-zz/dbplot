@@ -41,7 +41,7 @@
 #' 
 #' @export
 #' @import dplyr
-#' @import rlang
+#' @importFrom rlang enexpr 
 db_compute_raster <- function(data, x, y, fill = n(), resolution = 100){
   x <- enexpr(x)
   y <- enexpr(y)
@@ -115,7 +115,7 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100){
 #' 
 #' @export
 #' @import dplyr
-#' @import rlang
+#' @importFrom rlang enexpr 
 dbplot_raster <- function(data, x, y, fill = n(), resolution = 100){
   
   x <- enexpr(x)

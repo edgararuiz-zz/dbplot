@@ -25,7 +25,7 @@
 #'     tally()
 #' 
 #' @export
-#' @import rlang
+#' @importFrom rlang enexpr expr
 db_bin <- function(var, bins = 30, binwidth = NULL) {
   var <- enexpr(var)
   

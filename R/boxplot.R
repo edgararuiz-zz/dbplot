@@ -17,7 +17,7 @@
 #' 
 #' @export
 #' @import dplyr
-#' @import rlang
+#' @importFrom rlang enexpr 
 db_compute_boxplot <- function(data, x, var, coef = 1.5){
   
   x <- enexpr(x)
@@ -70,7 +70,7 @@ db_compute_boxplot <- function(data, x, var, coef = 1.5){
 #' 
 #' @export
 #' @import dplyr
-#' @import rlang
+#' @importFrom rlang enexpr 
 dbplot_boxplot <- function(data, x, var, coef = 1.5){
   
   x <- enexpr(x)

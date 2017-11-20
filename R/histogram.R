@@ -28,7 +28,7 @@
 #' 
 #' @export
 #' @import dplyr
-#' @import rlang
+#' @importFrom rlang enexpr 
 db_compute_bins <- function(data, x, bins = 30, binwidth = NULL){
   x <- enexpr(x)
   xf <- db_bin(
@@ -80,7 +80,7 @@ db_compute_bins <- function(data, x, bins = 30, binwidth = NULL){
 #' 
 #' @export
 #' @import dplyr
-#' @import rlang
+#' @importFrom rlang enexpr
 dbplot_histogram <- function(data, x, bins = 30, binwidth = NULL){
   
   x <- enexpr(x)
