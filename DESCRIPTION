@@ -1,5 +1,5 @@
 Package: dbplot
-Version: 0.1.0
+Version: 0.1.0.9000
 Title: Simplifies Plotting Data Inside Databases
 Description: Leverages 'dplyr' to process the calculations of a plot inside a database. 
     This package provides helper functions that abstract the work at three levels:

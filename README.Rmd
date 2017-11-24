@@ -18,7 +18,7 @@ knitr::opts_chunk$set(fig.height = 3.5, fig.width =  4, fig.align = 'center')
 
 
 [![Build Status](https://travis-ci.org/edgararuiz/dbplot.svg?branch=master)](https://travis-ci.org/edgararuiz/dbplot)
-
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dbplyr)](http://cran.r-project.org/package=dbplyr)
 
 Leverages `dplyr` to process the calculations of a plot inside a database.  This package provides helper functions that abstract the work at three levels:
     
@@ -26,19 +26,23 @@ Leverages `dplyr` to process the calculations of a plot inside a database.  This
 2. Functions that outputs a `data.frame` object with the calculations.  
 3. Creates the formula needed to calculate bins for a Histogram or a Raster plot
 
-## Connecting to a data source
-
-For more information on how to connect to databases, including Hive, please visit http://db.rstudio.com 
-
-To use Spark, please visit the `sparklyr` official website: http://spark.rstudio.com
-
-
-Use `devtools` to install:
+## Installation
 
 ```{r, eval = FALSE}
+# You can install the released version from CRAN
+install.packages("dbplot")
+
+# Or the the development version from GitHub:
+install.packages("devtools")
 devtools::install_github("edgararuiz/dbplot")
 ```
 
+
+## Connecting to a data source
+
+- For more information on how to connect to databases, including Hive, please visit http://db.rstudio.com 
+
+- To use Spark, please visit the `sparklyr` official website: http://spark.rstudio.com
 
 ## Example
 
