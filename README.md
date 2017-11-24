@@ -3,7 +3,7 @@ dbplot
 
 [![Build
 Status](https://travis-ci.org/edgararuiz/dbplot.svg?branch=master)](https://travis-ci.org/edgararuiz/dbplot)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dbplyr)](http://cran.r-project.org/package=dbplyr)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dbplot)](http://cran.r-project.org/package=dbplot)
 
 Leverages `dplyr` to process the calculations of a plot inside a
 database. This package provides helper functions that abstract the work
