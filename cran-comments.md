@@ -1,6 +1,6 @@
 ## Release summary
 
-This is a small release to fix a single issue that became apparent after the initial release.
+Patch to fix a bug found after the release.  This particular but is critical enough for me to go forward and send a new submission so soon after the initial release. 
 
 ## Test environments
 * local windows 10 install, R 3.4.2
