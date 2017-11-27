@@ -61,7 +61,7 @@ spark_flights %>%
   dbplot_histogram(sched_dep_time)
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="tools/readme/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 Use `binwidth` to fix the bin size
 
@@ -70,7 +70,7 @@ spark_flights %>%
   dbplot_histogram(sched_dep_time, binwidth = 200)
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="tools/readme/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 Because it outputs a `ggplot2` object, more customization can be done
 
@@ -81,7 +81,7 @@ spark_flights %>%
   theme_bw()
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="tools/readme/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 ### Raster
 
@@ -107,7 +107,7 @@ spark_flights %>%
   dbplot_raster(arr_delay, dep_delay) 
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="tools/readme/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
   - Pass an aggregation formula that can run inside the database
 
@@ -122,7 +122,7 @@ spark_flights %>%
     ## Warning: Missing values are always removed in SQL.
     ## Use `AVG(x, na.rm = TRUE)` to silence this warning
 
-<img src="README_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="tools/readme/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
   - Increase or decrease for more, or less, definition. The `resolution`
     argument controls that, it defaults to 100
@@ -138,7 +138,7 @@ spark_flights %>%
     ## Warning: Missing values are always removed in SQL.
     ## Use `AVG(x, na.rm = TRUE)` to silence this warning
 
-<img src="README_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="tools/readme/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 ### Bar Plot
 
@@ -152,7 +152,7 @@ spark_flights %>%
   dbplot_bar(origin)
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="tools/readme/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
   - Pass a formula that will be operated for each value in the discrete
     variable
@@ -167,7 +167,7 @@ spark_flights %>%
     ## Warning: Missing values are always removed in SQL.
     ## Use `AVG(x, na.rm = TRUE)` to silence this warning
 
-<img src="README_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="tools/readme/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 ### Line plot
 
@@ -181,7 +181,7 @@ spark_flights %>%
   dbplot_line(month)
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="tools/readme/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
   - Pass a formula that will be operated for each value in the discrete
     variable
@@ -196,7 +196,7 @@ spark_flights %>%
     ## Warning: Missing values are always removed in SQL.
     ## Use `AVG(x, na.rm = TRUE)` to silence this warning
 
-<img src="README_files/figure-gfm/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+<img src="tools/readme/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 ### Boxplot
 
@@ -217,7 +217,7 @@ spark_flights %>%
     ## Warning: Missing values are always removed in SQL.
     ## Use `MIN(x, na.rm = TRUE)` to silence this warning
 
-<img src="README_files/figure-gfm/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+<img src="tools/readme/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
 ## Calculation functions
 
@@ -265,7 +265,7 @@ spark_flights %>%
   geom_col(aes(arr_delay, count, fill = count))
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
+<img src="tools/readme/unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
 
 ## `db_bin()`
 
@@ -318,4 +318,4 @@ spark_flights %>%
   geom_col(aes(x, n))
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
+<img src="tools/readme/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
