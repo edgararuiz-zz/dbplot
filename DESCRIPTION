@@ -12,6 +12,7 @@ Depends:
     dplyr(>= 0.7),
     rlang
 Suggests:
+    dbplyr,
     testthat,
     ggplot2
 License: GPL-3
