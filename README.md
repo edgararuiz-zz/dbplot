@@ -1,5 +1,5 @@
-dbplot <img width = 200 height = 200 src="tools/images/logo.png" align="right" />
-========================================================
+dbplot
+================
 
 [![Build Status](https://travis-ci.org/edgararuiz/dbplot.svg?branch=master)](https://travis-ci.org/edgararuiz/dbplot) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dbplot)](http://cran.r-project.org/package=dbplot) ![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/dbplot)
 
