@@ -1,7 +1,7 @@
 dbplot
 ================
 
-<img src="tools/readme/logo.png" align="right" width = 300 height = 280>
+<img src="tools/readme/logo.png" align="right" width = 300 height = 250>
 
 [![Build Status](https://travis-ci.org/edgararuiz/dbplot.svg?branch=master)](https://travis-ci.org/edgararuiz/dbplot) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dbplot)](http://cran.r-project.org/package=dbplot) ![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/dbplot)
 
