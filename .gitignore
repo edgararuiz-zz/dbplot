@@ -6,3 +6,4 @@ dbplot.Rproj
 log4j.spark.log
 derby.log
 inst/doc
+logs/
