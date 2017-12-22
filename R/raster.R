@@ -60,6 +60,8 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100){
     collect()  %>% 
     mutate(fillname = as.numeric(fillname))
   
+  colnames(df) <- c(x, y, fillname)
+  
   df
 }
 
