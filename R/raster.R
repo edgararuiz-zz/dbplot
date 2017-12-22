@@ -56,10 +56,9 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100){
   df <- data %>%
     group_by(x = !! xf,
              y = !! yf) %>%
-    summarise(fill = !! fillname) %>%
-    collect 
-  
-  colnames(df) <- c(x, y, fillname)
+    summarise(fillname = !! fillname) %>%
+    collect()  %>% 
+    mutate(fillname = as.numeric(fillname))
   
   df
 }

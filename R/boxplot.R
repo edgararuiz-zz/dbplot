@@ -42,7 +42,7 @@ db_compute_boxplot <- function(data, x, var, coef = 1.5){
       ymax = ifelse(max_raw > max_iqr, max_iqr, max_raw),
       ymin = ifelse(min_raw < min_iqr, min_iqr, min_raw)
     ) %>%
-    collect
+    collect()
     
     df
 }

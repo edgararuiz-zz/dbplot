@@ -39,8 +39,9 @@ db_compute_bins <- function(data, x, bins = 30, binwidth = NULL){
   
   df <- data %>%
     group_by(x = !! xf) %>%
-    tally %>%
-    collect 
+    tally() %>%
+    collect() %>%
+    mutate(n = as.numeric(n)) #Accounts for interger64
   
   colnames(df) <- c(x, "count")
   
