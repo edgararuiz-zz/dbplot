@@ -32,6 +32,7 @@ db_compute_count <- function(data, x, y = n()){
     group_by(!! x) %>%
     summarise(result = !! y) %>%
     collect() %>%
+    ungroup() %>%
     mutate(result = as.numeric(result)) #Accounts for interger64
     
   colnames(df) <- c(x, y)
