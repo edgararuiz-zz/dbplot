@@ -29,8 +29,8 @@ db_compute_boxplot <- function(data, x, var, coef = 1.5) {
       lower = percentile_approx(!! var, 0.25),
       middle = percentile_approx(!! var, 0.5),
       upper = percentile_approx(!! var, 0.75),
-      max_raw = max(!! var),
-      min_raw = min(!! var)
+      max_raw = max(!! var, na.rm = TRUE),
+      min_raw = min(!! var, na.rm = TRUE)
     ) %>%
     mutate(iqr = (upper - lower) * coef) %>%
     mutate(

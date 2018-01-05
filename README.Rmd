@@ -11,7 +11,7 @@ library(dbplot)
 library(sparklyr)
 library(nycflights13)
 
-Sys.setenv("JAVA_HOME" = normalizePath("C:\\Program Files (x86)\\Java\\jre1.8.0_144"))
+#Sys.setenv("JAVA_HOME" = normalizePath("C:\\Program Files (x86)\\Java\\jre1.8.0_144"))
 
 knitr::opts_chunk$set(fig.height = 3.5, fig.width =  4, fig.align = 'center')
 ```
@@ -49,14 +49,16 @@ devtools::install_github("edgararuiz/dbplot")
 
 In addition to database connections, the functions work with `sparklyr`. A Spark DataFrame will be used for the examples in this README.  
 
-```{r}
+```{r, include = FALSE}
 library(sparklyr)
-
-conf <- spark_config()
 sc <- spark_connect(master = "local", version = "2.1.0")
-
 spark_flights <- copy_to(sc, nycflights13::flights, "flights")
+```
 
+```{r, eval = FALSE}
+library(sparklyr)
+sc <- spark_connect(master = "local", version = "2.1.0")
+spark_flights <- copy_to(sc, nycflights13::flights, "flights")
 ```
 
 ## `ggplot`
@@ -107,19 +109,19 @@ spark_flights %>%
 ```{r}
 spark_flights %>%
   filter(!is.na(arr_delay)) %>%
-  dbplot_raster(arr_delay, dep_delay, mean(distance)) 
+  dbplot_raster(arr_delay, dep_delay, mean(distance, na.rm = TRUE)) 
 ```
 
 - Increase or decrease for more, or less, definition.  The `resolution` argument controls that, it defaults to 100 
 ```{r}
 spark_flights %>%
   filter(!is.na(arr_delay)) %>%
-  dbplot_raster(arr_delay, dep_delay, mean(distance), resolution = 500)
+  dbplot_raster(arr_delay, dep_delay, mean(distance, na.rm = TRUE), resolution = 500)
 ```
 
 ### Bar Plot
 
-- `dbplot_bar()` defaults to a tally of each value in a discrete variable
+- `dbplot_bar()` defaults to a tally()of each value in a discrete variable
 ```{r}
 spark_flights %>%
   dbplot_bar(origin)
@@ -134,7 +136,7 @@ spark_flights %>%
 
 ### Line plot
 
-- `dbplot_line()` defaults to a tally of each value in a discrete variable
+- `dbplot_line()` defaults to a tally()of each value in a discrete variable
 ```{r}
 spark_flights %>%
   dbplot_line(month)
@@ -193,14 +195,14 @@ db_bin(var)
 ```{r}
 spark_flights %>%
   group_by(x = !! db_bin(arr_delay)) %>%
-  tally
+  tally()
 ```
 
 ```{r}
 spark_flights %>%
   filter(!is.na(arr_delay)) %>%
   group_by(x = !! db_bin(arr_delay)) %>%
-  tally %>%
+  tally()%>%
   collect %>%
   ggplot() +
   geom_col(aes(x, n))

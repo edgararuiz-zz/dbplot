@@ -1,9 +1,10 @@
 ## Release summary
 
-Patch to fix a bug found after the release.  This particular but is critical enough for me to go forward and send a new submission so soon after the initial release. 
+Mostly bug fixes. The main motivation was to address warnings issued by the new version of 'dbplyr'.
 
 ## Test environments
-* local windows 10 install, R 3.4.2
+* local windows 10 install, R 3.4.3
+* ubuntu 16.04 with RStudio Server, R 3.4.3 
 * ubuntu 14.04 (on travis-ci)
 
 ## R CMD check results
