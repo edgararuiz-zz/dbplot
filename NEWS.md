@@ -1,4 +1,6 @@
-# dbplot 0.1.1.9000
+# dbplot 0.2.0.9000
+
+# dbplot 0.2.0
 
 ## Bug Fixes
 
