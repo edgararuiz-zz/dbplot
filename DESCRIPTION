@@ -12,7 +12,7 @@ Depends:
     dplyr(>= 0.7),
     rlang
 Suggests:
-    dbplyr,
+    dbplyr(>= 1.2.0),
     testthat,
     ggplot2,
     tidyr

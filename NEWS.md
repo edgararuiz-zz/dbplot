@@ -2,6 +2,8 @@
 
 ## Bug Fixes
 
+- Adds compatability with dbplyr 1.2.0 upgrade
+
 - Adds `complete` argument to `db_compute_raster()` and `dbplot_raster()` which fills in empty bins (#5)
 
 - Coerce aggregate results using `as.numeric()` to handle `integer64` results (#6)

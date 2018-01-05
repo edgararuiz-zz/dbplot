@@ -16,7 +16,7 @@ db_compute_boxplot(data, x, var, coef = 1.5)
 \item{coef}{Length of the whiskers as multiple of IQR. Defaults to 1.5}
 }
 \description{
-Uses very generic dplyr code to create boxplot calculations.  
+Uses very generic dplyr code to create boxplot calculations.
 Because of this approach,
 the calculations automatically run inside the database if `data` has
 a database or sparklyr connection. The `class()` of such tables

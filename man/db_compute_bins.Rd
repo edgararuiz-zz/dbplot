@@ -16,7 +16,7 @@ db_compute_bins(data, x, bins = 30, binwidth = NULL)
 \item{binwidth}{Single value that sets the side of the bins, it overrides bins}
 }
 \description{
-Uses very generic dplyr code to create histogram bins.  
+Uses very generic dplyr code to create histogram bins.
 Because of this approach,
 the calculations automatically run inside the database if `data` has
 a database or sparklyr connection. The `class()` of such tables

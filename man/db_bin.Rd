@@ -29,7 +29,7 @@ verb.
     tally()
 
   # Uses binwidth which overrides bins
-  mtcars \%>\% 
+  mtcars \%>\%
     group_by(x = !! db_bin(mpg, binwidth = 10)) \%>\%
     tally()
 

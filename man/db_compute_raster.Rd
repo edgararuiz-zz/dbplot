@@ -21,9 +21,9 @@ db_compute_raster(data, x, y, fill = n(), resolution = 100,
 \item{complete}{Uses tidyr::complete to include empty bins. Inserts value of 0.}
 }
 \description{
-To visualize two continuous variables, we typically resort to a Scatter plot. However, 
-this may not be practical when visualizing millions or billions of dots representing the 
-intersections of the two variables. A Raster plot may be a better option, 
+To visualize two continuous variables, we typically resort to a Scatter plot. However,
+this may not be practical when visualizing millions or billions of dots representing the
+intersections of the two variables. A Raster plot may be a better option,
 because it concentrates the intersections into squares that are easier to parse visually.
 
 Uses very generic dplyr code to aggregate data.  Because of this approach,
@@ -32,18 +32,18 @@ a database or sparklyr connection. The `class()` of such tables
 in R are: tbl_sql, tbl_dbi, tbl_sql
 }
 \details{
-There are two considerations when using a Raster plot with a database. Both considerations are related 
+There are two considerations when using a Raster plot with a database. Both considerations are related
 to the size of the results downloaded from the database:
 
 - The number of bins requested: The higher the bins value is, the more data is downloaded from the database.
 
-- How concentrated the data is: This refers to how many intersections return a value. The more intersections without a value, 
+- How concentrated the data is: This refers to how many intersections return a value. The more intersections without a value,
 the less data is downloaded from the database.
 }
 \examples{
 
 # Returns a 100x100 grid of record count of intersections of eruptions and waiting
-faithful \%>\% 
+faithful \%>\%
   db_compute_raster(eruptions, waiting)
 
 # Returns a 50x50 grid of eruption averages of intersections of eruptions and waiting

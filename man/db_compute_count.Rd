@@ -21,7 +21,7 @@ in R are: tbl_sql, tbl_dbi, tbl_sql
 }
 \examples{
 
-# Returns the row count per am 
+# Returns the row count per am
 mtcars \%>\%
   db_compute_count(am)
 
