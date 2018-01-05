@@ -28,16 +28,19 @@ db_compute_count <- function(data, x, y = n()){
   x <- enexpr(x)
   y <- enexpr(y)
   
-  df <- data %>%
+  data <- data %>%
     group_by(!! x) %>%
-    summarise(result = !! y) %>%
+    summarise(!! y) %>%
     collect() %>%
-    ungroup() %>%
-    mutate(result = as.numeric(result)) #Accounts for interger64
-    
-  colnames(df) <- c(x, y)
+    ungroup() 
   
-  df
+  # Woraround for int64 support
+  colnames(data) <- c(x, "fieldname")
+  data$fieldname <- as.numeric(data$fieldname)
+  colnames(data) <- c(x, y)
+  
+  data
+  
 }
 
 

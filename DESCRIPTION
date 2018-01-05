@@ -14,7 +14,8 @@ Depends:
 Suggests:
     dbplyr,
     testthat,
-    ggplot2
+    ggplot2,
+    tidyr
 License: GPL-3
 URL: https://github.com/edgararuiz/dbplot
 BugReports: https://github.com/edgararuiz/dbplot/issues

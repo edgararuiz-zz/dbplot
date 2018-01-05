@@ -4,7 +4,8 @@
 \alias{db_compute_raster}
 \title{Aggregates intersections of two variables}
 \usage{
-db_compute_raster(data, x, y, fill = n(), resolution = 100)
+db_compute_raster(data, x, y, fill = n(), resolution = 100,
+  complete = FALSE)
 }
 \arguments{
 \item{data}{A table (tbl)}
@@ -16,6 +17,8 @@ db_compute_raster(data, x, y, fill = n(), resolution = 100)
 \item{fill}{The aggregation formula. Defaults to count (n)}
 
 \item{resolution}{The number of bins created by variable. The highest the number, the more records can be potentially imported from the sourd}
+
+\item{complete}{Uses tidyr::complete to include empty bins. Inserts value of 0.}
 }
 \description{
 To visualize two continuous variables, we typically resort to a Scatter plot. However, 

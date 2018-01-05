@@ -28,6 +28,7 @@
 #' @param y A continuous variable
 #' @param fill The aggregation formula. Defaults to count (n)
 #' @param resolution The number of bins created by variable. The highest the number, the more records can be potentially imported from the sourd
+#' @param complete Uses tidyr::complete to include empty bins. Inserts value of 0.
 #' 
 #' @examples 
 #' 
@@ -42,7 +43,7 @@
 #' @export
 #' @import dplyr
 #' @importFrom rlang enexpr 
-db_compute_raster <- function(data, x, y, fill = n(), resolution = 100){
+db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete = FALSE){
   x <- enexpr(x)
   y <- enexpr(y)
   fillname <- enexpr(fill)
@@ -63,7 +64,13 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100){
   
   colnames(df) <- c(x, y, fillname)
   
-  
+  if(complete){
+    df <- tidyr::complete(
+      data = df,
+      !!x,
+      !!y,
+      fill = list(`n()` = 0))
+  }
   
   df
 }
@@ -99,6 +106,7 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100){
 #' @param y A continuous variable
 #' @param fill The aggregation formula. Defaults to count (n)
 #' @param resolution The number of bins created by variable. The highest the number, the more records can be potentially imported from the sourd
+#' @param complete Uses tidyr::complete to include empty bins. Inserts value of 0.
 #' 
 #' @examples 
 #' 
@@ -120,7 +128,7 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100){
 #' @export
 #' @import dplyr
 #' @importFrom rlang enexpr 
-dbplot_raster <- function(data, x, y, fill = n(), resolution = 100){
+dbplot_raster <- function(data, x, y, fill = n(), resolution = 100, complete = FALSE){
   
   x <- enexpr(x)
   y <- enexpr(y)
@@ -130,7 +138,8 @@ dbplot_raster <- function(data, x, y, fill = n(), resolution = 100){
                           x = !! x,
                           y = !! y,
                           fill = !! fillname,
-                          resolution = resolution)
+                          resolution = resolution,
+                          complete = complete)
 
   colnames(df) <- c("x", "y", "fill")
   
