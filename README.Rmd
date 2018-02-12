@@ -24,7 +24,7 @@ knitr::opts_chunk$set(fig.height = 3.5, fig.width =  4, fig.align = 'center')
 Leverages `dplyr` to process the calculations of a plot inside a database.  This package provides helper functions that abstract the work at three levels:
     
 1. Functions that ouput a `ggplot2` object
-2. Functions that outputs a `data.frame` object with the calculations.  
+2. Functions that outputs a `data.frame` object with the calculations
 3. Creates the formula needed to calculate bins for a Histogram or a Raster plot
 
 ## Installation
@@ -121,7 +121,7 @@ spark_flights %>%
 
 ### Bar Plot
 
-- `dbplot_bar()` defaults to a tally()of each value in a discrete variable
+- `dbplot_bar()` defaults to a tally() of each value in a discrete variable
 ```{r}
 spark_flights %>%
   dbplot_bar(origin)
@@ -136,7 +136,7 @@ spark_flights %>%
 
 ### Line plot
 
-- `dbplot_line()` defaults to a tally()of each value in a discrete variable
+- `dbplot_line()` defaults to a tally() of each value in a discrete variable
 ```{r}
 spark_flights %>%
   dbplot_line(month)
@@ -150,7 +150,7 @@ spark_flights %>%
 
 ### Boxplot
 
-- It expect a discrete variable to group by, and a continuous variable to calculate the percentiles and IQR. It doesn't calculate outliers. Currently, this feature works with sparklyr and Hive connections.
+- It expects a discrete variable to group by, and a continuous variable to calculate the percentiles and IQR. It doesn't calculate outliers. Currently, this feature works with sparklyr and Hive connections.
 
 ```{r}
 spark_flights %>%
