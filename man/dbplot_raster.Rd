@@ -43,6 +43,7 @@ the less data is downloaded from the database.
 \examples{
 
 library(ggplot2)
+library(dplyr)
 
 # Returns a 100x100 raster plot of record count of intersections of eruptions and waiting
 faithful \%>\%

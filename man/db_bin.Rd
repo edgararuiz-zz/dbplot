@@ -20,6 +20,8 @@ verb.
 }
 \examples{
 
+ library(dplyr)
+
   # Important: Always name the field and
   # prefix the function with `!!`` (See Details)
 

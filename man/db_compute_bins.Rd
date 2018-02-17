@@ -24,6 +24,8 @@ in R are: tbl_sql, tbl_dbi, tbl_spark
 }
 \examples{
 
+library(dplyr)
+
 # Returns record count for 30 bins in mpg
 mtcars \%>\%
   db_compute_bins(mpg)

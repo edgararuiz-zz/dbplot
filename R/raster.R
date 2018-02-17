@@ -32,6 +32,8 @@
 #'
 #' @examples
 #'
+#' library(dplyr)
+#'
 #' # Returns a 100x100 grid of record count of intersections of eruptions and waiting
 #' faithful %>%
 #'   db_compute_raster(eruptions, waiting)
@@ -118,6 +120,7 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete
 #' @examples
 #'
 #' library(ggplot2)
+#' library(dplyr)
 #'
 #' # Returns a 100x100 raster plot of record count of intersections of eruptions and waiting
 #' faithful %>%

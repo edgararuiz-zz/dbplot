@@ -23,6 +23,7 @@ in R are: tbl_sql, tbl_dbi, tbl_spark
 \examples{
 
 library(ggplot2)
+library(dplyr)
 
 # Returns a plot of the row count per cyl
 mtcars \%>\%

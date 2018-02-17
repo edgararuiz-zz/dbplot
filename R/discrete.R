@@ -12,6 +12,8 @@
 #' @param y The aggregation formula. Defaults to count (n)
 #'
 #' @examples
+#' 
+#' library(dplyr)
 #'
 #' # Returns the row count per am
 #' mtcars %>%
@@ -60,6 +62,7 @@ db_compute_count <- function(data, x, y = n()) {
 #' @examples
 #'
 #' library(ggplot2)
+#' library(dplyr)
 #'
 #' # Returns a plot of the row count per am
 #' mtcars %>%
@@ -115,6 +118,7 @@ dbplot_bar <- function(data, x, y = n()) {
 #' @examples
 #'
 #' library(ggplot2)
+#' library(dplyr)
 #'
 #' # Returns a plot of the row count per cyl
 #' mtcars %>%

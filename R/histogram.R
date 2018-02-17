@@ -15,6 +15,8 @@
 #'
 #' @examples
 #'
+#' library(dplyr)
+#'
 #' # Returns record count for 30 bins in mpg
 #' mtcars %>%
 #'   db_compute_bins(mpg)
@@ -67,6 +69,7 @@ db_compute_bins <- function(data, x, bins = 30, binwidth = NULL) {
 #' @examples
 #'
 #' library(ggplot2)
+#' library(dplyr)
 #'
 #' # A ggplot histogram with 30 bins
 #' mtcars %>%
