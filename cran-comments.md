@@ -1,6 +1,6 @@
 ## Release summary
 
-Mostly bug fixes. The main motivation was to address warnings issued by the new version of 'dbplyr'.
+Mostly bug fixes. The main motivation was to address warnings issued by the new version of 'rlang'.
 
 ## Test environments
 * local windows 10 install, R 3.4.3
