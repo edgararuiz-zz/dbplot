@@ -20,14 +20,15 @@
 #'
 #' - The number of bins requested: The higher the bins value is, the more data is downloaded from the database.
 #'
-#' - How concentrated the data is: This refers to how many intersections return a value. The more intersections without a value,
-#' the less data is downloaded from the database.
+#' - How concentrated the data is: This refers to how many intersections return a value. The more 
+#' intersections without a value, the less data is downloaded from the database.
 #'
 #' @param data A table (tbl)
 #' @param x A continuous variable
 #' @param y A continuous variable
 #' @param fill The aggregation formula. Defaults to count (n)
-#' @param resolution The number of bins created by variable. The highest the number, the more records can be potentially imported from the sourd
+#' @param resolution The number of bins created by variable. The highest the number, the more records 
+#' can be potentially imported from the sourd
 #' @param complete Uses tidyr::complete to include empty bins. Inserts value of 0.
 #'
 #' @examples
@@ -43,8 +44,6 @@
 #'   db_compute_raster(eruptions, waiting, fill = mean(eruptions), resolution = 50)
 #'
 #' @export
-#' @import dplyr
-#' @importFrom rlang enexpr
 db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete = FALSE) {
   x <- enexpr(x)
   y <- enexpr(y)
@@ -107,14 +106,16 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete
 #'
 #' - The number of bins requested: The higher the bins value is, the more data is downloaded from the database.
 #'
-#' - How concentrated the data is: This refers to how many intersections return a value. The more intersections without a value,
+#' - How concentrated the data is: This refers to how many intersections return a value. The more intersections 
+#' without a value,
 #' the less data is downloaded from the database.
 #'
 #' @param data A table (tbl)
 #' @param x A continuous variable
 #' @param y A continuous variable
 #' @param fill The aggregation formula. Defaults to count (n)
-#' @param resolution The number of bins created by variable. The highest the number, the more records can be potentially imported from the sourd
+#' @param resolution The number of bins created by variable. The highest the number, the more records 
+#' can be potentially imported from the sourd
 #' @param complete Uses tidyr::complete to include empty bins. Inserts value of 0.
 #'
 #' @examples
@@ -136,8 +137,6 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete
 #'
 #'
 #' @export
-#' @import dplyr
-#' @importFrom rlang enexpr
 dbplot_raster <- function(data, x, y, fill = n(), resolution = 100, complete = FALSE) {
   x <- enexpr(x)
   y <- enexpr(y)
@@ -154,11 +153,11 @@ dbplot_raster <- function(data, x, y, fill = n(), resolution = 100, complete = F
 
   colnames(df) <- c("x", "y", "fill")
 
-  ggplot2::ggplot(df) +
-    ggplot2::geom_raster(aes(x, y, fill = fill)) +
-    ggplot2::labs(
+  ggplot(df) +
+    geom_raster(aes(x, y, fill = fill)) +
+    labs(
       x = x,
       y = y
     ) +
-    ggplot2::scale_fill_continuous(name = fillname)
+    scale_fill_continuous(name = fillname)
 }

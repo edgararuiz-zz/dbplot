@@ -16,14 +16,12 @@
 #' @param coef Length of the whiskers as multiple of IQR. Defaults to 1.5
 #'
 #' @export
-#' @import dplyr
-#' @importFrom rlang enexpr
 db_compute_boxplot <- function(data, x, var, coef = 1.5) {
   x <- enexpr(x)
 
   var <- enexpr(var)
 
-  df <- data %>%
+  data %>%
     group_by(!! x) %>%
     summarise(
       lower = percentile_approx(!! var, 0.25),
@@ -44,7 +42,6 @@ db_compute_boxplot <- function(data, x, var, coef = 1.5) {
     collect() %>%
     ungroup()
 
-  df
 }
 
 #' Boxplot
@@ -69,8 +66,6 @@ db_compute_boxplot <- function(data, x, var, coef = 1.5) {
 #'  \code{\link{dbplot_raster}}, \code{\link{dbplot_histogram}}
 #'
 #' @export
-#' @import dplyr
-#' @importFrom rlang enexpr
 dbplot_boxplot <- function(data, x, var, coef = 1.5) {
   x <- enexpr(x)
 
@@ -88,9 +83,8 @@ dbplot_boxplot <- function(data, x, var, coef = 1.5) {
     "iqr", "min_iqr", "max_iqr", "ymax", "ymin"
   )
 
-
-  ggplot2::ggplot(df) +
-    ggplot2::geom_boxplot(
+  ggplot(df) +
+    geom_boxplot(
       aes(
         x = x,
         ymin = ymin,
@@ -99,9 +93,9 @@ dbplot_boxplot <- function(data, x, var, coef = 1.5) {
         upper = upper,
         ymax = ymax
       ), stat = "identity"
-    ) +
-    ggplot2::labs(x = x)
+    ) + labs(x = x)
 }
+
 
 globalVariables(c(
   "upper", "ymax", "weight", "x_", "y", "aes", "ymin", "lower",

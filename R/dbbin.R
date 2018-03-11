@@ -10,7 +10,7 @@
 #'
 #'
 #' @examples
-#' 
+#'
 #'  library(dplyr)
 #'
 #'   # Important: Always name the field and
@@ -34,16 +34,16 @@ db_bin <- function(var, bins = 30, binwidth = NULL) {
   range <- expr(max(!! var, na.rm = TRUE) - min(!! var, na.rm = TRUE))
 
   if (is.null(binwidth)) {
-    binwidth <- expr((!! range) / (!! bins))
+    binwidth <- expr((!! range / !! bins))
   } else {
-    bins <- expr(as.integer((!! range) / (!! binwidth)))
+    bins <- expr(as.integer(!! range / !! binwidth))
   }
 
   # Made more sense to use floor() to determine the bin value than
   # using the bin number or the max or mean, feel free to customize
-  bin_number <- expr(as.integer(floor(((!! var) - min(!! var, na.rm = TRUE)) / (!! binwidth))))
+  bin_number <- expr(as.integer(floor((!! var - min(!! var, na.rm = TRUE)) / !! binwidth)))
 
   # Value(s) that match max(x) will be rebased to bin -1, giving us the exact number of bins requested
   expr(((!! binwidth) *
-    ifelse((!! bin_number) == (!! bins), (!! bin_number) - 1, (!! bin_number))) + min(!! var, na.rm = TRUE))
+    ifelse(!! bin_number == !! bins, !! bin_number - 1, !! bin_number)) + min(!! var, na.rm = TRUE))
 }
