@@ -1,17 +1,13 @@
 ---
 title: "dbplot"
 output:
-  github_document:
-    toc: true
-    toc_depth: 3
+  github_document
 ---
 ```{r, setup, include = FALSE}
 library(dplyr)
 library(dbplot)
 library(sparklyr)
 library(nycflights13)
-
-#Sys.setenv("JAVA_HOME" = normalizePath("C:\\Program Files (x86)\\Java\\jre1.8.0_144"))
 
 knitr::opts_chunk$set(fig.height = 3.5, fig.width =  4, fig.align = 'center')
 ```
@@ -20,6 +16,18 @@ knitr::opts_chunk$set(fig.height = 3.5, fig.width =  4, fig.align = 'center')
 [![Build Status](https://travis-ci.org/edgararuiz/dbplot.svg?branch=master)](https://travis-ci.org/edgararuiz/dbplot)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dbplot)](http://cran.r-project.org/package=dbplot)
 ![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/dbplot)
+
+-   [Installation](#installation)
+-   [Connecting to a data source](#connecting-to-a-data-source)
+-   [Example](#example)
+-   [`ggplot`](#ggplot)
+    -   [Histogram](#histogram)
+    -   [Raster](#raster)
+    -   [Bar Plot](#bar-plot)
+    -   [Line plot](#line-plot)
+    -   [Boxplot](#boxplot)
+-   [Calculation functions](#calculation-functions)
+-   [`db_bin()`](#db_bin)
 
 Leverages `dplyr` to process the calculations of a plot inside a database.  This package provides helper functions that abstract the work at three levels:
     

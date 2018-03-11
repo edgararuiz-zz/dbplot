@@ -1,27 +1,31 @@
 dbplot
 ================
 
-[![Build Status](https://travis-ci.org/edgararuiz/dbplot.svg?branch=master)](https://travis-ci.org/edgararuiz/dbplot) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dbplot)](http://cran.r-project.org/package=dbplot) ![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/dbplot)
+[![Build
+Status](https://travis-ci.org/edgararuiz/dbplot.svg?branch=master)](https://travis-ci.org/edgararuiz/dbplot)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dbplot)](http://cran.r-project.org/package=dbplot)
+![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/dbplot)
 
+  - [Installation](#installation)
+  - [Connecting to a data source](#connecting-to-a-data-source)
+  - [Example](#example)
+  - [`ggplot`](#ggplot)
+      - [Histogram](#histogram)
+      - [Raster](#raster)
+      - [Bar Plot](#bar-plot)
+      - [Line plot](#line-plot)
+      - [Boxplot](#boxplot)
+  - [Calculation functions](#calculation-functions)
+  - [`db_bin()`](#db_bin)
 
--   [Installation](#installation)
--   [Connecting to a data source](#connecting-to-a-data-source)
--   [Example](#example)
--   [`ggplot`](#ggplot)
-    -   [Histogram](#histogram)
-    -   [Raster](#raster)
-    -   [Bar Plot](#bar-plot)
-    -   [Line plot](#line-plot)
-    -   [Boxplot](#boxplot)
--   [Calculation functions](#calculation-functions)
--   [`db_bin()`](#db_bin)
-
-
-Leverages `dplyr` to process the calculations of a plot inside a database. This package provides helper functions that abstract the work at three levels:
+Leverages `dplyr` to process the calculations of a plot inside a
+database. This package provides helper functions that abstract the work
+at three levels:
 
 1.  Functions that ouput a `ggplot2` object
-2.  Functions that outputs a `data.frame` object with the calculations.
-3.  Creates the formula needed to calculate bins for a Histogram or a Raster plot
+2.  Functions that outputs a `data.frame` object with the calculations
+3.  Creates the formula needed to calculate bins for a Histogram or a
+    Raster plot
 
 ## Installation
 
