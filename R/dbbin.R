@@ -31,7 +31,7 @@
 db_bin <- function(var, bins = 30, binwidth = NULL) {
   var <- enexpr(var)
 
-  range <- expr(max(!! var, na.rm = TRUE) - min(!! var, na.rm = TRUE))
+  range <- expr((max(!! var, na.rm = TRUE) - min(!! var, na.rm = TRUE)))
 
   if (is.null(binwidth)) {
     binwidth <- expr((!! range / !! bins))

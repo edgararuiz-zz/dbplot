@@ -39,10 +39,12 @@ db_compute_bins <- function(data, x, bins = 30, binwidth = NULL) {
   )
 
   data %>%
+    select(!! x) %>%
     group_by(!! x := !! xf) %>%
     tally() %>%
     collect() %>%
-    ungroup()
+    ungroup() %>%
+    rename(count = n)
 }
 
 #' Histogram
@@ -92,7 +94,7 @@ dbplot_histogram <- function(data, x, bins = 30, binwidth = NULL) {
     )
 
   ggplot(df) +
-    geom_col(aes(x, n)) +
+    geom_col(aes(x, count)) +
     labs(
       x = expr_text(x),
       y = "count"
