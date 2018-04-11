@@ -91,11 +91,16 @@ dbplot_bar <- function(data, x,...,y = n()) {
   )
   
   if(ncol(df) == 2){
-    if(length(vars)==1) y <- vars
+    if(length(vars)==1){
+      y <- vars
+      ny <- names(y)
+    } else {
+      ny <- y
+    }
     colnames(df) <- c("x", "y")
     output <- ggplot(df) +
       geom_col(aes(x, y)) +
-      labs(x = x, y = y)
+      labs(x = x, y = ny)
   } 
   
   if(ncol(df) > 2){
@@ -162,11 +167,16 @@ dbplot_line <- function(data, x,...,y = n()) {
   )
   
   if(ncol(df) == 2){
-    if(length(vars)==1) y <- vars
+    if(length(vars)==1){
+      y <- vars
+      ny <- names(y)
+    } else {
+      ny <- y
+    }
     colnames(df) <- c("x", "y")
     output <- ggplot(df) +
       geom_line(aes(x, y)) +
-      labs(x = x, y = y)
+      labs(x = x, y = ny)
   } 
   
   if(ncol(df) > 2){
