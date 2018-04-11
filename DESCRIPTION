@@ -12,7 +12,8 @@ Depends:
 Imports:
     dplyr(>= 0.7),
     rlang(>= 0.2.0),
-    ggplot2
+    ggplot2,
+    purrr
 Suggests:
     dbplyr(>= 1.2.0),
     testthat,

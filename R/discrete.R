@@ -9,6 +9,7 @@
 #'
 #' @param data A table (tbl)
 #' @param x A discrete variable
+#' @param ... A set of named or unamed aggregations
 #' @param y The aggregation formula. Defaults to count (n)
 #'
 #' @examples
@@ -22,6 +23,10 @@
 #' # Returns the average mpg per am
 #' mtcars %>%
 #'   db_compute_count(am, mean(mpg))
+#'   
+#' # Returns the average and sum of mpg per am
+#' mtcars %>%
+#'   db_compute_count(am, mean(mpg), sum(mpg))
 #'
 #' @export
 db_compute_count <- function(data, x,...,y = n()) {
@@ -54,6 +59,7 @@ db_compute_count <- function(data, x,...,y = n()) {
 #'
 #' @param data A table (tbl)
 #' @param x A discrete variable
+#' @param ... A set of named or unamed aggregations
 #' @param y The aggregation formula. Defaults to count (n)
 #'
 #' @examples
@@ -68,6 +74,10 @@ db_compute_count <- function(data, x,...,y = n()) {
 #' # Returns a plot of the average mpg per am
 #' mtcars %>%
 #'   dbplot_bar(am, mean(mpg))
+#'
+#' # Returns the average and sum of mpg per am
+#' mtcars %>%
+#'   dbplot_bar(am, avg_mpg = mean(mpg), sum_mpg = sum(mpg))
 #'
 #' @seealso
 #' \code{\link{dbplot_line}} ,
@@ -131,6 +141,7 @@ dbplot_bar <- function(data, x,...,y = n()) {
 #'
 #' @param data A table (tbl)
 #' @param x A discrete variable
+#' @param ... A set of named or unamed aggregations
 #' @param y The aggregation formula. Defaults to count (n)
 #'
 #' @examples
@@ -145,6 +156,10 @@ dbplot_bar <- function(data, x,...,y = n()) {
 #' # Returns a plot of the average mpg per cyl
 #' mtcars %>%
 #'   dbplot_line(cyl, mean(mpg))
+#'
+#' # Returns the average and sum of mpg per am
+#' mtcars %>%
+#'   dbplot_line(am, avg_mpg = mean(mpg), sum_mpg = sum(mpg))
 #'
 #' @seealso
 #' \code{\link{dbplot_bar}},
