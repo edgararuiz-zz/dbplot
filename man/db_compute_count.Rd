@@ -4,7 +4,7 @@
 \alias{db_compute_count}
 \title{Aggregates over a discrete field}
 \usage{
-db_compute_count(data, x, y = n())
+db_compute_count(data, x, ..., y = n())
 }
 \arguments{
 \item{data}{A table (tbl)}

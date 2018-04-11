@@ -24,17 +24,23 @@
 #'   db_compute_count(am, mean(mpg))
 #'
 #' @export
-db_compute_count <- function(data, x, y = n()) {
+db_compute_count <- function(data, x,...,y = n()) {
   x <- enexpr(x)
   y <- enexpr(y)
-
+  vars <- enexprs(...)
+  
+  if(length(vars) > 0){
+    sums <- vars
+  } else {
+    sums <- y
+  }
+  
   data %>%
     group_by(!! x) %>%
-    summarise(!! y) %>%
+    summarise(!!! sums) %>%
     collect() %>%
-    ungroup() 
+    ungroup()
 }
-
 
 #' Bar plot
 #'
@@ -71,21 +77,40 @@ db_compute_count <- function(data, x, y = n()) {
 #' @export
 #' @import dplyr
 #' @importFrom rlang enexpr
-dbplot_bar <- function(data, x, y = n()) {
+
+dbplot_bar <- function(data, x,...,y = n()) {
   x <- enexpr(x)
   y <- enexpr(y)
-
+  vars <- exprs(...)
+  
   df <- db_compute_count(
-    data = data,
+    data = data, 
     x = !! x,
+    vars  = !!! vars,
     y = !! y
   )
   
-  colnames(df) <- c("x", "y")
-
-  ggplot(df) +
-    geom_col(aes(x, y)) +
-    labs(x = x, y = y)
+  if(ncol(df) == 2){
+    if(length(vars)==1) y <- vars
+    colnames(df) <- c("x", "y")
+    output <- ggplot(df) +
+      geom_col(aes(x, y)) +
+      labs(x = x, y = y)
+  } 
+  
+  if(ncol(df) > 2){
+    output <- df %>%
+      select(- !! x) %>%
+      imap(~{
+        df <- tibble(
+          x = pull(select(df, !! x)),
+          y =.x) %>%
+          ggplot() +
+          geom_col(aes(x, y)) +
+          labs(x = expr_text(x), y = .y)
+      })
+  } 
+  output
 }
 
 
@@ -124,19 +149,37 @@ dbplot_bar <- function(data, x, y = n()) {
 #' @export
 #' @import dplyr
 #' @importFrom rlang enexpr
-dbplot_line <- function(data, x, y = n()) {
+dbplot_line <- function(data, x,...,y = n()) {
   x <- enexpr(x)
   y <- enexpr(y)
-
+  vars <- exprs(...)
+  
   df <- db_compute_count(
-    data = data,
+    data = data, 
     x = !! x,
+    vars  = !!! vars,
     y = !! y
   )
-
-  colnames(df) <- c("x", "y")
-
-  ggplot(df) +
-    geom_line(aes(x, y), stat = "identity") +
-    labs(x = x, y = y)
+  
+  if(ncol(df) == 2){
+    if(length(vars)==1) y <- vars
+    colnames(df) <- c("x", "y")
+    output <- ggplot(df) +
+      geom_line(aes(x, y)) +
+      labs(x = x, y = y)
+  } 
+  
+  if(ncol(df) > 2){
+    output <- df %>%
+      select(- !! x) %>%
+      imap(~{
+        df <- tibble(
+          x = pull(select(df, !! x)),
+          y =.x) %>%
+          ggplot() +
+          geom_line(aes(x, y)) +
+          labs(x = expr_text(x), y = .y)
+      })
+  } 
+  output
 }

@@ -4,7 +4,7 @@
 \alias{dbplot_line}
 \title{Bar plot}
 \usage{
-dbplot_line(data, x, y = n())
+dbplot_line(data, x, ..., y = n())
 }
 \arguments{
 \item{data}{A table (tbl)}
