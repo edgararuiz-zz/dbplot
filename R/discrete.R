@@ -9,6 +9,7 @@
 #'
 #' @param data A table (tbl)
 #' @param x A discrete variable
+#' @param ... A set of named or unamed aggregations
 #' @param y The aggregation formula. Defaults to count (n)
 #'
 #' @examples
@@ -22,19 +23,29 @@
 #' # Returns the average mpg per am
 #' mtcars %>%
 #'   db_compute_count(am, mean(mpg))
+#'   
+#' # Returns the average and sum of mpg per am
+#' mtcars %>%
+#'   db_compute_count(am, mean(mpg), sum(mpg))
 #'
 #' @export
-db_compute_count <- function(data, x, y = n()) {
+db_compute_count <- function(data, x,...,y = n()) {
   x <- enexpr(x)
   y <- enexpr(y)
-
+  vars <- enexprs(...)
+  
+  if(length(vars) > 0){
+    sums <- vars
+  } else {
+    sums <- y
+  }
+  
   data %>%
     group_by(!! x) %>%
-    summarise(!! y) %>%
+    summarise(!!! sums) %>%
     collect() %>%
-    ungroup() 
+    ungroup()
 }
-
 
 #' Bar plot
 #'
@@ -48,6 +59,7 @@ db_compute_count <- function(data, x, y = n()) {
 #'
 #' @param data A table (tbl)
 #' @param x A discrete variable
+#' @param ... A set of named or unamed aggregations
 #' @param y The aggregation formula. Defaults to count (n)
 #'
 #' @examples
@@ -63,6 +75,10 @@ db_compute_count <- function(data, x, y = n()) {
 #' mtcars %>%
 #'   dbplot_bar(am, mean(mpg))
 #'
+#' # Returns the average and sum of mpg per am
+#' mtcars %>%
+#'   dbplot_bar(am, avg_mpg = mean(mpg), sum_mpg = sum(mpg))
+#'
 #' @seealso
 #' \code{\link{dbplot_line}} ,
 #' \code{\link{dbplot_histogram}},  \code{\link{dbplot_raster}} ,
@@ -71,21 +87,45 @@ db_compute_count <- function(data, x, y = n()) {
 #' @export
 #' @import dplyr
 #' @importFrom rlang enexpr
-dbplot_bar <- function(data, x, y = n()) {
+
+dbplot_bar <- function(data, x,...,y = n()) {
   x <- enexpr(x)
   y <- enexpr(y)
-
+  vars <- exprs(...)
+  
   df <- db_compute_count(
-    data = data,
+    data = data, 
     x = !! x,
+    vars  = !!! vars,
     y = !! y
   )
   
-  colnames(df) <- c("x", "y")
-
-  ggplot(df) +
-    geom_col(aes(x, y)) +
-    labs(x = x, y = y)
+  if(ncol(df) == 2){
+    if(length(vars)==1){
+      y <- vars
+      ny <- names(y)
+    } else {
+      ny <- y
+    }
+    colnames(df) <- c("x", "y")
+    output <- ggplot(df) +
+      geom_col(aes(x, y)) +
+      labs(x = x, y = ny)
+  } 
+  
+  if(ncol(df) > 2){
+    output <- df %>%
+      select(- !! x) %>%
+      imap(~{
+        df <- tibble(
+          x = pull(select(df, !! x)),
+          y =.x) %>%
+          ggplot() +
+          geom_col(aes(x, y)) +
+          labs(x = expr_text(x), y = .y)
+      })
+  } 
+  output
 }
 
 
@@ -101,6 +141,7 @@ dbplot_bar <- function(data, x, y = n()) {
 #'
 #' @param data A table (tbl)
 #' @param x A discrete variable
+#' @param ... A set of named or unamed aggregations
 #' @param y The aggregation formula. Defaults to count (n)
 #'
 #' @examples
@@ -116,6 +157,10 @@ dbplot_bar <- function(data, x, y = n()) {
 #' mtcars %>%
 #'   dbplot_line(cyl, mean(mpg))
 #'
+#' # Returns the average and sum of mpg per am
+#' mtcars %>%
+#'   dbplot_line(am, avg_mpg = mean(mpg), sum_mpg = sum(mpg))
+#'
 #' @seealso
 #' \code{\link{dbplot_bar}},
 #' \code{\link{dbplot_histogram}},  \code{\link{dbplot_raster}}
@@ -124,19 +169,42 @@ dbplot_bar <- function(data, x, y = n()) {
 #' @export
 #' @import dplyr
 #' @importFrom rlang enexpr
-dbplot_line <- function(data, x, y = n()) {
+dbplot_line <- function(data, x,...,y = n()) {
   x <- enexpr(x)
   y <- enexpr(y)
-
+  vars <- exprs(...)
+  
   df <- db_compute_count(
-    data = data,
+    data = data, 
     x = !! x,
+    vars  = !!! vars,
     y = !! y
   )
-
-  colnames(df) <- c("x", "y")
-
-  ggplot(df) +
-    geom_line(aes(x, y), stat = "identity") +
-    labs(x = x, y = y)
+  
+  if(ncol(df) == 2){
+    if(length(vars)==1){
+      y <- vars
+      ny <- names(y)
+    } else {
+      ny <- y
+    }
+    colnames(df) <- c("x", "y")
+    output <- ggplot(df) +
+      geom_line(aes(x, y)) +
+      labs(x = x, y = ny)
+  } 
+  
+  if(ncol(df) > 2){
+    output <- df %>%
+      select(- !! x) %>%
+      imap(~{
+        df <- tibble(
+          x = pull(select(df, !! x)),
+          y =.x) %>%
+          ggplot() +
+          geom_line(aes(x, y)) +
+          labs(x = expr_text(x), y = .y)
+      })
+  } 
+  output
 }

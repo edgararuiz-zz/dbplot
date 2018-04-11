@@ -4,12 +4,14 @@
 \alias{db_compute_count}
 \title{Aggregates over a discrete field}
 \usage{
-db_compute_count(data, x, y = n())
+db_compute_count(data, x, ..., y = n())
 }
 \arguments{
 \item{data}{A table (tbl)}
 
 \item{x}{A discrete variable}
+
+\item{...}{A set of named or unamed aggregations}
 
 \item{y}{The aggregation formula. Defaults to count (n)}
 }
@@ -30,5 +32,9 @@ mtcars \%>\%
 # Returns the average mpg per am
 mtcars \%>\%
   db_compute_count(am, mean(mpg))
+  
+# Returns the average and sum of mpg per am
+mtcars \%>\%
+  db_compute_count(am, mean(mpg), sum(mpg))
 
 }
