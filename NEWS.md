@@ -1,5 +1,9 @@
 # dbplot 0.2.1.9000
 
+- Supports multiple aggregations for bar and line charts
+
+- Supports naming aggregations for bar and line charts
+
 # dbplot 0.2.1
 
 - Adds compatability with rlang 0.2.0 upgrade
