@@ -1,10 +1,9 @@
 ## Release summary
 
-Mostly bug fixes. The main motivation was to address warnings issued by the new version of 'rlang'.
+New feature that allows multiple, and named, plots to be calculated at one time.
 
 ## Test environments
-* local windows 10 install, R 3.4.3
-* ubuntu 16.04 with RStudio Server, R 3.4.3 
+* local windows 10 install, R 3.5.0
 * ubuntu 14.04 (on travis-ci)
 
 ## R CMD check results
