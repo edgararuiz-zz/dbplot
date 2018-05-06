@@ -17,7 +17,7 @@ db_compute_raster(data, x, y, fill = n(), resolution = 100,
 \item{fill}{The aggregation formula. Defaults to count (n)}
 
 \item{resolution}{The number of bins created by variable. The highest the number, the more records 
-can be potentially imported from the sourd}
+can be potentially imported from the source}
 
 \item{complete}{Uses tidyr::complete to include empty bins. Inserts value of 0.}
 }
