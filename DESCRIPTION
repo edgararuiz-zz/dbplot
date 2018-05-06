@@ -14,10 +14,11 @@ Imports:
     rlang(>= 0.2.0),
     ggplot2,
     purrr
-Suggests:
-    dbplyr(>= 1.2.0),
+Suggests: 
+    dbplyr (>= 1.2.0),
     testthat,
-    tidyr
+    tidyr,
+    covr
 License: GPL-3
 URL: https://github.com/edgararuiz/dbplot
 BugReports: https://github.com/edgararuiz/dbplot/issues

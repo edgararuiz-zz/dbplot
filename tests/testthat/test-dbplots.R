@@ -1,7 +1,5 @@
 context("dbplots")
 
-library(ggplot2)
-
 test_that("A ggplot2 object is returned", {
   expect_is(dbplot_bar(mtcars, am), "ggplot")
   expect_is(dbplot_bar(mtcars, am, mean(wt)), "ggplot")
@@ -10,7 +8,6 @@ test_that("A ggplot2 object is returned", {
   expect_is(dbplot_raster(mtcars, wt, mpg), "ggplot")
 })
 
-
 test_that("A no warnings or errors are returned", {
   expect_silent(dbplot_bar(mtcars, am))
   expect_silent(dbplot_bar(mtcars, am, mean(wt)))
@@ -18,3 +15,4 @@ test_that("A no warnings or errors are returned", {
   expect_silent(dbplot_histogram(mtcars, mpg))
   expect_silent(dbplot_raster(mtcars, wt, mpg))
 })
+

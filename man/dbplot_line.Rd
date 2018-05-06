@@ -21,6 +21,11 @@ to create a line plot.  Because of this approach,
 the calculations automatically run inside the database if `data` has
 a database or sparklyr connection. The `class()` of such tables
 in R are: tbl_sql, tbl_dbi, tbl_spark
+
+If multiple named aggregations are passed, `dbplot` will only use one
+SQL query to perform all of the operations.  The purpose is to increase
+efficiency, and only make one "trip" to the database in order to
+obtains multiple, related, plots.
 }
 \examples{
 
