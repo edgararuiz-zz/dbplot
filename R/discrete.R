@@ -96,7 +96,7 @@ dbplot_bar <- function(data, x,...,y = n()) {
   df <- db_compute_count(
     data = data, 
     x = !! x,
-    vars  = !!! vars,
+    !!! vars,
     y = !! y
   )
   
@@ -182,7 +182,7 @@ dbplot_line <- function(data, x,...,y = n()) {
   df <- db_compute_count(
     data = data, 
     x = !! x,
-    vars  = !!! vars,
+    !!! vars,
     y = !! y
   )
   
