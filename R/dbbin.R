@@ -8,7 +8,6 @@
 #' @param bins Number of bins. Defaults to 30.
 #' @param binwidth Single value that sets the side of the bins, it overrides bins
 #'
-#'
 #' @examples
 #'
 #'  library(dplyr)
@@ -27,9 +26,8 @@
 #'     tally()
 #'
 #' @export
-#' @importFrom rlang enexpr expr
 db_bin <- function(var, bins = 30, binwidth = NULL) {
-  var <- enexpr(var)
+  var <- enquo(var)
 
   range <- expr((max(!! var, na.rm = TRUE) - min(!! var, na.rm = TRUE)))
 
