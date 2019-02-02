@@ -23,3 +23,4 @@ License: GPL-3
 URL: https://github.com/edgararuiz/dbplot
 BugReports: https://github.com/edgararuiz/dbplot/issues
 RoxygenNote: 6.1.0
+Encoding: UTF-8
