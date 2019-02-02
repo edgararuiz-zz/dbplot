@@ -84,6 +84,25 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete
   df
 }
 
+#' @rdname db_compute_raster
+#' @export
+db_compute_raster2 <- function(data, x, y, fill = n(), resolution = 100, complete = FALSE) {
+  x <- enquo(x)
+  y <- enquo(y)
+  fill <- enquo(fill)
+  cr <- db_compute_raster(
+    data, !! x , !! y,
+    !! fill, resolution, complete
+  )
+  size_x <- bin_size(cr, !! x)
+  size_y <- bin_size(cr, !! y)
+  mutate(
+    cr, 
+    !! paste0(quo_name(x), "_2") := !! x + size_x,
+    !! paste0(quo_name(y), "_2") := !! y + size_y
+  )
+}
+
 #' Raster plot
 #'
 #' @description

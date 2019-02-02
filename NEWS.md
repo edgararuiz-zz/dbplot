@@ -1,5 +1,7 @@
 # dbplot 0.3.0.9000
 
+- New `db_compute_raster2()` function includes upper limit
+
 - Removes dependencies on pipes
 
 - Improves compliance with rlangs `quo()` vs `expr()` usage rules
