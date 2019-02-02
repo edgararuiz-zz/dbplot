@@ -21,14 +21,28 @@ db_compute_boxplot <- function(data, x, var, coef = 1.5) {
   var <- enquo(var)
 
   res <- group_by(data, !!x)
-  res <- summarise(
-    res,
-    lower = percentile_approx(!!var, 0.25),
-    middle = percentile_approx(!!var, 0.5),
-    upper = percentile_approx(!!var, 0.75),
-    max_raw = max(!!var, na.rm = TRUE),
-    min_raw = min(!!var, na.rm = TRUE)
-  )
+  
+  if("tbl_spark" %in% class(res)) {
+    res <- summarise(
+      res,
+      lower  = percentile_approx(!!var, 0.25),
+      middle = percentile_approx(!!var, 0.5),
+      upper  = percentile_approx(!!var, 0.75),
+      max_raw = max(!!var, na.rm = TRUE),
+      min_raw = min(!!var, na.rm = TRUE)
+    ) 
+  } else {
+    res <- summarise(
+      res,
+      lower  = quantile(!!var, 0.25),
+      middle = quantile(!!var, 0.5),
+      upper  = quantile(!!var, 0.75),
+      max_raw = max(!!var, na.rm = TRUE),
+      min_raw = min(!!var, na.rm = TRUE)
+    ) 
+  }
+  
+
   res <- mutate(res, iqr = (upper - lower) * coef)
   res <- mutate(
     res,
