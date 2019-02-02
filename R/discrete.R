@@ -30,9 +30,9 @@
 #'
 #' @export
 db_compute_count <- function(data, x,...,y = n()) {
-  x <- enexpr(x)
-  y <- enexpr(y)
-  vars <- enexprs(...)
+  x <- enquo(x)
+  y <- enquo(y)
+  vars <- enquos(...)
   
   if(length(vars) > 0){
     sums <- vars
@@ -40,11 +40,10 @@ db_compute_count <- function(data, x,...,y = n()) {
     sums <- y
   }
   
-  data %>%
-    group_by(!! x) %>%
-    summarise(!!! sums) %>%
-    collect() %>%
-    ungroup()
+  res <- group_by(data, !! x)
+  res <- summarise(res, !!! sums) 
+  res <- collect(res) 
+  ungroup(res)
 }
 
 #' Bar plot
@@ -81,17 +80,13 @@ db_compute_count <- function(data, x,...,y = n()) {
 #'
 #' @seealso
 #' \code{\link{dbplot_line}} ,
-#' \code{\link{dbplot_histogram}},  \code{\link{dbplot_raster}} ,
-#'
+#' \code{\link{dbplot_histogram}},  \code{\link{dbplot_raster}} 
 #'
 #' @export
-#' @import dplyr
-#' @importFrom rlang enexpr
-
 dbplot_bar <- function(data, x,...,y = n()) {
-  x <- enexpr(x)
-  y <- enexpr(y)
-  vars <- exprs(...)
+  x <- enquo(x)
+  y <- enquo(y)
+  vars <- enquos(...)
   
   df <- db_compute_count(
     data = data, 
@@ -119,15 +114,14 @@ dbplot_bar <- function(data, x,...,y = n()) {
       imap(~{
         df <- tibble(
           x = pull(select(df, !! x)),
-          y =.x) %>%
-          ggplot() +
+          y =.x) 
+        ggplot(df) +
           geom_col(aes(x, y)) +
-          labs(x = expr_text(x), y = .y)
+          labs(x = quo_name(x), y = .y)
       })
   } 
   output
 }
-
 
 #' Bar plot
 #'
@@ -170,14 +164,11 @@ dbplot_bar <- function(data, x,...,y = n()) {
 #' \code{\link{dbplot_bar}},
 #' \code{\link{dbplot_histogram}},  \code{\link{dbplot_raster}}
 #'
-#'
 #' @export
-#' @import dplyr
-#' @importFrom rlang enexpr
 dbplot_line <- function(data, x,...,y = n()) {
-  x <- enexpr(x)
-  y <- enexpr(y)
-  vars <- exprs(...)
+  x <- enquo(x)
+  y <- enquo(y)
+  vars <- enquos(...)
   
   df <- db_compute_count(
     data = data, 
@@ -205,10 +196,11 @@ dbplot_line <- function(data, x,...,y = n()) {
       imap(~{
         df <- tibble(
           x = pull(select(df, !! x)),
-          y =.x) %>%
-          ggplot() +
+          y =.x
+          )
+        ggplot(df) +
           geom_line(aes(x, y)) +
-          labs(x = expr_text(x), y = .y)
+          labs(x = quo_name(x), y = .y)
       })
   } 
   output
