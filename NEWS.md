@@ -1,4 +1,12 @@
-# dbplot 0.2.1.9000
+# dbplot 0.3.0.9000
+
+- Removes dependencies on pipes
+
+- Improves compliance with rlangs `quo()` vs `expr()` usage rules
+
+- Separates Spark and default behaivor of `db_compute_boxplot()` and adds tests
+
+# dbplot 0.3.0
 
 - Supports multiple aggregations for bar and line charts
 

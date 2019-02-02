@@ -36,5 +36,4 @@ mtcars \%>\%
 # Returns the average and sum of mpg per am
 mtcars \%>\%
   db_compute_count(am, mean(mpg), sum(mpg))
-
 }
