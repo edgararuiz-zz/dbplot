@@ -17,31 +17,31 @@
 #'
 #' @export
 db_compute_boxplot <- function(data, x, var, coef = 1.5) {
-  x <- enexpr(x)
+  x <- enquo(x)
+  var <- enquo(var)
 
-  var <- enexpr(var)
-
-  data %>%
-    group_by(!! x) %>%
-    summarise(
-      lower = percentile_approx(!! var, 0.25),
-      middle = percentile_approx(!! var, 0.5),
-      upper = percentile_approx(!! var, 0.75),
-      max_raw = max(!! var, na.rm = TRUE),
-      min_raw = min(!! var, na.rm = TRUE)
-    ) %>%
-    mutate(iqr = (upper - lower) * coef) %>%
-    mutate(
-      min_iqr = lower - iqr,
-      max_iqr = upper + iqr
-    ) %>%
-    mutate(
-      ymax = ifelse(max_raw > max_iqr, max_iqr, max_raw),
-      ymin = ifelse(min_raw < min_iqr, min_iqr, min_raw)
-    ) %>%
-    collect() %>%
-    ungroup()
-
+  res <- group_by(data, !! x) 
+  res <- summarise(
+    res, 
+    lower = percentile_approx(!! var, 0.25),
+    middle = percentile_approx(!! var, 0.5),
+    upper = percentile_approx(!! var, 0.75),
+    max_raw = max(!! var, na.rm = TRUE),
+    min_raw = min(!! var, na.rm = TRUE)
+    ) 
+  res <- mutate(res, iqr = (upper - lower) * coef) 
+  res <- mutate(
+    res,
+    min_iqr = lower - iqr,
+    max_iqr = upper + iqr
+    ) 
+  res <- mutate(
+    res,
+    ymax = ifelse(max_raw > max_iqr, max_iqr, max_raw),
+    ymin = ifelse(min_raw < min_iqr, min_iqr, min_raw)
+  ) 
+  res <- collect(res) 
+  ungroup(res)
 }
 
 #' Boxplot
@@ -67,9 +67,8 @@ db_compute_boxplot <- function(data, x, var, coef = 1.5) {
 #'
 #' @export
 dbplot_boxplot <- function(data, x, var, coef = 1.5) {
-  x <- enexpr(x)
-
-  var <- enexpr(var)
+  x <- enquo(x)
+  var <- enquo(var)
 
   df <- db_compute_boxplot(
     data = data,
@@ -93,7 +92,8 @@ dbplot_boxplot <- function(data, x, var, coef = 1.5) {
         upper = upper,
         ymax = ymax
       ), stat = "identity"
-    ) + labs(x = x)
+    ) + 
+    labs(x = x)
 }
 
 
