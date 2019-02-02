@@ -12,7 +12,6 @@
 #' a database or sparklyr connection. The `class()` of such tables
 #' in R are: tbl_sql, tbl_dbi, tbl_sql
 #'
-#'
 #' @details
 #'
 #' There are two considerations when using a Raster plot with a database. Both considerations are related
@@ -45,9 +44,9 @@
 #'
 #' @export
 db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete = FALSE) {
-  x <- enexpr(x)
-  y <- enexpr(y)
-  fillname <- enexpr(fill)
+  x <- enquo(x)
+  y <- enquo(y)
+  fillname <- enquo(fill)
 
   xf <- db_bin(
     !! x,
@@ -59,17 +58,20 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete
     bins = resolution
   )
 
-  df <- data %>%
-    group_by(
-      x = !! xf,
-      y = !! yf
-    ) %>%
-    summarise(fillname = !! fillname) %>%
-    collect() %>%
-    ungroup() %>%
-    mutate(fillname = as.numeric(fillname))
-
-  colnames(df) <- c(x, y, fillname)
+  df <- group_by(
+    data, 
+    x = !! xf,
+    y = !! yf
+    ) 
+  df <- summarise(df, fillname = !! fillname) 
+  df <- collect(df) 
+  df <- ungroup(df) 
+  df <- mutate(df, fillname = as.numeric(fillname))
+  colnames(df) <- c(
+    quo_name(x), 
+    quo_name(y), 
+    quo_name(fillname)
+    )
 
   if (complete) {
     df <- tidyr::complete(
@@ -79,10 +81,8 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete
       fill = list(`n()` = 0)
     )
   }
-
   df
 }
-
 
 #' Raster plot
 #'
@@ -134,7 +134,6 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete
 #' @seealso
 #' \code{\link{dbplot_bar}}, \code{\link{dbplot_line}} ,
 #' \code{\link{dbplot_histogram}}
-#'
 #'
 #' @export
 dbplot_raster <- function(data, x, y, fill = n(), resolution = 100, complete = FALSE) {
