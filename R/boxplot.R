@@ -20,27 +20,27 @@ db_compute_boxplot <- function(data, x, var, coef = 1.5) {
   x <- enquo(x)
   var <- enquo(var)
 
-  res <- group_by(data, !! x) 
+  res <- group_by(data, !!x)
   res <- summarise(
-    res, 
-    lower = percentile_approx(!! var, 0.25),
-    middle = percentile_approx(!! var, 0.5),
-    upper = percentile_approx(!! var, 0.75),
-    max_raw = max(!! var, na.rm = TRUE),
-    min_raw = min(!! var, na.rm = TRUE)
-    ) 
-  res <- mutate(res, iqr = (upper - lower) * coef) 
+    res,
+    lower = percentile_approx(!!var, 0.25),
+    middle = percentile_approx(!!var, 0.5),
+    upper = percentile_approx(!!var, 0.75),
+    max_raw = max(!!var, na.rm = TRUE),
+    min_raw = min(!!var, na.rm = TRUE)
+  )
+  res <- mutate(res, iqr = (upper - lower) * coef)
   res <- mutate(
     res,
     min_iqr = lower - iqr,
     max_iqr = upper + iqr
-    ) 
+  )
   res <- mutate(
     res,
     ymax = ifelse(max_raw > max_iqr, max_iqr, max_raw),
     ymin = ifelse(min_raw < min_iqr, min_iqr, min_raw)
-  ) 
-  res <- collect(res) 
+  )
+  res <- collect(res)
   ungroup(res)
 }
 
@@ -72,8 +72,8 @@ dbplot_boxplot <- function(data, x, var, coef = 1.5) {
 
   df <- db_compute_boxplot(
     data = data,
-    x = !! x,
-    var = !! var,
+    x = !!x,
+    var = !!var,
     coef = coef
   )
 
@@ -91,8 +91,9 @@ dbplot_boxplot <- function(data, x, var, coef = 1.5) {
         middle = middle,
         upper = upper,
         ymax = ymax
-      ), stat = "identity"
-    ) + 
+      ),
+      stat = "identity"
+    ) +
     labs(x = x)
 }
 
