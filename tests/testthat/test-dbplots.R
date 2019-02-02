@@ -15,4 +15,3 @@ test_that("A no warnings or errors are returned", {
   expect_silent(dbplot_histogram(mtcars, mpg))
   expect_silent(dbplot_raster(mtcars, wt, mpg))
 })
-

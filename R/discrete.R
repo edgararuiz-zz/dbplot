@@ -13,7 +13,7 @@
 #' @param y The aggregation formula. Defaults to count (n)
 #'
 #' @examples
-#' 
+#'
 #' library(dplyr)
 #'
 #' # Returns the row count per am
@@ -23,28 +23,27 @@
 #' # Returns the average mpg per am
 #' mtcars %>%
 #'   db_compute_count(am, mean(mpg))
-#'   
+#'
 #' # Returns the average and sum of mpg per am
 #' mtcars %>%
 #'   db_compute_count(am, mean(mpg), sum(mpg))
 #'
 #' @export
-db_compute_count <- function(data, x,...,y = n()) {
-  x <- enexpr(x)
-  y <- enexpr(y)
-  vars <- enexprs(...)
-  
-  if(length(vars) > 0){
+db_compute_count <- function(data, x, ..., y = n()) {
+  x <- enquo(x)
+  y <- enquo(y)
+  vars <- enquos(...)
+
+  if (length(vars) > 0) {
     sums <- vars
   } else {
     sums <- y
   }
-  
-  data %>%
-    group_by(!! x) %>%
-    summarise(!!! sums) %>%
-    collect() %>%
-    ungroup()
+
+  res <- group_by(data, !!x)
+  res <- summarise(res, !!!sums)
+  res <- collect(res)
+  ungroup(res)
 }
 
 #' Bar plot
@@ -81,27 +80,23 @@ db_compute_count <- function(data, x,...,y = n()) {
 #'
 #' @seealso
 #' \code{\link{dbplot_line}} ,
-#' \code{\link{dbplot_histogram}},  \code{\link{dbplot_raster}} ,
-#'
+#' \code{\link{dbplot_histogram}},  \code{\link{dbplot_raster}}
 #'
 #' @export
-#' @import dplyr
-#' @importFrom rlang enexpr
+dbplot_bar <- function(data, x, ..., y = n()) {
+  x <- enquo(x)
+  y <- enquo(y)
+  vars <- enquos(...)
 
-dbplot_bar <- function(data, x,...,y = n()) {
-  x <- enexpr(x)
-  y <- enexpr(y)
-  vars <- exprs(...)
-  
   df <- db_compute_count(
-    data = data, 
-    x = !! x,
-    vars  = !!! vars,
-    y = !! y
+    data = data,
+    x = !!x,
+    vars = !!!vars,
+    y = !!y
   )
-  
-  if(ncol(df) == 2){
-    if(length(vars)==1){
+
+  if (ncol(df) == 2) {
+    if (length(vars) == 1) {
       y <- vars
       ny <- names(y)
     } else {
@@ -111,23 +106,23 @@ dbplot_bar <- function(data, x,...,y = n()) {
     output <- ggplot(df) +
       geom_col(aes(x, y)) +
       labs(x = x, y = ny)
-  } 
-  
-  if(ncol(df) > 2){
+  }
+
+  if (ncol(df) > 2) {
     output <- df %>%
-      select(- !! x) %>%
+      select(-!!x) %>%
       imap(~{
         df <- tibble(
-          x = pull(select(df, !! x)),
-          y =.x) %>%
-          ggplot() +
+          x = pull(select(df, !!x)),
+          y = .x
+        )
+        ggplot(df) +
           geom_col(aes(x, y)) +
-          labs(x = expr_text(x), y = .y)
+          labs(x = quo_name(x), y = .y)
       })
-  } 
+  }
   output
 }
-
 
 #' Bar plot
 #'
@@ -138,7 +133,7 @@ dbplot_bar <- function(data, x,...,y = n()) {
 #' the calculations automatically run inside the database if `data` has
 #' a database or sparklyr connection. The `class()` of such tables
 #' in R are: tbl_sql, tbl_dbi, tbl_spark
-#' 
+#'
 #' If multiple named aggregations are passed, `dbplot` will only use one
 #' SQL query to perform all of the operations.  The purpose is to increase
 #' efficiency, and only make one "trip" to the database in order to
@@ -170,24 +165,21 @@ dbplot_bar <- function(data, x,...,y = n()) {
 #' \code{\link{dbplot_bar}},
 #' \code{\link{dbplot_histogram}},  \code{\link{dbplot_raster}}
 #'
-#'
 #' @export
-#' @import dplyr
-#' @importFrom rlang enexpr
-dbplot_line <- function(data, x,...,y = n()) {
-  x <- enexpr(x)
-  y <- enexpr(y)
-  vars <- exprs(...)
-  
+dbplot_line <- function(data, x, ..., y = n()) {
+  x <- enquo(x)
+  y <- enquo(y)
+  vars <- enquos(...)
+
   df <- db_compute_count(
-    data = data, 
-    x = !! x,
-    vars  = !!! vars,
-    y = !! y
+    data = data,
+    x = !!x,
+    vars = !!!vars,
+    y = !!y
   )
-  
-  if(ncol(df) == 2){
-    if(length(vars)==1){
+
+  if (ncol(df) == 2) {
+    if (length(vars) == 1) {
       y <- vars
       ny <- names(y)
     } else {
@@ -197,19 +189,20 @@ dbplot_line <- function(data, x,...,y = n()) {
     output <- ggplot(df) +
       geom_line(aes(x, y)) +
       labs(x = x, y = ny)
-  } 
-  
-  if(ncol(df) > 2){
+  }
+
+  if (ncol(df) > 2) {
     output <- df %>%
-      select(- !! x) %>%
+      select(-!!x) %>%
       imap(~{
         df <- tibble(
-          x = pull(select(df, !! x)),
-          y =.x) %>%
-          ggplot() +
+          x = pull(select(df, !!x)),
+          y = .x
+        )
+        ggplot(df) +
           geom_line(aes(x, y)) +
-          labs(x = expr_text(x), y = .y)
+          labs(x = quo_name(x), y = .y)
       })
-  } 
+  }
   output
 }
