@@ -30,21 +30,19 @@
 #'
 #' @export
 db_compute_bins <- function(data, x, bins = 30, binwidth = NULL) {
-  x <- enexpr(x)
+  x <- enquo(x)
 
   xf <- db_bin(
-    var = !! x,
+    var = !!x,
     bins = bins,
     binwidth = binwidth
   )
 
-  data %>%
-    select(!! x) %>%
-    group_by(!! x := !! xf) %>%
-    tally() %>%
-    collect() %>%
-    ungroup() %>%
-    rename(count = n)
+  res <- select(data, !!x)
+  res <- count(res, !!x := !!xf)
+  res <- collect(res)
+  res <- ungroup(res)
+  rename(res, count = n)
 }
 
 #' Histogram
@@ -85,18 +83,19 @@ dbplot_histogram <- function(data, x, bins = 30, binwidth = NULL) {
 
   df <- db_compute_bins(
     data = data,
-    x = !! x,
+    x = !!x,
     bins = bins,
     binwidth = binwidth
-  ) %>%
-    mutate(
-      x = !! x
-    )
+  )
+  df <- mutate(
+    df,
+    x = !!x
+  )
 
   ggplot(df) +
     geom_col(aes(x, count)) +
     labs(
-      x = expr_text(x),
+      x = quo_name(x),
       y = "count"
     )
 }

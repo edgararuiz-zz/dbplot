@@ -12,7 +12,6 @@
 #' a database or sparklyr connection. The `class()` of such tables
 #' in R are: tbl_sql, tbl_dbi, tbl_sql
 #'
-#'
 #' @details
 #'
 #' There are two considerations when using a Raster plot with a database. Both considerations are related
@@ -20,14 +19,14 @@
 #'
 #' - The number of bins requested: The higher the bins value is, the more data is downloaded from the database.
 #'
-#' - How concentrated the data is: This refers to how many intersections return a value. The more 
+#' - How concentrated the data is: This refers to how many intersections return a value. The more
 #' intersections without a value, the less data is downloaded from the database.
 #'
 #' @param data A table (tbl)
 #' @param x A continuous variable
 #' @param y A continuous variable
 #' @param fill The aggregation formula. Defaults to count (n)
-#' @param resolution The number of bins created by variable. The highest the number, the more records 
+#' @param resolution The number of bins created by variable. The highest the number, the more records
 #' can be potentially imported from the source
 #' @param complete Uses tidyr::complete to include empty bins. Inserts value of 0.
 #'
@@ -45,44 +44,45 @@
 #'
 #' @export
 db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete = FALSE) {
-  x <- enexpr(x)
-  y <- enexpr(y)
-  fillname <- enexpr(fill)
+  x <- enquo(x)
+  y <- enquo(y)
+  fillname <- enquo(fill)
 
   xf <- db_bin(
-    !! x,
+    !!x,
     bins = resolution
   )
 
   yf <- db_bin(
-    !! y,
+    !!y,
     bins = resolution
   )
 
-  df <- data %>%
-    group_by(
-      x = !! xf,
-      y = !! yf
-    ) %>%
-    summarise(fillname = !! fillname) %>%
-    collect() %>%
-    ungroup() %>%
-    mutate(fillname = as.numeric(fillname))
-
-  colnames(df) <- c(x, y, fillname)
+  df <- group_by(
+    data,
+    x = !!xf,
+    y = !!yf
+  )
+  df <- summarise(df, fillname = !!fillname)
+  df <- collect(df)
+  df <- ungroup(df)
+  df <- mutate(df, fillname = as.numeric(fillname))
+  colnames(df) <- c(
+    quo_name(x),
+    quo_name(y),
+    quo_name(fillname)
+  )
 
   if (complete) {
     df <- tidyr::complete(
       data = df,
-      !! x,
-      !! y,
+      !!x,
+      !!y,
       fill = list(`n()` = 0)
     )
   }
-
   df
 }
-
 
 #' Raster plot
 #'
@@ -106,7 +106,7 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete
 #'
 #' - The number of bins requested: The higher the bins value is, the more data is downloaded from the database.
 #'
-#' - How concentrated the data is: This refers to how many intersections return a value. The more intersections 
+#' - How concentrated the data is: This refers to how many intersections return a value. The more intersections
 #' without a value,
 #' the less data is downloaded from the database.
 #'
@@ -114,7 +114,7 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete
 #' @param x A continuous variable
 #' @param y A continuous variable
 #' @param fill The aggregation formula. Defaults to count (n)
-#' @param resolution The number of bins created by variable. The highest the number, the more records 
+#' @param resolution The number of bins created by variable. The highest the number, the more records
 #' can be potentially imported from the sourd
 #' @param complete Uses tidyr::complete to include empty bins. Inserts value of 0.
 #'
@@ -135,7 +135,6 @@ db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete
 #' \code{\link{dbplot_bar}}, \code{\link{dbplot_line}} ,
 #' \code{\link{dbplot_histogram}}
 #'
-#'
 #' @export
 dbplot_raster <- function(data, x, y, fill = n(), resolution = 100, complete = FALSE) {
   x <- enexpr(x)
@@ -144,9 +143,9 @@ dbplot_raster <- function(data, x, y, fill = n(), resolution = 100, complete = F
 
   df <- db_compute_raster(
     data = data,
-    x = !! x,
-    y = !! y,
-    fill = !! fillname,
+    x = !!x,
+    y = !!y,
+    fill = !!fillname,
     resolution = resolution,
     complete = complete
   )

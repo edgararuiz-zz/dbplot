@@ -42,5 +42,5 @@ mtcars \%>\%
 }
 \seealso{
 \code{\link{dbplot_line}} ,
-\code{\link{dbplot_histogram}},  \code{\link{dbplot_raster}} ,
+\code{\link{dbplot_histogram}},  \code{\link{dbplot_raster}}
 }
