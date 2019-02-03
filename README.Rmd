@@ -60,7 +60,7 @@ In addition to database connections, the functions work with `sparklyr`. A Spark
 
 ```{r, include = FALSE}
 library(sparklyr)
-sc <- spark_connect(master = "local", version = "2.1.0")
+sc <- spark_connect(master = "local")
 spark_flights <- copy_to(sc, nycflights13::flights, "flights")
 ```
 
@@ -174,7 +174,8 @@ If a more customized plot is needed, the data the underpins the plots can also b
 1. `db_compute_bins()` - Returns a data frame with the bins and count per bin
 2. `db_compute_count()` - Returns a data frame with the count per discrete value
 3. `db_compute_raster()` -  Returns a data frame with the results per x/y intersection
-4. `db_compute_boxplot()` -  Returns a data frame with boxplot calculations
+4. `db_compute_raster2()` -  Returns same as `db_compute_raster()` function plus the coordinates of the x/y boxes
+5. `db_compute_boxplot()` -  Returns a data frame with boxplot calculations
 
 
 ```{r}
