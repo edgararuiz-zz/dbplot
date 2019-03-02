@@ -1,5 +1,5 @@
-dbplot
-================
+
+# dbplot <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 [![Build
 Status](https://travis-ci.org/edgararuiz/dbplot.svg?branch=master)](https://travis-ci.org/edgararuiz/dbplot)
@@ -55,7 +55,7 @@ A Spark DataFrame will be used for the examples in this README.
 
 ``` r
 library(sparklyr)
-sc <- spark_connect(master = "local", version = "2.1.0")
+sc <- spark_connect(master = "local")
 spark_flights <- copy_to(sc, nycflights13::flights, "flights")
 ```
 
@@ -69,7 +69,7 @@ By default `dbplot_histogram()` creates a 30 bin histogram
 library(ggplot2)
 
 spark_flights %>% 
-  dbplot_histogram(sched_dep_time)
+  dbplot_histogram(distance)
 ```
 
 <img src="tools/readme/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
@@ -78,7 +78,7 @@ Use `binwidth` to fix the bin size
 
 ``` r
 spark_flights %>% 
-  dbplot_histogram(sched_dep_time, binwidth = 200)
+  dbplot_histogram(distance, binwidth = 400)
 ```
 
 <img src="tools/readme/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
@@ -87,8 +87,8 @@ Because it outputs a `ggplot2` object, more customization can be done
 
 ``` r
 spark_flights %>% 
-  dbplot_histogram(sched_dep_time, binwidth = 300) +
-  labs(title = "Flights - Scheduled Departure Time") +
+  dbplot_histogram(distance, binwidth = 400) +
+  labs(title = "Flights - Distance traveled") +
   theme_bw()
 ```
 
@@ -114,8 +114,7 @@ inside each square or processes some aggregation, like an average.
 
 ``` r
 spark_flights %>%
-  filter(!is.na(arr_delay)) %>%
-  dbplot_raster(arr_delay, dep_delay) 
+  dbplot_raster(sched_dep_time, sched_arr_time) 
 ```
 
 <img src="tools/readme/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
@@ -126,8 +125,11 @@ spark_flights %>%
 
 ``` r
 spark_flights %>%
-  filter(!is.na(arr_delay)) %>%
-  dbplot_raster(arr_delay, dep_delay, mean(distance, na.rm = TRUE)) 
+  dbplot_raster(
+    sched_dep_time, 
+    sched_arr_time, 
+    mean(distance, na.rm = TRUE)
+    ) 
 ```
 
 <img src="tools/readme/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
@@ -139,8 +141,12 @@ spark_flights %>%
 
 ``` r
 spark_flights %>%
-  filter(!is.na(arr_delay)) %>%
-  dbplot_raster(arr_delay, dep_delay, mean(distance, na.rm = TRUE), resolution = 500)
+  dbplot_raster(
+    sched_dep_time, 
+    sched_arr_time, 
+    mean(distance, na.rm = TRUE),
+    resolution = 20
+    ) 
 ```
 
 <img src="tools/readme/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
@@ -170,7 +176,8 @@ spark_flights %>%
 ```
 
     ## Warning: Missing values are always removed in SQL.
-    ## Use `AVG(x, na.rm = TRUE)` to silence this warning
+    ## Use `mean(x, na.rm = TRUE)` to silence this warning
+    ## This warning is displayed only once per session.
 
 <img src="tools/readme/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
@@ -197,9 +204,6 @@ spark_flights %>%
 spark_flights %>%
   dbplot_line(month, mean(dep_delay))
 ```
-
-    ## Warning: Missing values are always removed in SQL.
-    ## Use `AVG(x, na.rm = TRUE)` to silence this warning
 
 <img src="tools/readme/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
@@ -320,3 +324,9 @@ spark_flights %>%
 ```
 
 <img src="tools/readme/unnamed-chunk-19-1.png" style="display: block; margin: auto;" />
+
+``` r
+spark_disconnect(sc)
+```
+
+    ## NULL

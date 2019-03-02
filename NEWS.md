@@ -1,4 +1,4 @@
-# dbplot 0.3.0.9000
+# dbplot 0.3.1
 
 - New `db_compute_raster2()` function includes upper limit
 

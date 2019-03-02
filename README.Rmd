@@ -1,8 +1,9 @@
 ---
-title: "dbplot"
-output:
-  github_document
+output: github_document
 ---
+
+# dbplot <img src="man/figures/logo.png" align="right" alt="" width="120" />
+
 ```{r, setup, include = FALSE}
 library(dplyr)
 library(dbplot)
@@ -60,13 +61,19 @@ In addition to database connections, the functions work with `sparklyr`. A Spark
 
 ```{r, include = FALSE}
 library(sparklyr)
-sc <- spark_connect(master = "local")
+
+conf <- spark_config()
+conf$`sparklyr.shell.driver-memory` <- "1G"
+conf$spark.memory.fraction <- 0.9
+
+sc <- spark_connect(master = "local",config = conf)
+
 spark_flights <- copy_to(sc, nycflights13::flights, "flights")
 ```
 
 ```{r, eval = FALSE}
 library(sparklyr)
-sc <- spark_connect(master = "local", version = "2.1.0")
+sc <- spark_connect(master = "local")
 spark_flights <- copy_to(sc, nycflights13::flights, "flights")
 ```
 
@@ -80,22 +87,22 @@ By default `dbplot_histogram()` creates a 30 bin histogram
 library(ggplot2)
 
 spark_flights %>% 
-  dbplot_histogram(sched_dep_time)
+  dbplot_histogram(distance)
 ```
 
 Use `binwidth` to fix the bin size
 
 ```{r}
 spark_flights %>% 
-  dbplot_histogram(sched_dep_time, binwidth = 200)
+  dbplot_histogram(distance, binwidth = 400)
 ```
 
 Because it outputs a `ggplot2` object, more customization can be done
 
 ```{r}
 spark_flights %>% 
-  dbplot_histogram(sched_dep_time, binwidth = 300) +
-  labs(title = "Flights - Scheduled Departure Time") +
+  dbplot_histogram(distance, binwidth = 400) +
+  labs(title = "Flights - Distance traveled") +
   theme_bw()
 ```
 
@@ -109,23 +116,29 @@ A Raster plot basically does the same as a Histogram. It takes two continuous va
 - If no `fill` argument is passed, the default calculation will be count, `n()`
 ```{r}
 spark_flights %>%
-  filter(!is.na(arr_delay)) %>%
-  dbplot_raster(arr_delay, dep_delay) 
+  dbplot_raster(sched_dep_time, sched_arr_time) 
 ```
 
 
 - Pass an aggregation formula that can run inside the database
 ```{r}
 spark_flights %>%
-  filter(!is.na(arr_delay)) %>%
-  dbplot_raster(arr_delay, dep_delay, mean(distance, na.rm = TRUE)) 
+  dbplot_raster(
+    sched_dep_time, 
+    sched_arr_time, 
+    mean(distance, na.rm = TRUE)
+    ) 
 ```
 
 - Increase or decrease for more, or less, definition.  The `resolution` argument controls that, it defaults to 100 
 ```{r}
 spark_flights %>%
-  filter(!is.na(arr_delay)) %>%
-  dbplot_raster(arr_delay, dep_delay, mean(distance, na.rm = TRUE), resolution = 500)
+  dbplot_raster(
+    sched_dep_time, 
+    sched_arr_time, 
+    mean(distance, na.rm = TRUE),
+    resolution = 20
+    ) 
 ```
 
 ### Bar Plot
@@ -184,6 +197,7 @@ spark_flights %>%
 ```
 
 The data can be piped to a plot
+
 ```{r}
 spark_flights %>%
   filter(arr_delay < 100 , arr_delay > -50) %>%
@@ -218,4 +232,7 @@ spark_flights %>%
   geom_col(aes(x, n))
 ```
 
+```{r}
+spark_disconnect(sc)
+```
 
