@@ -1,3 +1,4 @@
+^pkgdown$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^packrat/
