@@ -13,17 +13,17 @@
 #' @param y The aggregation formula. Defaults to count (n)
 #'
 #' @examples
-#' 
+#'
 #' library(dplyr)
-#' 
+#'
 #' # Returns the row count per am
 #' mtcars %>%
 #'   db_compute_count(am)
-#' 
+#'
 #' # Returns the average mpg per am
 #' mtcars %>%
 #'   db_compute_count(am, mean(mpg))
-#' 
+#'
 #' # Returns the average and sum of mpg per am
 #' mtcars %>%
 #'   db_compute_count(am, mean(mpg), sum(mpg))
@@ -32,15 +32,12 @@ db_compute_count <- function(data, x, ..., y = n()) {
   x <- enquo(x)
   y <- enquo(y)
   vars <- enquos(...)
-
-  if (length(vars) > 0) {
-    sums <- vars
-  } else {
-    sums <- y
-  }
-
   res <- group_by(data, !!x)
-  res <- summarise(res, !!!sums)
+  if (length(vars) > 0) {
+    res <- summarise(res, !!!vars)
+  } else {
+    res <- summarise(res, !!y)
+  }
   res <- collect(res)
   ungroup(res)
 }
@@ -61,18 +58,18 @@ db_compute_count <- function(data, x, ..., y = n()) {
 #' @param y The aggregation formula. Defaults to count (n)
 #'
 #' @examples
-#' 
+#'
 #' library(ggplot2)
 #' library(dplyr)
-#' 
+#'
 #' # Returns a plot of the row count per am
 #' mtcars %>%
 #'   dbplot_bar(am)
-#' 
+#'
 #' # Returns a plot of the average mpg per am
 #' mtcars %>%
 #'   dbplot_bar(am, mean(mpg))
-#' 
+#'
 #' # Returns the average and sum of mpg per am
 #' mtcars %>%
 #'   dbplot_bar(am, avg_mpg = mean(mpg), sum_mpg = sum(mpg))
@@ -87,7 +84,7 @@ dbplot_bar <- function(data, x, ..., y = n()) {
   vars <- enquos(...)
 
   df <- db_compute_count(
-    data = data, 
+    data = data,
     x = !! x,
     !!! vars,
     y = !! y
@@ -146,18 +143,18 @@ dbplot_bar <- function(data, x, ..., y = n()) {
 #' @param y The aggregation formula. Defaults to count (n)
 #'
 #' @examples
-#' 
+#'
 #' library(ggplot2)
 #' library(dplyr)
-#' 
+#'
 #' # Returns a plot of the row count per cyl
 #' mtcars %>%
 #'   dbplot_line(cyl)
-#' 
+#'
 #' # Returns a plot of the average mpg per cyl
 #' mtcars %>%
 #'   dbplot_line(cyl, mean(mpg))
-#' 
+#'
 #' # Returns the average and sum of mpg per am
 #' mtcars %>%
 #'   dbplot_line(am, avg_mpg = mean(mpg), sum_mpg = sum(mpg))
@@ -172,7 +169,7 @@ dbplot_line <- function(data, x, ..., y = n()) {
   vars <- enquos(...)
 
   df <- db_compute_count(
-    data = data, 
+    data = data,
     x = !! x,
     !!! vars,
     y = !! y

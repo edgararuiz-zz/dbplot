@@ -83,6 +83,14 @@ spark_flights <- copy_to(sc, nycflights13::flights, "flights")
 By default `dbplot_histogram()` creates a 30 bin histogram
 
 ```{r}
+library(rlang)
+x <- expr(test)
+x1 <- enquo(x)
+quo_squash(x1)
+```
+
+
+```{r}
 library(ggplot2)
 
 spark_flights %>% 
@@ -149,10 +157,10 @@ spark_flights %>%
 ```
 
 
-- Pass a formula that will be operated for each value in the discrete variable
+- Pass a formula, and column name, that will be operated for each value in the discrete variable
 ```{r}
 spark_flights %>%
-  dbplot_bar(origin, mean(dep_delay))
+  dbplot_bar(origin, avg_delay =  mean(dep_delay, na.rm = TRUE))
 ```
 
 ### Line plot
@@ -166,7 +174,7 @@ spark_flights %>%
 - Pass a formula that will be operated for each value in the discrete variable
 ```{r}
 spark_flights %>%
-  dbplot_line(month, mean(dep_delay))
+  dbplot_line(month, avg_delay = mean(dep_delay, na.rm = TRUE))
 ```
 
 ### Boxplot

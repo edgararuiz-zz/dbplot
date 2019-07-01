@@ -28,6 +28,7 @@
 #' @export
 db_bin <- function(var, bins = 30, binwidth = NULL) {
   var <- enquo(var)
+  var <- quo_squash(var)
 
   range <- expr((max(!!var, na.rm = TRUE) - min(!!var, na.rm = TRUE)))
 
@@ -38,17 +39,17 @@ db_bin <- function(var, bins = 30, binwidth = NULL) {
   }
 
   bin_number <- expr(as.integer(floor((!!var - min(!!var, na.rm = TRUE)) / !!binwidth)))
-  
+
   expr(((!!binwidth) *
     ifelse(!!bin_number == !!bins, !!bin_number - 1, !!bin_number)) + min(!!var, na.rm = TRUE))
 }
 
 bin_size <- function(.data, field) {
   field <- enquo(field)
-  
+
   vals <- pull(.data, !! field)
   vals_sort <- sort(vals)
-  sort_1 <- vals_sort[1:length(vals_sort) - 1] 
+  sort_1 <- vals_sort[1:length(vals_sort) - 1]
   sort_2 <- vals_sort[2:length(vals_sort)]
   comp <- sort_1 - sort_2
   comp <- comp[comp != 0]

@@ -1,3 +1,7 @@
+# dbplot 0.3.1.9000
+
+- Addresses issue of `'symbol' is not subsettable` (#24)
+
 # dbplot 0.3.1
 
 - New `db_compute_raster2()` function includes upper limit
