@@ -1,4 +1,4 @@
-# dbplot 0.3.1.9000
+# dbplot 0.3.2
 
 - Addresses issue of `'symbol' is not subsettable` (#24)
 
