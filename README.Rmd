@@ -38,13 +38,15 @@ Leverages `dplyr` to process the calculations of a plot inside a database.  This
 
 ## Installation
 
+You can install the released version from CRAN:
 ```{r, eval = FALSE}
-# You can install the released version from CRAN
-install.packages("dbplot")
+# install.packages("dbplot")
+```
 
-# Or the the development version from GitHub:
-install.packages("devtools")
-devtools::install_github("edgararuiz/dbplot")
+Or the the development version from GitHub, using the `remotes` package:
+```{r, eval = FALSE}
+# install.packages("remotes")
+# remotes::install_github("edgararuiz/dbplot")
 ```
 
 
