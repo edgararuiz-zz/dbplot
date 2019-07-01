@@ -72,7 +72,7 @@ in R are: tbl_sql, tbl_dbi, tbl_sql" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dbplot</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.9000</span>
       </span>
     </div>
 
@@ -193,7 +193,7 @@ intersections without a value, the less data is downloaded from the database.</p
 #&gt; </span><span style='color: #BCBCBC;'> 8</span><span>      1.74    57.8     1
 #&gt; </span><span style='color: #BCBCBC;'> 9</span><span>      1.74    61.6     1
 #&gt; </span><span style='color: #BCBCBC;'>10</span><span>      1.78    45.6     1
-#&gt; </span><span style='color: #949494;'># ... with 236 more rows</span><span></div><div class='input'>
+#&gt; </span><span style='color: #949494;'># … with 236 more rows</span><span></div><div class='input'>
 <span class='co'># Returns a 50x50 grid of eruption averages of intersections of eruptions and waiting</span>
 <span class='no'>faithful</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>db_compute_raster</span>(<span class='no'>eruptions</span>, <span class='no'>waiting</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>eruptions</span>), <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 220 x 3</span><span>
@@ -209,7 +209,7 @@ intersections without a value, the less data is downloaded from the database.</p
 #&gt; </span><span style='color: #BCBCBC;'> 8</span><span>      1.74    50.4              1.8 
 #&gt; </span><span style='color: #BCBCBC;'> 9</span><span>      1.74    51.5              1.78
 #&gt; </span><span style='color: #BCBCBC;'>10</span><span>      1.74    52.5              1.8 
-#&gt; </span><span style='color: #949494;'># ... with 210 more rows</span><span></div><div class='input'>
+#&gt; </span><span style='color: #949494;'># … with 210 more rows</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
