@@ -1,9 +1,10 @@
 ## Release summary
 
-New feature that allows multiple, and named, plots to be calculated at one time.
+Fixes compatability issue with the 'rlang' package
 
 ## Test environments
-* local windows 10 install, R 3.5.2
+* local windows 10 install, R 3.6.0
+* ubuntu desktop 18.04
 * ubuntu 14.04 (on travis-ci)
 
 ## R CMD check results
