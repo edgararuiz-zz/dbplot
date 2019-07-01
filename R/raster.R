@@ -97,7 +97,7 @@ db_compute_raster2 <- function(data, x, y, fill = n(), resolution = 100, complet
   size_x <- bin_size(cr, !! x)
   size_y <- bin_size(cr, !! y)
   mutate(
-    cr, 
+    cr,
     !! paste0(quo_name(x), "_2") := !! x + size_x,
     !! paste0(quo_name(y), "_2") := !! y + size_y
   )
@@ -172,7 +172,7 @@ dbplot_raster <- function(data, x, y, fill = n(), resolution = 100, complete = F
   colnames(df) <- c("x", "y", "fill")
 
   ggplot(df) +
-    geom_raster(aes(x, y, fill = fill)) +
+    geom_tile(aes(x, y, fill = fill)) +
     labs(
       x = x,
       y = y

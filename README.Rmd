@@ -85,14 +85,6 @@ spark_flights <- copy_to(sc, nycflights13::flights, "flights")
 By default `dbplot_histogram()` creates a 30 bin histogram
 
 ```{r}
-library(rlang)
-x <- expr(test)
-x1 <- enquo(x)
-quo_squash(x1)
-```
-
-
-```{r}
 library(ggplot2)
 
 spark_flights %>% 
