@@ -15,7 +15,7 @@ knitr::opts_chunk$set(fig.height = 3.5, fig.width =  4, fig.align = 'center')
 
 
 [![Build Status](https://travis-ci.org/edgararuiz/dbplot.svg?branch=master)](https://travis-ci.org/edgararuiz/dbplot)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dbplot)](http://cran.r-project.org/package=dbplot)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/dbplot)](https://cran.r-project.org/package=dbplot)
 [![Coverage status](https://codecov.io/gh/edgararuiz/dbplot/branch/master/graph/badge.svg)](https://codecov.io/github/edgararuiz/dbplot?branch=master)
 
 -   [Installation](#installation)
