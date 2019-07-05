@@ -1,8 +1,14 @@
+code a, pre a {color: #66ff33;}
+.fl      {color: #66ff33;}
+.fu      {color: #66ff33;}
+.ch,.st  {color: #66ff33;}
+.kw      {color: #66ff33;}
+.co      {color: #ffff33;}
+.message {
+  color: #ccc;
+  font-weight: bolder;
+}
 pre, code {
   background-color: #101010;
-  color: #A8A8A8;
-}
-
-.co {
-  color: #F0F0F0;
+  color: #66ff33;
 }
