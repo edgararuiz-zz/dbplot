@@ -2,7 +2,7 @@
 output: github_document
 ---
 
-# dbplot <img src="man/figures/logo.png" align="right" alt="" width="120" />
+# dbplot <img src="man/figures/logo.png" align="right" alt="" width="220" />
 
 ```{r, setup, include = FALSE}
 library(dplyr)
