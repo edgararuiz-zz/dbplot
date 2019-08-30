@@ -1,3 +1,9 @@
+# dbplot 0.3.3
+
+- Added support for MS SQL (#23)
+
+- `db_compute_boxplot` can now return boxplots for tbl objects with existing (eg useful for facetted boxplots)
+
 # dbplot 0.3.2
 
 - Addresses issue of `'symbol' is not subsettable` (#24)
