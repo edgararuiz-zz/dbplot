@@ -7,7 +7,7 @@
 db_compute_boxplot(data, x, var, coef = 1.5)
 }
 \arguments{
-\item{data}{A table (tbl)}
+\item{data}{A table (tbl), can already contain additional grouping vars specified}
 
 \item{x}{A discrete variable in which to group the boxplots}
 
@@ -22,5 +22,8 @@ the calculations automatically run inside the database if `data` has
 a database or sparklyr connection. The `class()` of such tables
 in R are: tbl_sql, tbl_dbi, tbl_spark
 
-It currently only works with Spark and Hive connections.
+It currently only works with Spark, Hive, and SQL Server connections.
+
+Note that this function supports input tbl that already contains 
+grouping variables. This can be useful when creating faceted boxplots.
 }

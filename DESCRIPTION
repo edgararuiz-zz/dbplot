@@ -1,5 +1,5 @@
 Package: dbplot
-Version: 0.3.2
+Version: 0.3.3
 Title: Simplifies Plotting Data Inside Databases
 Description: Leverages 'dplyr' to process the calculations of a plot inside a database. 
     This package provides helper functions that abstract the work at three levels:
@@ -11,7 +11,7 @@ Depends:
     R (>= 3.1)
 Imports:
     dplyr(>= 0.7),
-    rlang(>= 0.4),
+    rlang(>= 0.3),
     ggplot2,
     purrr
 Suggests: 
