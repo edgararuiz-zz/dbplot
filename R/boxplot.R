@@ -52,19 +52,11 @@ calc_boxplot.tbl <- function(res, var) {
   )
 }
 
-calc_boxplot.data.frame <- function(res, var) {
-  summarise(
-    res,
-    n       = n(),
-    lower   = quantile(!!var, 0.25),
-    middle  = quantile(!!var, 0.5),
-    upper   = quantile(!!var, 0.75),
-    max_raw = max(!!var, na.rm = TRUE),
-    min_raw = min(!!var, na.rm = TRUE)
-  )
+calc_boxplot.tbl_spark <- function(res, var) {
+  calc_boxplot_sparklyr(res, var)
 }
 
-calc_boxplot.tbl_spark <- function(res, var) {
+calc_boxplot_sparklyr <- function(res, var) {
   summarise(
     res,
     n       = n(),
@@ -77,6 +69,10 @@ calc_boxplot.tbl_spark <- function(res, var) {
 }
 
 `calc_boxplot.tbl_Microsoft SQL Server` <- function(res, var) {
+  calc_boxplot_mssql(res, var)
+}
+
+calc_boxplot_mssql <- function(res, var) {
   res <- mutate(
     res,
     n       = n(),

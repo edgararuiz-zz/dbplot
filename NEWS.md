@@ -1,8 +1,8 @@
 # dbplot 0.3.3
 
-- Added support for MS SQL (#23)
+-  Expands support for `db_compute_boxplot` to `dbplyr` backends (#23 @mkirzon)
 
-- `db_compute_boxplot` can now return boxplots for tbl objects with existing (eg useful for facetted boxplots)
+- `db_compute_boxplot` can now return boxplots for `tbl` objects with existing grouping (eg useful for facetted boxplots) (#23 @mkirzon)
 
 # dbplot 0.3.2
 
