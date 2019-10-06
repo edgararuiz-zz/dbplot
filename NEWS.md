@@ -1,6 +1,8 @@
 # dbplot 0.3.3
 
--  Expands support for `db_compute_boxplot` to `dbplyr` backends (#23 @mkirzon)
+- Adds support for `vars()` in the `x` argument in `db_compute_boxplot()` (#27)
+
+- Expands support for `db_compute_boxplot` to `dbplyr` backends (#23 @mkirzon)
 
 - `db_compute_boxplot` can now return boxplots for `tbl` objects with existing grouping (eg useful for facetted boxplots) (#23 @mkirzon)
 

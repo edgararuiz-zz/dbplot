@@ -21,9 +21,15 @@
 #' @export
 db_compute_boxplot <- function(data, x, var, coef = 1.5) {
   x <- enquo(x)
+  check_vars <- quo_get_expr(x)
+  if(length(check_vars) > 1 && expr_text(check_vars[1]) == "vars()") {
+    x <- eval_tidy(x)
+  } else {
+    x <- quos(!! x)
+  }
   var <- enquo(var)
   var <- quo_squash(var)
-  res <- group_by(data, !!x, add = TRUE)
+  res <- group_by(data, !!! x, add = TRUE)
   res <- calc_boxplot(res, var)
   res <- mutate(res,
     iqr     = (upper - lower) * coef,
@@ -133,7 +139,8 @@ dbplot_boxplot <- function(data, x, var, coef = 1.5) {
         lower = lower,
         middle = middle,
         upper = upper,
-        ymax = ymax
+        ymax = ymax,
+        group = x
       ),
       stat = "identity"
     ) +
