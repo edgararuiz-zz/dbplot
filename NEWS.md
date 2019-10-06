@@ -1,5 +1,7 @@
 # dbplot 0.3.3
 
+- Example in README now uses SQLite (#17)
+
 - Adds support for `vars()` in the `x` argument in `db_compute_boxplot()` (#27)
 
 - Expands support for `db_compute_boxplot` to `dbplyr` backends (#23 @mkirzon)

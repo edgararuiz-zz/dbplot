@@ -7,10 +7,16 @@ output: github_document
 ```{r, setup, include = FALSE}
 library(dplyr)
 library(dbplot)
-library(sparklyr)
 library(nycflights13)
 
-knitr::opts_chunk$set(fig.height = 3.5, fig.width =  4, fig.align = 'center')
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+
+#knitr::opts_chunk$set(fig.height = 3.5, fig.width =  4, fig.align = 'center')
 ```
 
 
@@ -58,24 +64,16 @@ Or the the development version from GitHub, using the `remotes` package:
 
 ## Example
 
-In addition to database connections, the functions work with `sparklyr`. A Spark DataFrame will be used for the examples in this README.  
+In addition to database connections, the functions work with `sparklyr`. A local `RSQLite` database will be used for the examples in this README.  
 
-```{r, include = FALSE}
-library(sparklyr)
 
-conf <- spark_config()
-conf$`sparklyr.shell.driver-memory` <- "1G"
-conf$spark.memory.fraction <- 0.9
+```{r}
+library(DBI)
+library(odbc)
+library(dplyr)
 
-sc <- spark_connect(master = "local",config = conf)
-
-spark_flights <- copy_to(sc, nycflights13::flights, "flights")
-```
-
-```{r, eval = FALSE}
-library(sparklyr)
-sc <- spark_connect(master = "local")
-spark_flights <- copy_to(sc, nycflights13::flights, "flights")
+con <- dbConnect(RSQLite::SQLite(), ":memory:")
+db_flights <- copy_to(con, nycflights13::flights, "flights")
 ```
 
 ## `ggplot`
@@ -87,21 +85,21 @@ By default `dbplot_histogram()` creates a 30 bin histogram
 ```{r}
 library(ggplot2)
 
-spark_flights %>% 
+db_flights %>% 
   dbplot_histogram(distance)
 ```
 
 Use `binwidth` to fix the bin size
 
 ```{r}
-spark_flights %>% 
+db_flights %>% 
   dbplot_histogram(distance, binwidth = 400)
 ```
 
 Because it outputs a `ggplot2` object, more customization can be done
 
 ```{r}
-spark_flights %>% 
+db_flights %>% 
   dbplot_histogram(distance, binwidth = 400) +
   labs(title = "Flights - Distance traveled") +
   theme_bw()
@@ -116,14 +114,14 @@ A Raster plot basically does the same as a Histogram. It takes two continuous va
 
 - If no `fill` argument is passed, the default calculation will be count, `n()`
 ```{r}
-spark_flights %>%
+db_flights %>%
   dbplot_raster(sched_dep_time, sched_arr_time) 
 ```
 
 
 - Pass an aggregation formula that can run inside the database
 ```{r}
-spark_flights %>%
+db_flights %>%
   dbplot_raster(
     sched_dep_time, 
     sched_arr_time, 
@@ -133,7 +131,7 @@ spark_flights %>%
 
 - Increase or decrease for more, or less, definition.  The `resolution` argument controls that, it defaults to 100 
 ```{r}
-spark_flights %>%
+db_flights %>%
   dbplot_raster(
     sched_dep_time, 
     sched_arr_time, 
@@ -146,14 +144,14 @@ spark_flights %>%
 
 - `dbplot_bar()` defaults to a tally() of each value in a discrete variable
 ```{r}
-spark_flights %>%
+db_flights %>%
   dbplot_bar(origin)
 ```
 
 
 - Pass a formula, and column name, that will be operated for each value in the discrete variable
 ```{r}
-spark_flights %>%
+db_flights %>%
   dbplot_bar(origin, avg_delay =  mean(dep_delay, na.rm = TRUE))
 ```
 
@@ -161,24 +159,32 @@ spark_flights %>%
 
 - `dbplot_line()` defaults to a tally() of each value in a discrete variable
 ```{r}
-spark_flights %>%
+db_flights %>%
   dbplot_line(month)
 ```
 
 - Pass a formula that will be operated for each value in the discrete variable
 ```{r}
-spark_flights %>%
+db_flights %>%
   dbplot_line(month, avg_delay = mean(dep_delay, na.rm = TRUE))
 ```
 
 ### Boxplot
 
-- It expects a discrete variable to group by, and a continuous variable to calculate the percentiles and IQR. It doesn't calculate outliers. Currently, this feature works with sparklyr and Hive connections.
+It expects a discrete variable to group by, and a continuous variable to calculate the percentiles and IQR. It doesn't calculate outliers. It has been tested with the following connections:
+
+- MS SQL Server
+- PostgreSQL
+- Oracle
+- `sparklyr`
+
+Here is an example using `dbplot_boxplot()` with a local data frame:
 
 ```{r}
-spark_flights %>%
-  dbplot_boxplot(origin, dep_delay)
+nycflights13::flights %>%
+  dbplot_boxplot(origin, distance)
 ```
+
 
 
 ## Calculation functions
@@ -193,14 +199,14 @@ If a more customized plot is needed, the data the underpins the plots can also b
 
 
 ```{r}
-spark_flights %>%
+db_flights %>%
   db_compute_bins(arr_delay) 
 ```
 
 The data can be piped to a plot
 
 ```{r}
-spark_flights %>%
+db_flights %>%
   filter(arr_delay < 100 , arr_delay > -50) %>%
   db_compute_bins(arr_delay) %>%
   ggplot() +
@@ -218,13 +224,13 @@ db_bin(var)
 
 
 ```{r}
-spark_flights %>%
+db_flights %>%
   group_by(x = !! db_bin(arr_delay)) %>%
   tally()
 ```
 
 ```{r}
-spark_flights %>%
+db_flights %>%
   filter(!is.na(arr_delay)) %>%
   group_by(x = !! db_bin(arr_delay)) %>%
   tally()%>%
@@ -234,6 +240,6 @@ spark_flights %>%
 ```
 
 ```{r}
-spark_disconnect(sc)
+dbDisconnect(con)
 ```
 

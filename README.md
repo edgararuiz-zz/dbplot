@@ -54,12 +54,15 @@ Or the the development version from GitHub, using the `remotes` package:
 ## Example
 
 In addition to database connections, the functions work with `sparklyr`.
-A Spark DataFrame will be used for the examples in this README.
+A local `RSQLite` database will be used for the examples in this README.
 
 ``` r
-library(sparklyr)
-sc <- spark_connect(master = "local")
-spark_flights <- copy_to(sc, nycflights13::flights, "flights")
+library(DBI)
+library(odbc)
+library(dplyr)
+
+con <- dbConnect(RSQLite::SQLite(), ":memory:")
+db_flights <- copy_to(con, nycflights13::flights, "flights")
 ```
 
 ## `ggplot`
@@ -71,31 +74,31 @@ By default `dbplot_histogram()` creates a 30 bin histogram
 ``` r
 library(ggplot2)
 
-spark_flights %>% 
+db_flights %>% 
   dbplot_histogram(distance)
 ```
 
-<img src="man/figures/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 Use `binwidth` to fix the bin size
 
 ``` r
-spark_flights %>% 
+db_flights %>% 
   dbplot_histogram(distance, binwidth = 400)
 ```
 
-<img src="man/figures/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 Because it outputs a `ggplot2` object, more customization can be done
 
 ``` r
-spark_flights %>% 
+db_flights %>% 
   dbplot_histogram(distance, binwidth = 400) +
   labs(title = "Flights - Distance traveled") +
   theme_bw()
 ```
 
-<img src="man/figures/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 ### Raster
 
@@ -116,18 +119,18 @@ inside each square or processes some aggregation, like an average.
 <!-- end list -->
 
 ``` r
-spark_flights %>%
+db_flights %>%
   dbplot_raster(sched_dep_time, sched_arr_time) 
 ```
 
-<img src="man/figures/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
   - Pass an aggregation formula that can run inside the database
 
 <!-- end list -->
 
 ``` r
-spark_flights %>%
+db_flights %>%
   dbplot_raster(
     sched_dep_time, 
     sched_arr_time, 
@@ -135,7 +138,7 @@ spark_flights %>%
     ) 
 ```
 
-<img src="man/figures/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
   - Increase or decrease for more, or less, definition. The `resolution`
     argument controls that, it defaults to 100
@@ -143,7 +146,7 @@ spark_flights %>%
 <!-- end list -->
 
 ``` r
-spark_flights %>%
+db_flights %>%
   dbplot_raster(
     sched_dep_time, 
     sched_arr_time, 
@@ -152,7 +155,7 @@ spark_flights %>%
     ) 
 ```
 
-<img src="man/figures/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 ### Bar Plot
 
@@ -162,11 +165,11 @@ spark_flights %>%
 <!-- end list -->
 
 ``` r
-spark_flights %>%
+db_flights %>%
   dbplot_bar(origin)
 ```
 
-<img src="man/figures/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
 
   - Pass a formula, and column name, that will be operated for each
     value in the discrete variable
@@ -174,11 +177,11 @@ spark_flights %>%
 <!-- end list -->
 
 ``` r
-spark_flights %>%
+db_flights %>%
   dbplot_bar(origin, avg_delay =  mean(dep_delay, na.rm = TRUE))
 ```
 
-<img src="man/figures/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
 
 ### Line plot
 
@@ -188,11 +191,11 @@ spark_flights %>%
 <!-- end list -->
 
 ``` r
-spark_flights %>%
+db_flights %>%
   dbplot_line(month)
 ```
 
-<img src="man/figures/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
 
   - Pass a formula that will be operated for each value in the discrete
     variable
@@ -200,27 +203,31 @@ spark_flights %>%
 <!-- end list -->
 
 ``` r
-spark_flights %>%
+db_flights %>%
   dbplot_line(month, avg_delay = mean(dep_delay, na.rm = TRUE))
 ```
 
-<img src="man/figures/unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
 
 ### Boxplot
 
-  - It expects a discrete variable to group by, and a continuous
-    variable to calculate the percentiles and IQR. It doesn’t calculate
-    outliers. Currently, this feature works with sparklyr and Hive
-    connections.
+It expects a discrete variable to group by, and a continuous variable to
+calculate the percentiles and IQR. It doesn’t calculate outliers. It has
+been tested with the following connections:
 
-<!-- end list -->
+  - MS SQL Server
+  - PostgreSQL
+  - Oracle
+  - `sparklyr`
+
+Here is an example using `dbplot_boxplot()` with a local data frame:
 
 ``` r
-spark_flights %>%
-  dbplot_boxplot(origin, dep_delay)
+nycflights13::flights %>%
+  dbplot_boxplot(origin, distance)
 ```
 
-<img src="man/figures/unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
 
 ## Calculation functions
 
@@ -241,79 +248,76 @@ can also be accessed:
 <!-- end list -->
 
 ``` r
-spark_flights %>%
+db_flights %>%
   db_compute_bins(arr_delay) 
+#> # A tibble: 28 x 2
+#>    arr_delay  count
+#>        <dbl>  <int>
+#>  1     NA      9430
+#>  2    -86      5325
+#>  3    -40.7  207999
+#>  4      4.53  79784
+#>  5     49.8   19063
+#>  6     95.1    7890
+#>  7    140.     3746
+#>  8    186.     1742
+#>  9    231.      921
+#> 10    276.      425
+#> # … with 18 more rows
 ```
-
-    ## # A tibble: 28 x 2
-    ##    arr_delay  count
-    ##        <dbl>  <dbl>
-    ##  1      4.53  79784
-    ##  2    -40.7  207999
-    ##  3     95.1    7890
-    ##  4     49.8   19063
-    ##  5    819.        8
-    ##  6    140.     3746
-    ##  7    321.      232
-    ##  8    231.      921
-    ##  9    -86      5325
-    ## 10    186.     1742
-    ## # … with 18 more rows
 
 The data can be piped to a plot
 
 ``` r
-spark_flights %>%
+db_flights %>%
   filter(arr_delay < 100 , arr_delay > -50) %>%
   db_compute_bins(arr_delay) %>%
   ggplot() +
   geom_col(aes(arr_delay, count, fill = count))
 ```
 
-<img src="man/figures/unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" />
 
 ## `db_bin()`
 
 Uses ‘rlang’ to build the formula needed to create the bins of a numeric
 variable in an un-evaluated fashion. This way, the formula can be then
-passed inside a dplyr
-    verb.
+passed inside a dplyr verb.
 
 ``` r
 db_bin(var)
+#> (((max(var, na.rm = TRUE) - min(var, na.rm = TRUE))/30) * ifelse(as.integer(floor((var - 
+#>     min(var, na.rm = TRUE))/((max(var, na.rm = TRUE) - min(var, 
+#>     na.rm = TRUE))/30))) == 30, as.integer(floor((var - min(var, 
+#>     na.rm = TRUE))/((max(var, na.rm = TRUE) - min(var, na.rm = TRUE))/30))) - 
+#>     1, as.integer(floor((var - min(var, na.rm = TRUE))/((max(var, 
+#>     na.rm = TRUE) - min(var, na.rm = TRUE))/30))))) + min(var, 
+#>     na.rm = TRUE)
 ```
 
-    ## (((max(var, na.rm = TRUE) - min(var, na.rm = TRUE))/30) * ifelse(as.integer(floor((var - 
-    ##     min(var, na.rm = TRUE))/((max(var, na.rm = TRUE) - min(var, 
-    ##     na.rm = TRUE))/30))) == 30, as.integer(floor((var - min(var, 
-    ##     na.rm = TRUE))/((max(var, na.rm = TRUE) - min(var, na.rm = TRUE))/30))) - 
-    ##     1, as.integer(floor((var - min(var, na.rm = TRUE))/((max(var, 
-    ##     na.rm = TRUE) - min(var, na.rm = TRUE))/30))))) + min(var, 
-    ##     na.rm = TRUE)
-
 ``` r
-spark_flights %>%
+db_flights %>%
   group_by(x = !! db_bin(arr_delay)) %>%
   tally()
+#> # Source:   lazy query [?? x 2]
+#> # Database: sqlite 3.29.0 [:memory:]
+#>         x      n
+#>     <dbl>  <int>
+#>  1  NA      9430
+#>  2 -86      5325
+#>  3 -40.7  207999
+#>  4   4.53  79784
+#>  5  49.8   19063
+#>  6  95.1    7890
+#>  7 140.     3746
+#>  8 186.     1742
+#>  9 231.      921
+#> 10 276.      425
+#> # … with more rows
 ```
 
-    ## # Source: spark<?> [?? x 2]
-    ##         x      n
-    ##     <dbl>  <dbl>
-    ##  1   4.53  79784
-    ##  2 -40.7  207999
-    ##  3  95.1    7890
-    ##  4  49.8   19063
-    ##  5 819.        8
-    ##  6 140.     3746
-    ##  7 321.      232
-    ##  8 231.      921
-    ##  9 -86      5325
-    ## 10 186.     1742
-    ## # … with more rows
-
 ``` r
-spark_flights %>%
+db_flights %>%
   filter(!is.na(arr_delay)) %>%
   group_by(x = !! db_bin(arr_delay)) %>%
   tally()%>%
@@ -322,8 +326,8 @@ spark_flights %>%
   geom_col(aes(x, n))
 ```
 
-<img src="man/figures/unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" />
 
 ``` r
-spark_disconnect(sc)
+dbDisconnect(con)
 ```

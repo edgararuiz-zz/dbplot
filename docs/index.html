@@ -12,14 +12,14 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cyborg/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
-<meta property="og:title" content="Simplifies Plotting Data Inside Databases">
-<meta property="og:description" content="Leverages 'dplyr' to process the calculations of a plot inside a database. 
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script><meta property="og:title" content="Simplifies Plotting Data Inside Databases">
+<meta property="og:description" content="Leverages dplyr to process the calculations of a plot inside a database. 
     This package provides helper functions that abstract the work at three levels:
-    outputs a 'ggplot', outputs the calculations, outputs the formula
+    outputs a ggplot, outputs the calculations, outputs the formula
     needed to calculate bins.">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">dbplot</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2.9000</span>
       </span>
     </div>
 
@@ -49,7 +49,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -63,7 +63,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/edgararuiz/dbplot">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -76,6 +76,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="contents col-md-9">
 <div id="dbplot" class="section level1">
@@ -126,10 +127,13 @@
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>In addition to database connections, the functions work with <code>sparklyr</code>. A Spark DataFrame will be used for the examples in this README.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sparklyr)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">sc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/sparklyr/topics/spark-connections">spark_connect</a></span>(<span class="dt">master =</span> <span class="st">"local"</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">spark_flights &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/sparklyr/topics/copy_to">copy_to</a></span>(sc, nycflights13<span class="op">::</span>flights, <span class="st">"flights"</span>)</a></code></pre></div>
+<p>In addition to database connections, the functions work with <code>sparklyr</code>. A local <code>RSQLite</code> database will be used for the examples in this README.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(DBI)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(odbc)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">con &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/DBI/man/dbConnect.html">dbConnect</a></span>(RSQLite<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/RSQLite/man/SQLite.html">SQLite</a></span>(), <span class="st">":memory:"</span>)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">db_flights &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/copy_to.html">copy_to</a></span>(con, nycflights13<span class="op">::</span>flights, <span class="st">"flights"</span>)</a></code></pre></div>
 </div>
 <div id="ggplot" class="section level2">
 <h2 class="hasAnchor">
@@ -139,21 +143,21 @@
 <h3 class="hasAnchor">
 <a href="#histogram" class="anchor"></a>Histogram</h3>
 <p>By default <code><a href="reference/dbplot_histogram.html">dbplot_histogram()</a></code> creates a 30 bin histogram</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">spark_flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">db_flights <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="reference/dbplot_histogram.html">dbplot_histogram</a></span>(distance)</a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-5-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
 <p>Use <code>binwidth</code> to fix the bin size</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">db_flights <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/dbplot_histogram.html">dbplot_histogram</a></span>(distance, <span class="dt">binwidth =</span> <span class="dv">400</span>)</a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-6-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
 <p>Because it outputs a <code>ggplot2</code> object, more customization can be done</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">db_flights <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/dbplot_histogram.html">dbplot_histogram</a></span>(distance, <span class="dt">binwidth =</span> <span class="dv">400</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">title =</span> <span class="st">"Flights - Distance traveled"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-7-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
 </div>
 <div id="raster" class="section level3">
 <h3 class="hasAnchor">
@@ -161,33 +165,33 @@
 <p>To visualize two continuous variables, we typically resort to a Scatter plot. However, this may not be practical when visualizing millions or billions of dots representing the intersections of the two variables. A Raster plot may be a better option, because it concentrates the intersections into squares that are easier to parse visually.</p>
 <p>A Raster plot basically does the same as a Histogram. It takes two continuous variables and creates discrete 2-dimensional bins represented as squares in the plot. It then determines either the number of rows inside each square or processes some aggregation, like an average.</p>
 <ul>
-<li>If no <code>fill</code> argument is passed, the default calculation will be count, <code>n()</code>
+<li>If no <code>fill</code> argument is passed, the default calculation will be count, <code><a href="https://dplyr.tidyverse.org/reference/n.html">n()</a></code>
 </li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span></a>
+<!-- end list --><div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">db_flights <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/dbplot_raster.html">dbplot_raster</a></span>(sched_dep_time, sched_arr_time) </a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-8-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
 <ul>
 <li>Pass an aggregation formula that can run inside the database</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span></a>
+<!-- end list --><div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">db_flights <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/dbplot_raster.html">dbplot_raster</a></span>(</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3">    sched_dep_time, </a>
 <a class="sourceLine" id="cb8-4" data-line-number="4">    sched_arr_time, </a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(distance, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">    <span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(distance, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb8-6" data-line-number="6">    ) </a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-9-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-8-1.png" width="100%"></p>
 <ul>
 <li>Increase or decrease for more, or less, definition. The <code>resolution</code> argument controls that, it defaults to 100</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span></a>
+<!-- end list --><div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">db_flights <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/dbplot_raster.html">dbplot_raster</a></span>(</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3">    sched_dep_time, </a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">    sched_arr_time, </a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(distance, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">    <span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(distance, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
 <a class="sourceLine" id="cb9-6" data-line-number="6">    <span class="dt">resolution =</span> <span class="dv">20</span></a>
 <a class="sourceLine" id="cb9-7" data-line-number="7">    ) </a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-10-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%"></p>
 </div>
 <div id="bar-plot" class="section level3">
 <h3 class="hasAnchor">
@@ -196,15 +200,15 @@
 <li>
 <code><a href="reference/dbplot_bar.html">dbplot_bar()</a></code> defaults to a tally() of each value in a discrete variable</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span></a>
+<!-- end list --><div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">db_flights <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/dbplot_bar.html">dbplot_bar</a></span>(origin)</a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-11-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="100%"></p>
 <ul>
 <li>Pass a formula, and column name, that will be operated for each value in the discrete variable</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/dbplot_bar.html">dbplot_bar</a></span>(origin, <span class="dt">avg_delay =</span>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-12-1.png" style="display: block; margin: auto;"></p>
+<!-- end list --><div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">db_flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/dbplot_bar.html">dbplot_bar</a></span>(origin, <span class="dt">avg_delay =</span>  <span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%"></p>
 </div>
 <div id="line-plot" class="section level3">
 <h3 class="hasAnchor">
@@ -213,25 +217,30 @@
 <li>
 <code><a href="reference/dbplot_line.html">dbplot_line()</a></code> defaults to a tally() of each value in a discrete variable</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span></a>
+<!-- end list --><div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">db_flights <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/dbplot_line.html">dbplot_line</a></span>(month)</a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-13-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="100%"></p>
 <ul>
 <li>Pass a formula that will be operated for each value in the discrete variable</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/dbplot_line.html">dbplot_line</a></span>(month, <span class="dt">avg_delay =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-14-1.png" style="display: block; margin: auto;"></p>
+<!-- end list --><div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">db_flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/dbplot_line.html">dbplot_line</a></span>(month, <span class="dt">avg_delay =</span> <span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="100%"></p>
 </div>
 <div id="boxplot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#boxplot" class="anchor"></a>Boxplot</h3>
+<p>It expects a discrete variable to group by, and a continuous variable to calculate the percentiles and IQR. It doesn’t calculate outliers. It has been tested with the following connections:</p>
 <ul>
-<li>It expects a discrete variable to group by, and a continuous variable to calculate the percentiles and IQR. It doesn’t calculate outliers. Currently, this feature works with sparklyr and Hive connections.</li>
+<li>MS SQL Server</li>
+<li>PostgreSQL</li>
+<li>Oracle</li>
+<li><code>sparklyr</code></li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/dbplot_boxplot.html">dbplot_boxplot</a></span>(origin, dep_delay)</a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-15-1.png" style="display: block; margin: auto;"></p>
+<p>Here is an example using <code><a href="reference/dbplot_boxplot.html">dbplot_boxplot()</a></code> with a local data frame:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">nycflights13<span class="op">::</span>flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/dbplot_boxplot.html">dbplot_boxplot</a></span>(origin, distance)</a></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-14-1.png" width="100%"></p>
 </div>
 </div>
 <div id="calculation-functions" class="section level2">
@@ -250,69 +259,70 @@
 <li>
 <code><a href="reference/db_compute_boxplot.html">db_compute_boxplot()</a></code> - Returns a data frame with boxplot calculations</li>
 </ol>
-<!-- end list --><div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/db_compute_bins.html">db_compute_bins</a></span>(arr_delay) </a></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co">## # A tibble: 28 x 2</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">##    arr_delay  count</span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co">##        &lt;dbl&gt;  &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co">##  1      4.53  79784</span></a>
-<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co">##  2    -40.7  207999</span></a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co">##  3     95.1    7890</span></a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">##  4     49.8   19063</span></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">##  5    819.        8</span></a>
-<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co">##  6    140.     3746</span></a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">##  7    321.      232</span></a>
-<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co">##  8    231.      921</span></a>
-<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">##  9    -86      5325</span></a>
-<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co">## 10    186.     1742</span></a>
-<a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co">## # … with 18 more rows</span></a></code></pre></div>
+<!-- end list --><div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">db_flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/db_compute_bins.html">db_compute_bins</a></span>(arr_delay) </a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; # A tibble: 28 x 2</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt;    arr_delay  count</span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt;        &lt;dbl&gt;  &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt;  1     NA      9430</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt;  2    -86      5325</span></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt;  3    -40.7  207999</span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt;  4      4.53  79784</span></a>
+<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">#&gt;  5     49.8   19063</span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt;  6     95.1    7890</span></a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt;  7    140.     3746</span></a>
+<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt;  8    186.     1742</span></a>
+<a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt;  9    231.      921</span></a>
+<a class="sourceLine" id="cb15-15" data-line-number="15"><span class="co">#&gt; 10    276.      425</span></a>
+<a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co">#&gt; # … with 18 more rows</span></a></code></pre></div>
 <p>The data can be piped to a plot</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(arr_delay <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span> , arr_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">-50</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="reference/db_compute_bins.html">db_compute_bins</a></span>(arr_delay) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(arr_delay, count, <span class="dt">fill =</span> count))</a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-17-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">db_flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(arr_delay <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span> , arr_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">-50</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="reference/db_compute_bins.html">db_compute_bins</a></span>(arr_delay) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(arr_delay, count, <span class="dt">fill =</span> count))</a></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-16-1.png" width="100%"></p>
 </div>
 <div id="db_bin" class="section level2">
 <h2 class="hasAnchor">
-<a href="#db_bin" class="anchor"></a><code><a href="reference/db_bin.html">db_bin()</a></code>
+<a href="#db_bin" class="anchor"></a><code>db_bin()</code>
 </h2>
 <p>Uses ‘rlang’ to build the formula needed to create the bins of a numeric variable in an un-evaluated fashion. This way, the formula can be then passed inside a dplyr verb.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw"><a href="reference/db_bin.html">db_bin</a></span>(var)</a></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co">## (((max(var, na.rm = TRUE) - min(var, na.rm = TRUE))/30) * ifelse(as.integer(floor((var - </span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="co">##     min(var, na.rm = TRUE))/((max(var, na.rm = TRUE) - min(var, </span></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="co">##     na.rm = TRUE))/30))) == 30, as.integer(floor((var - min(var, </span></a>
-<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="co">##     na.rm = TRUE))/((max(var, na.rm = TRUE) - min(var, na.rm = TRUE))/30))) - </span></a>
-<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="co">##     1, as.integer(floor((var - min(var, na.rm = TRUE))/((max(var, </span></a>
-<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="co">##     na.rm = TRUE) - min(var, na.rm = TRUE))/30))))) + min(var, </span></a>
-<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="co">##     na.rm = TRUE)</span></a></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(<span class="dt">x =</span> <span class="op">!!</span><span class="st"> </span><span class="kw"><a href="reference/db_bin.html">db_bin</a></span>(arr_delay)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="st">  </span><span class="kw">tally</span>()</a></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co">## # Source: spark&lt;?&gt; [?? x 2]</span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">##         x      n</span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">##     &lt;dbl&gt;  &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co">##  1   4.53  79784</span></a>
-<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co">##  2 -40.7  207999</span></a>
-<a class="sourceLine" id="cb21-6" data-line-number="6"><span class="co">##  3  95.1    7890</span></a>
-<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="co">##  4  49.8   19063</span></a>
-<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="co">##  5 819.        8</span></a>
-<a class="sourceLine" id="cb21-9" data-line-number="9"><span class="co">##  6 140.     3746</span></a>
-<a class="sourceLine" id="cb21-10" data-line-number="10"><span class="co">##  7 321.      232</span></a>
-<a class="sourceLine" id="cb21-11" data-line-number="11"><span class="co">##  8 231.      921</span></a>
-<a class="sourceLine" id="cb21-12" data-line-number="12"><span class="co">##  9 -86      5325</span></a>
-<a class="sourceLine" id="cb21-13" data-line-number="13"><span class="co">## 10 186.     1742</span></a>
-<a class="sourceLine" id="cb21-14" data-line-number="14"><span class="co">## # … with more rows</span></a></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">spark_flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(arr_delay)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(<span class="dt">x =</span> <span class="op">!!</span><span class="st"> </span><span class="kw"><a href="reference/db_bin.html">db_bin</a></span>(arr_delay)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="st">  </span><span class="kw">tally</span>()<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="st">  </span>collect <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb22-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, n))</a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-20-1.png" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/sparklyr/topics/spark-connections">spark_disconnect</a></span>(sc)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="reference/db_bin.html">db_bin</a></span>(var)</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co">#&gt; (((max(var, na.rm = TRUE) - min(var, na.rm = TRUE))/30) * ifelse(as.integer(floor((var - </span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="co">#&gt;     min(var, na.rm = TRUE))/((max(var, na.rm = TRUE) - min(var, </span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="co">#&gt;     na.rm = TRUE))/30))) == 30, as.integer(floor((var - min(var, </span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co">#&gt;     na.rm = TRUE))/((max(var, na.rm = TRUE) - min(var, na.rm = TRUE))/30))) - </span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt;     1, as.integer(floor((var - min(var, na.rm = TRUE))/((max(var, </span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co">#&gt;     na.rm = TRUE) - min(var, na.rm = TRUE))/30))))) + min(var, </span></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt;     na.rm = TRUE)</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">db_flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="dt">x =</span> <span class="op">!!</span><span class="st"> </span><span class="kw"><a href="reference/db_bin.html">db_bin</a></span>(arr_delay)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/tally.html">tally</a></span>()</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="co">#&gt; # Source:   lazy query [?? x 2]</span></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="co">#&gt; # Database: sqlite 3.29.0 [:memory:]</span></a>
+<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="co">#&gt;         x      n</span></a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="co">#&gt;     &lt;dbl&gt;  &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co">#&gt;  1  NA      9430</span></a>
+<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="co">#&gt;  2 -86      5325</span></a>
+<a class="sourceLine" id="cb18-10" data-line-number="10"><span class="co">#&gt;  3 -40.7  207999</span></a>
+<a class="sourceLine" id="cb18-11" data-line-number="11"><span class="co">#&gt;  4   4.53  79784</span></a>
+<a class="sourceLine" id="cb18-12" data-line-number="12"><span class="co">#&gt;  5  49.8   19063</span></a>
+<a class="sourceLine" id="cb18-13" data-line-number="13"><span class="co">#&gt;  6  95.1    7890</span></a>
+<a class="sourceLine" id="cb18-14" data-line-number="14"><span class="co">#&gt;  7 140.     3746</span></a>
+<a class="sourceLine" id="cb18-15" data-line-number="15"><span class="co">#&gt;  8 186.     1742</span></a>
+<a class="sourceLine" id="cb18-16" data-line-number="16"><span class="co">#&gt;  9 231.      921</span></a>
+<a class="sourceLine" id="cb18-17" data-line-number="17"><span class="co">#&gt; 10 276.      425</span></a>
+<a class="sourceLine" id="cb18-18" data-line-number="18"><span class="co">#&gt; # … with more rows</span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">db_flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(arr_delay)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="dt">x =</span> <span class="op">!!</span><span class="st"> </span><span class="kw"><a href="reference/db_bin.html">db_bin</a></span>(arr_delay)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/tally.html">tally</a></span>()<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="st">  </span>collect <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, n))</a></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-19-1.png" width="100%"></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/DBI/man/dbDisconnect.html">dbDisconnect</a></span>(con)</a></code></pre></div>
 </div>
 </div>
   </div>
@@ -353,17 +363,20 @@
 </div>
 </div>
 
+
       <footer><div class="copyright">
   <p>Developed by Edgar Ruiz.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
