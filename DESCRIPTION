@@ -15,7 +15,7 @@ Imports:
     ggplot2,
     purrr
 Suggests: 
-    dbplyr (>= 1.2.0),
+    dbplyr (>= 1.4.0),
     testthat,
     tidyr,
     covr

@@ -10,11 +10,11 @@
 #'
 #' It currently only works with Spark, Hive, and SQL Server connections.
 #'
-#' Note that this function supports input tbl that already contains 
+#' Note that this function supports input tbl that already contains
 #' grouping variables. This can be useful when creating faceted boxplots.
 #'
 #' @param data A table (tbl), can already contain additional grouping vars specified
-#' @param x A discrete variable in which to group the boxplots 
+#' @param x A discrete variable in which to group the boxplots
 #' @param var A continuous variable
 #' @param coef Length of the whiskers as multiple of IQR. Defaults to 1.5
 #'
@@ -23,38 +23,9 @@ db_compute_boxplot <- function(data, x, var, coef = 1.5) {
   x <- enquo(x)
   var <- enquo(var)
   var <- quo_squash(var)
-
   res <- group_by(data, !!x, add = TRUE)
-
-  if("tbl_spark" %in% class(res)) {
-    res <- summarise(
-      res,
-      n       = n(),
-      lower   = percentile_approx(!!var, 0.25),
-      middle  = percentile_approx(!!var, 0.5),
-      upper   = percentile_approx(!!var, 0.75),
-      max_raw = max(!!var, na.rm = TRUE),
-      min_raw = min(!!var, na.rm = TRUE)
-    )
-  } else {
-    # For Microsoft SQL Server, the quantile functions are windowed, so 'mutate' is necessary (and summarization is done with 'distinct')
-    dplyr_fn <- ifelse("tbl_Microsoft SQL Server" %in% class(res), mutate, summarise)
-    res <- dplyr_fn(
-      res,
-      n       = n(),
-      lower   = quantile(!!var, 0.25),
-      middle  = quantile(!!var, 0.5),
-      upper   = quantile(!!var, 0.75),
-      max_raw = max(!!var, na.rm = TRUE),
-      min_raw = min(!!var, na.rm = TRUE)
-    )
-    if (identical(dplyr_fn, mutate)) {
-      res <- select(res, n, lower, middle, upper, max_raw, min_raw) # This should preserve grouping columns
-      res <- distinct(res)
-    }
-  }
-
-  res <- mutate(res, 
+  res <- calc_boxplot(res, var)
+  res <- mutate(res,
     iqr     = (upper - lower) * coef,
     min_iqr = lower - iqr,
     max_iqr = upper + iqr,
@@ -62,9 +33,58 @@ db_compute_boxplot <- function(data, x, var, coef = 1.5) {
     ymin    = ifelse(min_raw < min_iqr, min_iqr, min_raw)
   )
   res <- collect(res)
-  res <- ungroup(res)
+  ungroup(res)
+}
 
-  return (res)
+calc_boxplot <- function(res, var) {
+  UseMethod("calc_boxplot")
+}
+
+calc_boxplot.tbl <- function(res, var) {
+  summarise(
+    res,
+    n       = n(),
+    lower   = quantile(!!var, 0.25),
+    middle  = quantile(!!var, 0.5),
+    upper   = quantile(!!var, 0.75),
+    max_raw = max(!!var, na.rm = TRUE),
+    min_raw = min(!!var, na.rm = TRUE)
+  )
+}
+
+calc_boxplot.tbl_spark <- function(res, var) {
+  calc_boxplot_sparklyr(res, var)
+}
+
+calc_boxplot_sparklyr <- function(res, var) {
+  summarise(
+    res,
+    n       = n(),
+    lower   = percentile_approx(!!var, 0.25),
+    middle  = percentile_approx(!!var, 0.5),
+    upper   = percentile_approx(!!var, 0.75),
+    max_raw = max(!!var, na.rm = TRUE),
+    min_raw = min(!!var, na.rm = TRUE)
+  )
+}
+
+`calc_boxplot.tbl_Microsoft SQL Server` <- function(res, var) {
+  calc_boxplot_mssql(res, var)
+}
+
+calc_boxplot_mssql <- function(res, var) {
+  res <- mutate(
+    res,
+    n       = n(),
+    lower   = quantile(!!var, 0.25),
+    middle  = quantile(!!var, 0.5),
+    upper   = quantile(!!var, 0.75),
+    max_raw = max(!!var, na.rm = TRUE),
+    min_raw = min(!!var, na.rm = TRUE)
+  )
+  # This should preserve grouping columns
+  res <- select(res, n, lower, middle, upper, max_raw, min_raw)
+  distinct(res)
 }
 
 #' Boxplot
