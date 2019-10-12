@@ -47,7 +47,6 @@ intersections without a value, the less data is downloaded from the database.
 }
 \examples{
 
-library(dplyr)
 
 # Returns a 100x100 grid of record count of intersections of eruptions and waiting
 faithful \%>\%

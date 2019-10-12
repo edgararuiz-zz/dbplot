@@ -27,3 +27,9 @@ It currently only works with Spark, Hive, and SQL Server connections.
 Note that this function supports input tbl that already contains
 grouping variables. This can be useful when creating faceted boxplots.
 }
+\examples{
+
+mtcars \%>\%
+  db_compute_boxplot(am, mpg)
+
+}

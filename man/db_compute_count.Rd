@@ -23,8 +23,6 @@ in R are: tbl_sql, tbl_dbi, tbl_sql
 }
 \examples{
 
-library(dplyr)
-
 # Returns the row count per am
 mtcars \%>\%
   db_compute_count(am)

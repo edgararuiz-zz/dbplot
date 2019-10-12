@@ -10,10 +10,11 @@ Authors@R:
 Depends:
     R (>= 3.1)
 Imports:
-    dplyr(>= 0.7),
-    rlang(>= 0.3),
+    dplyr (>= 0.7),
+    rlang (>= 0.3),
     ggplot2,
-    purrr
+    purrr,
+    magrittr
 Suggests: 
     dbplyr (>= 1.4.0),
     testthat,

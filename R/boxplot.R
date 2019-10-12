@@ -18,6 +18,11 @@
 #' @param var A continuous variable
 #' @param coef Length of the whiskers as multiple of IQR. Defaults to 1.5
 #'
+#' @examples
+#'
+#' mtcars %>%
+#'   db_compute_boxplot(am, mpg)
+#'
 #' @export
 db_compute_boxplot <- function(data, x, var, coef = 1.5) {
   x <- enquo(x)
@@ -115,6 +120,10 @@ calc_boxplot_mssql <- function(res, var) {
 #'  \code{\link{dbplot_raster}}, \code{\link{dbplot_histogram}}
 #'
 #' @export
+#'
+#' mtcars %>%
+#'   dbplot_boxplot(am, mpg)
+#'
 dbplot_boxplot <- function(data, x, var, coef = 1.5) {
   x   <- enquo(x)
   var <- enquo(var)

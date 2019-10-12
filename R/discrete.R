@@ -14,8 +14,6 @@
 #'
 #' @examples
 #'
-#' library(dplyr)
-#'
 #' # Returns the row count per am
 #' mtcars %>%
 #'   db_compute_count(am)
