@@ -4,12 +4,12 @@ test_that(
   "Correct binwidth formula is returned",
   expect_equal(
     db_bin(var, binwidth = 10),
-    rlang::expr((10 * ifelse(as.integer(floor((var - min(var, na.rm = TRUE))/10)) ==
-                               as.integer((max(var, na.rm = TRUE) - min(var, na.rm = TRUE))/10),
-                             as.integer(floor((var - min(var, na.rm = TRUE))/10)) - 1,
-                             as.integer(floor((var - min(var, na.rm = TRUE))/10)))) +
-                  min(var, na.rm = TRUE)
-      )
+    rlang::expr((10 * ifelse(as.integer(floor((var - min(var, na.rm = TRUE)) / 10)) ==
+      as.integer((max(var, na.rm = TRUE) - min(var, na.rm = TRUE)) / 10),
+    as.integer(floor((var - min(var, na.rm = TRUE)) / 10)) - 1,
+    as.integer(floor((var - min(var, na.rm = TRUE)) / 10))
+    )) +
+      min(var, na.rm = TRUE))
   )
 )
 

@@ -40,7 +40,6 @@
 #' # Returns a 50x50 grid of eruption averages of intersections of eruptions and waiting
 #' faithful %>%
 #'   db_compute_raster(eruptions, waiting, fill = mean(eruptions), resolution = 50)
-#'
 #' @export
 db_compute_raster <- function(data, x, y, fill = n(), resolution = 100, complete = FALSE) {
   x <- enquo(x)
@@ -90,15 +89,15 @@ db_compute_raster2 <- function(data, x, y, fill = n(), resolution = 100, complet
   y <- enquo(y)
   fill <- enquo(fill)
   cr <- db_compute_raster(
-    data, !! x , !! y,
-    !! fill, resolution, complete
+    data, !!x, !!y,
+    !!fill, resolution, complete
   )
-  size_x <- bin_size(cr, !! x)
-  size_y <- bin_size(cr, !! y)
+  size_x <- bin_size(cr, !!x)
+  size_y <- bin_size(cr, !!y)
   mutate(
     cr,
-    !! paste0(quo_name(x), "_2") := !! x + size_x,
-    !! paste0(quo_name(y), "_2") := !! y + size_y
+    !!paste0(quo_name(x), "_2") := !!x + size_x,
+    !!paste0(quo_name(y), "_2") := !!y + size_y
   )
 }
 
@@ -148,7 +147,6 @@ db_compute_raster2 <- function(data, x, y, fill = n(), resolution = 100, complet
 #' # Returns a 50x50 raster plot of eruption averages of intersections of eruptions and waiting
 #' faithful %>%
 #'   dbplot_raster(eruptions, waiting, fill = mean(eruptions), resolution = 50)
-#'
 #' @seealso
 #' \code{\link{dbplot_bar}}, \code{\link{dbplot_line}} ,
 #' \code{\link{dbplot_histogram}}

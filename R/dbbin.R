@@ -10,21 +10,20 @@
 #'
 #' @examples
 #'
-#'  library(dplyr)
+#' library(dplyr)
 #'
-#'   # Important: Always name the field and
-#'   # prefix the function with `!!`` (See Details)
+#' # Important: Always name the field and
+#' # prefix the function with `!!`` (See Details)
 #'
-#'   # Uses the default 30 bins
-#'   mtcars %>%
-#'     group_by(x = !! db_bin(mpg)) %>%
-#'     tally()
+#' # Uses the default 30 bins
+#' mtcars %>%
+#'   group_by(x = !!db_bin(mpg)) %>%
+#'   tally()
 #'
-#'   # Uses binwidth which overrides bins
-#'   mtcars %>%
-#'     group_by(x = !! db_bin(mpg, binwidth = 10)) %>%
-#'     tally()
-#'
+#' # Uses binwidth which overrides bins
+#' mtcars %>%
+#'   group_by(x = !!db_bin(mpg, binwidth = 10)) %>%
+#'   tally()
 #' @export
 db_bin <- function(var, bins = 30, binwidth = NULL) {
   var <- enquo(var)
@@ -47,7 +46,7 @@ db_bin <- function(var, bins = 30, binwidth = NULL) {
 bin_size <- function(.data, field) {
   field <- enquo(field)
 
-  vals <- pull(.data, !! field)
+  vals <- pull(.data, !!field)
   vals_sort <- sort(vals)
   sort_1 <- vals_sort[1:length(vals_sort) - 1]
   sort_2 <- vals_sort[2:length(vals_sort)]

@@ -27,9 +27,9 @@ test_that("Compute raster 2 returns the rignt number of rows", {
   )
   expect_equal(
     nrow(db_compute_raster2(mtcars,
-                           wt, mpg,
-                           complete = TRUE,
-                           resolution = 10
+      wt, mpg,
+      complete = TRUE,
+      resolution = 10
     )),
     80
   )

@@ -22,7 +22,6 @@
 #' # Returns record count for bins of size 10
 #' mtcars %>%
 #'   db_compute_bins(mpg, binwidth = 10)
-#'
 #' @seealso
 #' \code{\link{db_bin}},
 #'
@@ -70,7 +69,6 @@ db_compute_bins <- function(data, x, bins = 30, binwidth = NULL) {
 #' # A ggplot histogram with bins of size 10
 #' mtcars %>%
 #'   dbplot_histogram(mpg, binwidth = 10)
-#'
 #' @seealso
 #' \code{\link{dbplot_bar}}, \code{\link{dbplot_line}} ,
 #'  \code{\link{dbplot_raster}}

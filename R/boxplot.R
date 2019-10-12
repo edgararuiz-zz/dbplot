@@ -22,26 +22,25 @@
 #'
 #' mtcars %>%
 #'   db_compute_boxplot(am, mpg)
-#'
 #' @export
 db_compute_boxplot <- function(data, x, var, coef = 1.5) {
   x <- enquo(x)
   check_vars <- quo_get_expr(x)
-  if(length(check_vars) > 1 && expr_text(check_vars[1]) == "vars()") {
+  if (length(check_vars) > 1 && expr_text(check_vars[1]) == "vars()") {
     x <- eval_tidy(x)
   } else {
-    x <- quos(!! x)
+    x <- quos(!!x)
   }
   var <- enquo(var)
   var <- quo_squash(var)
-  res <- group_by(data, !!! x, add = TRUE)
+  res <- group_by(data, !!!x, add = TRUE)
   res <- calc_boxplot(res, var)
   res <- mutate(res,
-    iqr     = (upper - lower) * coef,
+    iqr = (upper - lower) * coef,
     min_iqr = lower - iqr,
     max_iqr = upper + iqr,
-    ymax    = ifelse(max_raw > max_iqr, max_iqr, max_raw),
-    ymin    = ifelse(min_raw < min_iqr, min_iqr, min_raw)
+    ymax = ifelse(max_raw > max_iqr, max_iqr, max_raw),
+    ymin = ifelse(min_raw < min_iqr, min_iqr, min_raw)
   )
   res <- collect(res)
   ungroup(res)
@@ -54,10 +53,10 @@ calc_boxplot <- function(res, var) {
 calc_boxplot.tbl <- function(res, var) {
   summarise(
     res,
-    n       = n(),
-    lower   = quantile(!!var, 0.25),
-    middle  = quantile(!!var, 0.5),
-    upper   = quantile(!!var, 0.75),
+    n = n(),
+    lower = quantile(!!var, 0.25),
+    middle = quantile(!!var, 0.5),
+    upper = quantile(!!var, 0.75),
     max_raw = max(!!var, na.rm = TRUE),
     min_raw = min(!!var, na.rm = TRUE)
   )
@@ -70,10 +69,10 @@ calc_boxplot.tbl_spark <- function(res, var) {
 calc_boxplot_sparklyr <- function(res, var) {
   summarise(
     res,
-    n       = n(),
-    lower   = percentile_approx(!!var, 0.25),
-    middle  = percentile_approx(!!var, 0.5),
-    upper   = percentile_approx(!!var, 0.75),
+    n = n(),
+    lower = percentile_approx(!!var, 0.25),
+    middle = percentile_approx(!!var, 0.5),
+    upper = percentile_approx(!!var, 0.75),
     max_raw = max(!!var, na.rm = TRUE),
     min_raw = min(!!var, na.rm = TRUE)
   )
@@ -86,10 +85,10 @@ calc_boxplot_sparklyr <- function(res, var) {
 calc_boxplot_mssql <- function(res, var) {
   res <- mutate(
     res,
-    n       = n(),
-    lower   = quantile(!!var, 0.25),
-    middle  = quantile(!!var, 0.5),
-    upper   = quantile(!!var, 0.75),
+    n = n(),
+    lower = quantile(!!var, 0.25),
+    middle = quantile(!!var, 0.5),
+    upper = quantile(!!var, 0.75),
     max_raw = max(!!var, na.rm = TRUE),
     min_raw = min(!!var, na.rm = TRUE)
   )
@@ -125,13 +124,13 @@ calc_boxplot_mssql <- function(res, var) {
 #'   dbplot_boxplot(am, mpg)
 #'
 dbplot_boxplot <- function(data, x, var, coef = 1.5) {
-  x   <- enquo(x)
+  x <- enquo(x)
   var <- enquo(var)
 
   df <- db_compute_boxplot(
     data = data,
-    x    = !!x,
-    var  = !!var,
+    x = !!x,
+    var = !!var,
     coef = coef
   )
 
