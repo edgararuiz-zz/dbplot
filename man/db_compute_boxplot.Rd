@@ -31,5 +31,4 @@ grouping variables. This can be useful when creating faceted boxplots.
 
 mtcars \%>\%
   db_compute_boxplot(am, mpg)
-
 }

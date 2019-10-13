@@ -55,7 +55,6 @@ faithful \%>\%
 # Returns a 50x50 raster plot of eruption averages of intersections of eruptions and waiting
 faithful \%>\%
   dbplot_raster(eruptions, waiting, fill = mean(eruptions), resolution = 50)
-
 }
 \seealso{
 \code{\link{dbplot_bar}}, \code{\link{dbplot_line}} ,

@@ -55,5 +55,4 @@ faithful \%>\%
 # Returns a 50x50 grid of eruption averages of intersections of eruptions and waiting
 faithful \%>\%
   db_compute_raster(eruptions, waiting, fill = mean(eruptions), resolution = 50)
-
 }

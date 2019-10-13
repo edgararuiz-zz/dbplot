@@ -34,7 +34,6 @@ mtcars \%>\%
 # A ggplot histogram with bins of size 10
 mtcars \%>\%
   dbplot_histogram(mpg, binwidth = 10)
-
 }
 \seealso{
 \code{\link{dbplot_bar}}, \code{\link{dbplot_line}} ,

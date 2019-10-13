@@ -31,7 +31,6 @@ mtcars \%>\%
 # Returns record count for bins of size 10
 mtcars \%>\%
   db_compute_bins(mpg, binwidth = 10)
-
 }
 \seealso{
 \code{\link{db_bin}},
