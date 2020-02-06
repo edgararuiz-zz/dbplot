@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculates a histogram bins — db_compute_bins • dbplot</title>
+<title>Pipe operator — %&gt;% • dbplot</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,12 +42,8 @@
 
 
 
-<meta property="og:title" content="Calculates a histogram bins — db_compute_bins" />
-<meta property="og:description" content="Uses very generic dplyr code to create histogram bins.
-Because of this approach,
-the calculations automatically run inside the database if `data` has
-a database or sparklyr connection. The `class()` of such tables
-in R are: tbl_sql, tbl_dbi, tbl_spark" />
+<meta property="og:title" content="Pipe operator — %&gt;%" />
+<meta property="og:description" content="See magrittr::%&amp;gt;% for details." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -120,86 +116,23 @@ in R are: tbl_sql, tbl_dbi, tbl_spark" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculates a histogram bins</h1>
-    <small class="dont-index">Source: <a href='https://github.com/edgararuiz/dbplot/blob/master/R/histogram.R'><code>R/histogram.R</code></a></small>
-    <div class="hidden name"><code>db_compute_bins.Rd</code></div>
+    <h1>Pipe operator</h1>
+    <small class="dont-index">Source: <a href='https://github.com/edgararuiz/dbplot/blob/master/R/utils-pipe.R'><code>R/utils-pipe.R</code></a></small>
+    <div class="hidden name"><code>pipe.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Uses very generic dplyr code to create histogram bins.
-Because of this approach,
-the calculations automatically run inside the database if `data` has
-a database or sparklyr connection. The `class()` of such tables
-in R are: tbl_sql, tbl_dbi, tbl_spark</p>
+    <p>See <code>magrittr::%&gt;%</code> for details.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>db_compute_bins</span>(<span class='no'>data</span>, <span class='no'>x</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='no'>lhs</span> <span class='kw'>%&gt;%</span> <span class='no'>rhs</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>data</th>
-      <td><p>A table (tbl)</p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A continuous variable</p></td>
-    </tr>
-    <tr>
-      <th>bins</th>
-      <td><p>Number of bins. Defaults to 30.</p></td>
-    </tr>
-    <tr>
-      <th>binwidth</th>
-      <td><p>Single value that sets the side of the bins, it overrides bins</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='db_bin.html'>db_bin</a></code>,</p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># Returns record count for 30 bins in mpg</span>
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>db_compute_bins</span>(<span class='no'>mpg</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 19 x 2</span><span>
-#&gt;      mpg count
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>  10.4     2
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>  12.8     1
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>  13.5     1
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>  14.3     2
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>  15.1     4
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>  15.9     1
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>  16.7     1
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>  17.4     2
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>  18.2     1
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span>  19.0     3
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span>  20.6     2
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span>  21.4     3
-#&gt; </span><span style='color: #BCBCBC;'>13</span><span>  22.2     2
-#&gt; </span><span style='color: #BCBCBC;'>14</span><span>  23.7     1
-#&gt; </span><span style='color: #BCBCBC;'>15</span><span>  25.3     1
-#&gt; </span><span style='color: #BCBCBC;'>16</span><span>  26.8     1
-#&gt; </span><span style='color: #BCBCBC;'>17</span><span>  30.0     2
-#&gt; </span><span style='color: #BCBCBC;'>18</span><span>  32.3     1
-#&gt; </span><span style='color: #BCBCBC;'>19</span><span>  33.1     1</div><div class='input'>
-<span class='co'># Returns record count for bins of size 10</span>
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>db_compute_bins</span>(<span class='no'>mpg</span>, <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 2</span><span>
-#&gt;     mpg count
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>  10.4    18
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>  20.4    14</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
