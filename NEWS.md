@@ -1,5 +1,9 @@
 # dbplot 0.3.3
 
+- Exports the pipe operator
+
+- Adds missing examples
+
 - Example in README now uses SQLite (#17)
 
 - Adds support for `vars()` in the `x` argument in `db_compute_boxplot()` (#27)
