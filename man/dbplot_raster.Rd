@@ -4,8 +4,7 @@
 \alias{dbplot_raster}
 \title{Raster plot}
 \usage{
-dbplot_raster(data, x, y, fill = n(), resolution = 100,
-  complete = FALSE)
+dbplot_raster(data, x, y, fill = n(), resolution = 100, complete = FALSE)
 }
 \arguments{
 \item{data}{A table (tbl)}

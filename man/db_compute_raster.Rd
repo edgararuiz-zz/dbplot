@@ -5,11 +5,9 @@
 \alias{db_compute_raster2}
 \title{Aggregates intersections of two variables}
 \usage{
-db_compute_raster(data, x, y, fill = n(), resolution = 100,
-  complete = FALSE)
+db_compute_raster(data, x, y, fill = n(), resolution = 100, complete = FALSE)
 
-db_compute_raster2(data, x, y, fill = n(), resolution = 100,
-  complete = FALSE)
+db_compute_raster2(data, x, y, fill = n(), resolution = 100, complete = FALSE)
 }
 \arguments{
 \item{data}{A table (tbl)}
