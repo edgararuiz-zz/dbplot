@@ -118,11 +118,11 @@ calc_boxplot_mssql <- function(res, var) {
 #' \code{\link{dbplot_bar}}, \code{\link{dbplot_line}} ,
 #'  \code{\link{dbplot_raster}}, \code{\link{dbplot_histogram}}
 #'
-#' @export
+#' @examples
 #'
 #' mtcars %>%
 #'   dbplot_boxplot(am, mpg)
-#'
+#' @export
 dbplot_boxplot <- function(data, x, var, coef = 1.5) {
   x <- enquo(x)
   var <- enquo(var)
