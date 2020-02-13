@@ -24,6 +24,11 @@ in R are: tbl_sql, tbl_dbi, tbl_spark
 
 It currently only works with Spark and Hive connections.
 }
+\examples{
+
+mtcars \%>\%
+  dbplot_boxplot(am, mpg)
+}
 \seealso{
 \code{\link{dbplot_bar}}, \code{\link{dbplot_line}} ,
  \code{\link{dbplot_raster}}, \code{\link{dbplot_histogram}}
