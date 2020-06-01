@@ -89,7 +89,8 @@ dbplot_histogram <- function(data, x, bins = 30, binwidth = NULL) {
   )
 
   ggplot(df) +
-    geom_col(aes(x, count)) +
+    geom_col(aes(x, count),
+             orientation = "x") +
     labs(
       x = quo_name(x),
       y = "count"
